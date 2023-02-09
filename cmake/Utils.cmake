@@ -1,0 +1,69 @@
+#We need to check whether tool is multi config
+macro(check_multi_config)
+
+   #For now, we will require it
+
+   get_cmake_property(isMultiConfig GENERATOR_IS_MULTI_CONFIG)
+   if(NOT isMultiConfig)
+      message(FATAL_ERROR "This generator doesn't support multi-config!")
+   else()
+      message("Multi-config: Success!")
+   endif()
+
+endmacro()
+
+#Initializes Debug, Release and Dist configurations
+macro(init_configurations)
+
+   #Debug -> core engine debugging and development
+   #Release -> for graphics engine with gui
+   #Distribution -> for engine exported projects, without gui
+
+   list(REMOVE_ITEM CMAKE_CONFIGURATION_TYPES MinSizeRel RelWithDebInfo PARENT_SCOPE)
+   list(APPEND CMAKE_CONFIGURATION_TYPES Dist)
+   list(REMOVE_DUPLICATES CMAKE_CONFIGURATION_TYPES)
+
+   message("Configuration types: Success! (${CMAKE_CONFIGURATION_TYPES})")
+
+endmacro()
+
+#Sets/unsets building DLLs
+macro(set_shared isShared)
+
+   set(BUILD_SHARED_LIBS ${isShared})
+   message("Shared set: Success! (${isShared})")
+
+endmacro()
+
+#Lists all targets recursively into a hierarchy tree
+function(listTargets currentDir)
+
+   if(DEBUG)
+      message("Directory: ${currentDir}")
+   endif()
+
+   get_property(currentTargets DIRECTORY "${currentDir}" PROPERTY BUILDSYSTEM_TARGETS)
+   get_property(currentSubdirs DIRECTORY "${currentDir}" PROPERTY SUBDIRECTORIES)
+
+   string(REPLACE "${Tigraf_SOURCE_DIR}" "Tigraf" currentTargetsPath "${currentDir}")
+
+   foreach(target IN LISTS currentTargets)
+
+      if(DEBUG)
+         message("    ${target}")
+      endif()
+
+      set_target_properties(
+         "${target}"
+            PROPERTIES
+               FOLDER "${currentTargetsPath}" 
+         )
+      
+   endforeach()
+
+
+   foreach(subdir IN LISTS currentSubdirs)
+      listTargets("${subdir}")
+   endforeach()
+   
+endfunction()
