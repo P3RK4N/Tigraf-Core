@@ -6,4 +6,3 @@
 #include "Tigraf/Core/Log.h"
 #include "Tigraf/Core/Assert.h"
 
-//TEMP//

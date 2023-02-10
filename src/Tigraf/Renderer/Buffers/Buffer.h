@@ -7,9 +7,9 @@
 
 namespace Tigraf
 {
-#define isINT(VertexAttributeType)		(uint32_t)VertexAttributeType < 10U
-#define isFLOAT(VertexAttributeType)	(uint32_t)VertexAttributeType < 20U && (uint32_t)VertexAttributeType >= 10U
-#define isDOUBLE(VertexAttributeType)	(uint32_t)VertexAttributeType >= 20U
+#define isINT(VertexAttributeType)		(uint32_t)VertexAttributeType <  100U
+#define isFLOAT(VertexAttributeType)	(uint32_t)VertexAttributeType >= 100U && (uint32_t)VertexAttributeType < 200U
+#define isDOUBLE(VertexAttributeType)	(uint32_t)VertexAttributeType >= 200U
 
 /**
 * Sets texture to index location in UNIFORM_TEXTURE_BUFFER
@@ -19,18 +19,18 @@ namespace Tigraf
 		uint8_t textureHandleWrapper[16];														\
 		uint64_t handle = textureHandle;														\
 		memcpy(textureHandleWrapper, &handle, 8);												\
-		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, 16, textureIndex);	\
+		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureIndex, 16);	\
 	}
 
 /**
 * Updates per frame buffer with given data,size and offset
 */
-#define UPDATE_PER_FRAME_BUFFER(data, byteSize, byteOffset)	UniformBuffer::s_PerFrameBuffer->updateBuffer((void*)&(data), byteSize, byteOffset)
+#define UPDATE_PER_FRAME_BUFFER(data, byteOffset, byteSize)	UniformBuffer::s_PerFrameBuffer->updateBuffer((void*)&(data), byteOffset, byteSize)
 
 /**
 * Updates per model buffer with given data,size and offset
 */
-#define UPDATE_PER_MODEL_BUFFER(data, byteSize, byteOffset)	UniformBuffer::s_PerModelBuffer->updateBuffer((void*)&(data), byteSize, byteOffset)
+#define UPDATE_PER_MODEL_BUFFER(data, byteOffset, byteSize)	UniformBuffer::s_PerModelBuffer->updateBuffer((void*)&(data), byteOffset, byteSize)
 
 
 	enum class VertexAttributeType : uint16_t
@@ -40,13 +40,13 @@ namespace Tigraf
 		INT3 = 2,
 		INT4 = 3,
 
-		FLOAT = 10,
-		FLOAT2 = 11,
-		FLOAT3 = 12,
-		FLOAT4 = 13,
+		FLOAT = 100,
+		FLOAT2 = 101,
+		FLOAT3 = 102,
+		FLOAT4 = 103,
 
-		FLOAT3X3 = 14,
-		FLOAT4X4 = 15,
+		FLOAT3X3 = 104,
+		FLOAT4X4 = 105,
 	};
 
 	class IndexBuffer;
@@ -93,7 +93,7 @@ namespace Tigraf
 	public:
 		virtual ~UniformBuffer() {}
 
-		virtual void updateBuffer(void* subData, uint32_t byteSize, uint32_t byteOffset) {}
+		virtual void updateBuffer(void* subData, uint32_t byteOffset, uint32_t byteSize) {}
 		const uint16_t getBindIndex() { return m_BindIndex; }
 
 		virtual void bind(uint16_t bindIndex) = 0;
@@ -117,7 +117,7 @@ namespace Tigraf
 	public:
 		virtual ~RWBuffer() {}
 
-		virtual void updateBuffer(void* subData, uint32_t byteSize, uint32_t byteOffset) {}
+		virtual void updateBuffer(void* subData, uint32_t byteOffset, uint32_t byteSize) {}
 		const uint16_t getBindIndex() { return m_BindIndex; }
 
 		virtual void bind(uint16_t bindIndex) = 0;

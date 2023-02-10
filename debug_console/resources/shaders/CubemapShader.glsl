@@ -9,6 +9,8 @@ layout(std140, binding = 1) uniform PerFrameBuffer
 {
 	mat4 VP;
 	vec3 CameraWorldPosition;
+	float TotalTime;
+	float FrameTime;
 };
 
 layout(std140, binding = 2) uniform PerModelBuffer

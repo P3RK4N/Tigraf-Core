@@ -74,7 +74,7 @@ namespace Tigraf
 		glDeleteBuffers(1, &m_UniformBufferID);
 	}
 
-	void OpenGLUniformBuffer::updateBuffer(void* subData, uint32_t sizeInBytes, uint32_t byteOffset)
+	void OpenGLUniformBuffer::updateBuffer(void* subData, uint32_t byteOffset, uint32_t sizeInBytes)
 	{
 		glNamedBufferSubData(m_UniformBufferID, byteOffset, sizeInBytes, subData);
 	}
@@ -108,7 +108,7 @@ namespace Tigraf
 		glDeleteBuffers(1, &m_RWBufferID);
 	}
 
-	void OpenGLRWBuffer::updateBuffer(void* subData, uint32_t sizeInBytes, uint32_t byteOffset)
+	void OpenGLRWBuffer::updateBuffer(void* subData, uint32_t byteOffset, uint32_t sizeInBytes)
 	{
 		glNamedBufferSubData(m_RWBufferID, byteOffset, sizeInBytes, subData);
 	}

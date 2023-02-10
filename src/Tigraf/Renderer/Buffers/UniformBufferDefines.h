@@ -13,10 +13,11 @@ layout(std140, binding = 0) uniform TextureBuffer
 ----	sampler3D textures3D[20];
 ----	samplerCube texturesCube[20];
 */
-#define TEXTURE_UNIFORM_BUFFER 0
+#define UNIFORM_BUFFER_0_TEXTURE 0
 
 //TEXTURE HANDLE OFFSET
 #define TEXTURE_HANDLE_OFFSET 16
+
 //Counts
 #define TEXTURE_2D_COUNT	100
 #define TEXTURE_3D_COUNT	20 
@@ -67,14 +68,14 @@ layout(std140, binding = 0) uniform TextureBuffer
 /**
 Buffer for storing data that changes once per frame.
 */
-#define PER_FRAME_UNIFORM_BUFFER 1
-#define PER_FRAME_UNIFORM_BUFFER_SIZE 1000
+#define UNIFORM_BUFFER_1_FRAME 1
+#define UNIFORM_BUFFER_1_FRAME_SIZE 1000
 
 /**
 Buffer for storing data that changes with each model.
 */
-#define PER_MODEL_UNIFORM_BUFFER 2
-#define PER_MODEL_UNIFORM_BUFFER_SIZE 1000
+#define UNIFORM_BUFFER_2_MODEL 2
+#define UNIFORM_BUFFER_2_MODEL_SIZE 1000
 
 
 #define UNIFORM_BUFFER_3	3

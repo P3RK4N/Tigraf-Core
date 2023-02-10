@@ -12,8 +12,8 @@ namespace Tigraf
 	public:
 		Mesh(Ref<VertexBuffer> vertexBuffer, Ref<IndexBuffer> indexBuffer = nullptr, Ref<Shader> shader = nullptr);
 
-		void draw();
-		void drawIndexed();
+		void drawTriangles();
+		void drawTrianglesIndexed();
 
 		void setShader(Ref<Shader> shader) { m_Shader = shader; }
 		Ref<Shader> getShader() { return m_Shader; }

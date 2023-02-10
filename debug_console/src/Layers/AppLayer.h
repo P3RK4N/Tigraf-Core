@@ -20,21 +20,13 @@ namespace Tigraf
 		EVENT(onResize);
 
 	private:
-		Ref<Framebuffer> m_Framebuffer = nullptr;
 		Ref<Camera> m_EditorCamera = nullptr;
+		Ref<Framebuffer> m_Framebuffer = nullptr;
 
-		Ref<Texture2D> m_GigachadTexture = nullptr;
 		Ref<TextureCube> m_CubemapTexture = nullptr;
 
 		Ref<Mesh> m_FloorMesh = nullptr;
 		Ref<Mesh> m_CubemapMesh = nullptr;
 		Ref<Mesh> m_FramebufferFrameMesh = nullptr;
-
-		Ref<Mesh> m_Plane2DMesh = nullptr;
-
-		Ref<RWBuffer> m_RWBuffer = nullptr;
-		Ref<RWTexture2D> m_RWTexture = nullptr;
-		Ref<UniformBuffer> m_ImageBuffer = nullptr;
-		Ref<Shader> m_ComputeShader = nullptr;
 	};
 }

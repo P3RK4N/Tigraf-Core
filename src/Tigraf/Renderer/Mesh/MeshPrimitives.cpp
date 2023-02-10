@@ -1,4 +1,3 @@
-//#include "PCH.h"
 #include "MeshPrimitives.h"
 
 #include "Mesh.h"
@@ -137,11 +136,6 @@ namespace Tigraf
 		{
 			vertices[index].Position = glm::vec2(initialTransform * glm::vec4(vertices[index].Position, 1.0f, 1.0f));
 		};
-
-		for(auto& vertex : vertices)
-		{
-			CORE_TRACE(std::format("UV {0} {1}", vertex.TexCoord.x, vertex.TexCoord.y));
-		}
 
 		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(4, 16, vertices.data(), 0);
 		vertexBuffer->pushVertexAttribute(VertexAttributeType::FLOAT2);

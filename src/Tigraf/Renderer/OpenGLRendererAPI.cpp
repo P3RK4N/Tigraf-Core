@@ -1,4 +1,3 @@
-//#include "PCH.h"
 #include "OpenGLRendererAPI.h"
 
 #include "Tigraf/Renderer/Buffers/OpenGLBuffer.h"
@@ -13,8 +12,10 @@ namespace Tigraf
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glEnable(GL_DEPTH_TEST);
-
 		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
 
 		glClearColor(0.2f, 0.6f, 0.8f, 1.0f);
 
@@ -38,20 +39,41 @@ namespace Tigraf
 		glViewport(x, y, width, height);
 	}
 
-	void OpenGLRendererAPI::draw(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLRendererAPI::drawTriangles(const Ref<VertexBuffer>& vertexBuffer)
 	{
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
 		glDrawArrays(GL_TRIANGLES, 0, vertexBuffer->getVertexCount());
 	}
 
-	void OpenGLRendererAPI::drawIndexed(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLRendererAPI::drawTrianglesIndexed(const Ref<VertexBuffer>& vertexBuffer)
 	{
 
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
 
-		TIGRAF_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
+	TIGRAF_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
 
 		glDrawElements(GL_TRIANGLES, vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+	}
+
+	void OpenGLRendererAPI::drawPoints(const Ref<VertexBuffer>& vertexBuffer)
+	{
+		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
+		glDrawArrays(GL_POINTS, 0, vertexBuffer->getVertexCount());
+	}
+
+	void OpenGLRendererAPI::drawPointsIndexed(const Ref<VertexBuffer>& vertexBuffer)
+	{
+		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
+
+	TIGRAF_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
+
+		glDrawElements(GL_POINTS, vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+	}
+
+	void OpenGLRendererAPI::drawPointsInstanced(const Ref<VertexBuffer>& vertexBuffer, uint32_t numInstances)
+	{
+		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
+		glDrawArraysInstanced(GL_POINTS, 0, vertexBuffer->getVertexCount(), numInstances);
 	}
 
 	void OpenGLRendererAPI::initGlobalUniformBuffers()
@@ -67,26 +89,26 @@ namespace Tigraf
 		UniformBuffer::s_PerFrameBuffer = UniformBuffer::create
 		(
 			NULL,
-			PER_FRAME_UNIFORM_BUFFER_SIZE,
+			UNIFORM_BUFFER_1_FRAME_SIZE,
 			GL_DYNAMIC_STORAGE_BIT
 		);
 
 		UniformBuffer::s_PerModelBuffer = UniformBuffer::create
 		(
 			NULL,
-			PER_MODEL_UNIFORM_BUFFER_SIZE,
+			UNIFORM_BUFFER_2_MODEL_SIZE,
 			GL_DYNAMIC_STORAGE_BIT
 		);
 
 		
 		GLuint textureBufferID = reinterpret_cast<OpenGLUniformBuffer*>(UniformBuffer::s_TextureBuffer.get())->getUniformBufferID();
-		glBindBufferBase(GL_UNIFORM_BUFFER, TEXTURE_UNIFORM_BUFFER, textureBufferID);
+		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_0_TEXTURE, textureBufferID);
 
 		textureBufferID = reinterpret_cast<OpenGLUniformBuffer*>(UniformBuffer::s_PerFrameBuffer.get())->getUniformBufferID();
-		glBindBufferBase(GL_UNIFORM_BUFFER, PER_FRAME_UNIFORM_BUFFER, textureBufferID);
+		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_1_FRAME, textureBufferID);
 
 		textureBufferID = reinterpret_cast<OpenGLUniformBuffer*>(UniformBuffer::s_PerModelBuffer.get())->getUniformBufferID();
-		glBindBufferBase(GL_UNIFORM_BUFFER, PER_MODEL_UNIFORM_BUFFER, textureBufferID);
+		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_2_MODEL, textureBufferID);
 
 	}
 }

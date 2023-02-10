@@ -38,20 +38,12 @@ endmacro()
 #Lists all targets recursively into a hierarchy tree
 function(listTargets currentDir)
 
-   if(DEBUG)
-      message("Directory: ${currentDir}")
-   endif()
-
    get_property(currentTargets DIRECTORY "${currentDir}" PROPERTY BUILDSYSTEM_TARGETS)
    get_property(currentSubdirs DIRECTORY "${currentDir}" PROPERTY SUBDIRECTORIES)
 
    string(REPLACE "${Tigraf_SOURCE_DIR}" "Tigraf" currentTargetsPath "${currentDir}")
 
    foreach(target IN LISTS currentTargets)
-
-      if(DEBUG)
-         message("    ${target}")
-      endif()
 
       set_target_properties(
          "${target}"
@@ -67,3 +59,21 @@ function(listTargets currentDir)
    endforeach()
    
 endfunction()
+
+#Lists all sources recursively into a hierarchy tree
+macro(listSources sources root_path)
+
+   foreach(source IN LISTS "${sources}")
+
+      get_filename_component(source_path "${source}" PATH)
+      string(REPLACE "${root_path}" "" source_path "${source_path}")
+
+      if(MSVC)
+         string(REPLACE "/" "\\" source_path "${source_path}")
+      endif()
+
+      source_group("${source_path}" FILES "${source}")
+
+   endforeach()
+
+endmacro()

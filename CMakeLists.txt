@@ -115,16 +115,7 @@ target_sources(Tigraf-Core PRIVATE "${sources};${headers}")
 
 #Building a hierarchy tree
 #Tigraf Source
-foreach(source IN LISTS sources)
-   get_filename_component(source_path "${source}" PATH)
-   string(REPLACE "${Tigraf_SOURCE_DIR}/src" "" source_path "${source_path}")
-
-   if(MSVC)
-      string(REPLACE "/" "\\" source_path_msvc "${source_path}")
-   endif()
-
-   source_group("${source_path_msvc}" FILES "${source}")
-endforeach()
+listSources(sources "${Tigraf_SOURCE_DIR}/src")
 
 #Tigraf include
 source_group("Include" FILES "${headers}")
@@ -215,7 +206,11 @@ target_link_libraries(
 
 add_executable(Tigraf-Console)
 
-file(GLOB_RECURSE console_sources debug_console/*.cpp debug_console/*.h)
+file(GLOB_RECURSE console_sources debug_console/*.cpp debug_console/*.h debug_console/*.glsl debug_console/*.jpg debug_console/*.png)
+
+file(GLOB_RECURSE console_resources debug_console/*.glsl debug_console/*.jpg debug_console/*.png)
+
+listSources(console_resources "${Tigraf_SOURCE_DIR}/debug_console")
 
 target_sources(
    Tigraf-Console
