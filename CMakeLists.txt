@@ -193,6 +193,7 @@ add_subdirectory(vendor/glfw)
    target_include_directories(Tigraf-Core PRIVATE vendor/glfw/include)
 
 #OpenGL Maths
+set(BUILD_STATIC_LIBS NOT "${BUILD_DYNAMIC_LIBS}")    #TODO: Remove
 add_subdirectory(vendor/glm)
 
 #Image loader
