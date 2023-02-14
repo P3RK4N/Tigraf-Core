@@ -1,4 +1,3 @@
-//#include "PCH.h"
 #include "OpenGLFramebuffer.h"
 
 #include "Tigraf/Renderer/Textures/OpenGLTexture.h"
@@ -6,6 +5,8 @@
 
 namespace Tigraf
 {	
+	static GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+
 	OpenGLFramebuffer::OpenGLFramebuffer(uint32_t width, uint32_t height)
 		: Framebuffer::Framebuffer(width, height)
 	{
@@ -19,7 +20,7 @@ namespace Tigraf
 
 	void OpenGLFramebuffer::attachColorTexture(TextureFormat colorFormat)
 	{
-	TIGRAF_ASSERT(colorFormat == TextureFormat::RGBA8, "Tigraf currently does not support this framebuffer color format!");
+	TIGRAF_CORE_ASSERT(colorFormat == TextureFormat::RGBA8, "Tigraf currently does not support this framebuffer color format!");
 
 		Ref<Texture2D> colorTexture = Texture2D::create(colorFormat, m_Width, m_Height, nullptr);
 		GLuint textureID = reinterpret_cast<OpenGLTexture2D*>(colorTexture.get())->getTextureID();
@@ -31,8 +32,8 @@ namespace Tigraf
 
 	void OpenGLFramebuffer::attachDepthStencilTexture(TextureFormat depthStencilFormat)
 	{
-	TIGRAF_ASSERT(depthStencilFormat == TextureFormat::DEPTH24STENCIL8, "Tigraf currently does not support this framebuffer depth stencil format!");
-	TIGRAF_ASSERT(!m_DepthStencilTexture, "Depth stencil texture already attached!");
+	TIGRAF_CORE_ASSERT(depthStencilFormat == TextureFormat::DEPTH24STENCIL8, "Tigraf currently does not support this framebuffer depth stencil format!");
+	TIGRAF_CORE_ASSERT(!m_DepthStencilTexture, "Depth stencil texture already attached!");
 
 		Ref<Texture2D> depthStencilTexture = Texture2D::create(depthStencilFormat, m_Width, m_Height, nullptr);
 		GLuint textureID = reinterpret_cast<OpenGLTexture2D*>(depthStencilTexture.get())->getTextureID();
@@ -88,7 +89,7 @@ namespace Tigraf
 
 	void OpenGLFramebuffer::clearColor(uint32_t index)
 	{
-	TIGRAF_ASSERT(m_ColorTextures.size() > index, "Invalid color texture index!");
+	TIGRAF_CORE_ASSERT(m_ColorTextures.size() > index, "Invalid color texture index!");
 		
 		TextureFormat format = m_ColorTextures[index]->getTextureFormat();
 		GLuint textureID = reinterpret_cast<OpenGLTexture2D*>(m_ColorTextures[index].get())->getTextureID();
@@ -123,7 +124,7 @@ namespace Tigraf
 
 		}
 
-	TIGRAF_ASSERT(0, "Invalid texture format!");
+	TIGRAF_CORE_ASSERT(0, "Invalid texture format!");
 	}
 
 	void OpenGLFramebuffer::clearAll()

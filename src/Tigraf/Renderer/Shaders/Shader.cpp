@@ -1,6 +1,4 @@
-//#include "PCH.h"
-#include "Shader.h"
-
+#include "Tigraf/Renderer/Shaders/Shader.h"
 #include "glslShader.h"
 
 namespace Tigraf

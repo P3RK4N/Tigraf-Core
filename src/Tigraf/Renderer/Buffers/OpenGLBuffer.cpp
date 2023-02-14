@@ -1,8 +1,67 @@
-//#include "PCH.h"
 #include "OpenGLBuffer.h"
 
 namespace Tigraf
 {
+	static GLenum OpenGLVertexAttributeType(VertexAttributeType type)
+	{
+		switch(type)
+		{
+		case VertexAttributeType::INT:		return GL_INT;
+		case VertexAttributeType::INT2:		return GL_INT;
+		case VertexAttributeType::INT3:		return GL_INT;
+		case VertexAttributeType::INT4:		return GL_INT;
+		case VertexAttributeType::FLOAT:	return GL_FLOAT;
+		case VertexAttributeType::FLOAT2:	return GL_FLOAT;
+		case VertexAttributeType::FLOAT3:	return GL_FLOAT;
+		case VertexAttributeType::FLOAT4:	return GL_FLOAT;
+		case VertexAttributeType::FLOAT3X3:	return GL_FLOAT;
+		case VertexAttributeType::FLOAT4X4:	return GL_FLOAT;
+		}
+
+		TIGRAF_CORE_ASSERT(0, "Invalid VertexAttributeType");
+		return 0;
+	};
+
+	static GLuint OpenGLVertexAttributeTypeSize(VertexAttributeType type)
+	{
+		switch(type)
+		{
+		case VertexAttributeType::INT:		return sizeof(int)   * 1;
+		case VertexAttributeType::INT2:		return sizeof(int)   * 2;
+		case VertexAttributeType::INT3:		return sizeof(int)   * 3;
+		case VertexAttributeType::INT4:		return sizeof(int)   * 4;
+		case VertexAttributeType::FLOAT:	return sizeof(float) * 1;
+		case VertexAttributeType::FLOAT2:	return sizeof(float) * 2;
+		case VertexAttributeType::FLOAT3:	return sizeof(float) * 3;
+		case VertexAttributeType::FLOAT4:	return sizeof(float) * 4;
+		case VertexAttributeType::FLOAT3X3:	return sizeof(float) * 9;
+		case VertexAttributeType::FLOAT4X4:	return sizeof(float) * 16;
+		}
+
+		TIGRAF_CORE_ASSERT(0, "Invalid VertexAttributeType");
+		return 0;
+	};
+
+	static GLuint OpenGLVertexAttributeTypeCount(VertexAttributeType type)
+	{
+		switch(type)
+		{
+		case VertexAttributeType::INT:		return 1;
+		case VertexAttributeType::INT2:		return 2;
+		case VertexAttributeType::INT3:		return 3;
+		case VertexAttributeType::INT4:		return 4;
+		case VertexAttributeType::FLOAT:	return 1;
+		case VertexAttributeType::FLOAT2:	return 2;
+		case VertexAttributeType::FLOAT3:	return 3;
+		case VertexAttributeType::FLOAT4:	return 4;
+		case VertexAttributeType::FLOAT3X3:	return 9;
+		case VertexAttributeType::FLOAT4X4:	return 16;
+		}
+
+		TIGRAF_CORE_ASSERT(0, "Invalid VertexAttributeType");
+		return 0;
+	};
+
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
 		glDeleteVertexArrays(1, &m_VertexArrayID);
@@ -81,7 +140,7 @@ namespace Tigraf
 
 	void OpenGLUniformBuffer::bind(uint16_t bindIndex)
 	{
-		TIGRAF_ASSERT(UniformBuffer::s_CurrentUniformBuffers.find(bindIndex) == UniformBuffer::s_CurrentUniformBuffers.end(), "Index is already taken!");
+		TIGRAF_CORE_ASSERT(UniformBuffer::s_CurrentUniformBuffers.find(bindIndex) == UniformBuffer::s_CurrentUniformBuffers.end(), "Index is already taken!");
 		glBindBufferBase(GL_UNIFORM_BUFFER, bindIndex, m_UniformBufferID);
 		UniformBuffer::s_CurrentUniformBuffers.insert(bindIndex);
 		m_BindIndex = bindIndex;
@@ -89,7 +148,7 @@ namespace Tigraf
 
 	void OpenGLUniformBuffer::unbind()
 	{
-		TIGRAF_ASSERT(m_BindIndex != -1, "This buffer is already unbound!");
+		TIGRAF_CORE_ASSERT(m_BindIndex != -1, "This buffer is already unbound!");
 		glBindBufferBase(GL_UNIFORM_BUFFER, m_BindIndex, 0);
 		UniformBuffer::s_CurrentUniformBuffers.erase(m_BindIndex);
 		m_BindIndex = -1;
@@ -115,7 +174,7 @@ namespace Tigraf
 
 	void OpenGLRWBuffer::bind(uint16_t bindIndex)
 	{
-		TIGRAF_ASSERT(RWBuffer::s_CurrentRWBuffers.find(bindIndex) == RWBuffer::s_CurrentRWBuffers.end(), "Index is already taken!");
+		TIGRAF_CORE_ASSERT(RWBuffer::s_CurrentRWBuffers.find(bindIndex) == RWBuffer::s_CurrentRWBuffers.end(), "Index is already taken!");
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bindIndex, m_RWBufferID);
 		RWBuffer::s_CurrentRWBuffers.insert(bindIndex);
 		m_BindIndex = bindIndex;
@@ -123,7 +182,7 @@ namespace Tigraf
 
 	void OpenGLRWBuffer::unbind()
 	{
-		TIGRAF_ASSERT(m_BindIndex != -1, "This buffer is already unbound!");
+		TIGRAF_CORE_ASSERT(m_BindIndex != -1, "This buffer is already unbound!");
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, m_BindIndex, 0);
 		RWBuffer::s_CurrentRWBuffers.erase(m_BindIndex);
 		m_BindIndex = -1;

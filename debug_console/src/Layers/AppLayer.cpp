@@ -1,14 +1,5 @@
 #include "AppLayer.h"
 
-#include <Tigraf/Input/Keycodes.h>
-#include <Tigraf/Input/glfwInput.h>
-
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/transform.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-
 namespace Tigraf
 {
 	struct PerFrameData
@@ -56,6 +47,7 @@ namespace Tigraf
 		m_Framebuffer->attachDepthStencilTexture(TextureFormat::DEPTH24STENCIL8);
 		m_Framebuffer->invalidate();
 		SET_TEXTURE_HANDLE(m_Framebuffer->getColorTexture(0)->getTextureHandle(), TEXTURE_2D_0);
+
 	}
 
 	void AppLayer::onUpdate(const TimeStep& ts)
@@ -74,6 +66,7 @@ namespace Tigraf
 		frameData.TotalTime = ts.m_TotalTime;
 		frameData.FrameTime = ts.m_FrameTime;
 		UPDATE_PER_FRAME_BUFFER(frameData, 0, sizeof(PerFrameData));
+
 	}
 
 	void AppLayer::onDraw()
@@ -96,6 +89,7 @@ namespace Tigraf
 	bool AppLayer::onEvent(Event& event)
 	{
 		DISPATCH(EVENT_TYPE::RESIZE, event, onResize);
+		return false;
 	}
 
 	bool AppLayer::onResize(void* eventData)

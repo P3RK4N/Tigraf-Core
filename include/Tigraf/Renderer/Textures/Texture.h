@@ -1,5 +1,4 @@
 #pragma once
-#include "Tigraf/Core/Core.h"
 
 namespace Tigraf
 {

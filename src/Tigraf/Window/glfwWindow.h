@@ -1,12 +1,13 @@
 #pragma once
-#include "Window.h"
+#include "Tigraf/Window/Window.h"
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 namespace Tigraf
 {
+	class Event;
+
 	class glfwWindow : public Window
 	{
 	public:

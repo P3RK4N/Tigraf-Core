@@ -1,15 +1,12 @@
 #pragma once
+
 #include "UniformBufferDefines.h"
 #include "RWBufferDefines.h"
 
-#include <cstdint>
-#include <unordered_set>
-
-namespace Tigraf
-{
 #define isINT(VertexAttributeType)		(uint32_t)VertexAttributeType <  100U
 #define isFLOAT(VertexAttributeType)	(uint32_t)VertexAttributeType >= 100U && (uint32_t)VertexAttributeType < 200U
 #define isDOUBLE(VertexAttributeType)	(uint32_t)VertexAttributeType >= 200U
+
 
 /**
 * Sets texture to index location in UNIFORM_TEXTURE_BUFFER
@@ -33,6 +30,8 @@ namespace Tigraf
 #define UPDATE_PER_MODEL_BUFFER(data, byteOffset, byteSize)	UniformBuffer::s_PerModelBuffer->updateBuffer((void*)&(data), byteOffset, byteSize)
 
 
+namespace Tigraf
+{
 	enum class VertexAttributeType : uint16_t
 	{
 		INT = 0,

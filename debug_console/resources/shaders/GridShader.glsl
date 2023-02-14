@@ -63,8 +63,6 @@ void main()
 
 	float val = ((floorX < 0.5 && floorZ < 0.5) || (floorX > 0.5 && floorZ > 0.5) ? 0.8 : 0.4);
 
-	mix()
-
 	float dist = length(ObjectPositionPS) / 20;
 	float opacity = mix(1.0, 0.0, dist*dist);
 

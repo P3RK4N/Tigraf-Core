@@ -1,5 +1,6 @@
-//#include "PCH.h"
-#include "Application.h"
+#include "Tigraf/Core/Application.h"
+
+#include "Tigraf/Renderer/Renderer.h"
 
 namespace Tigraf
 {
@@ -38,7 +39,7 @@ namespace Tigraf
 	{
 		CORE_TRACE(getWorkingDirectory());
 
-		m_Window = Window::createWindow(1280, 720, "Tigraf", true, BIND_EVENT_FN(Application::onEvent)); //Handles Window, Events and Graphics Context
+		m_Window = Window::createWindow(1280, 720, "Tigraf", true, BIND_EVENT_FN(Application::onEvent)); //Initializes Window, Events and Graphics Context
 		m_Timer = createScope<glfwTimer>();
 		
 		Renderer::init();
@@ -117,3 +118,5 @@ namespace Tigraf
 		return false;
 	}
 }
+
+#include "EntryPoint.h"

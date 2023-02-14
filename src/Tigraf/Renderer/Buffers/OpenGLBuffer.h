@@ -1,60 +1,10 @@
 #pragma once
-#include "Buffer.h"
+#include "Tigraf/Renderer/Buffers/Buffer.h"
 
 #include <glad/glad.h>
+
 namespace Tigraf
 {
-	static GLenum OpenGLVertexAttributeType(VertexAttributeType type)
-	{
-		switch(type)
-		{
-		case VertexAttributeType::INT:		return GL_INT;
-		case VertexAttributeType::INT2:		return GL_INT;
-		case VertexAttributeType::INT3:		return GL_INT;
-		case VertexAttributeType::INT4:		return GL_INT;
-		case VertexAttributeType::FLOAT:	return GL_FLOAT;
-		case VertexAttributeType::FLOAT2:	return GL_FLOAT;
-		case VertexAttributeType::FLOAT3:	return GL_FLOAT;
-		case VertexAttributeType::FLOAT4:	return GL_FLOAT;
-		case VertexAttributeType::FLOAT3X3:	return GL_FLOAT;
-		case VertexAttributeType::FLOAT4X4:	return GL_FLOAT;
-		}
-	};
-
-	static GLuint OpenGLVertexAttributeTypeSize(VertexAttributeType type)
-	{
-		switch(type)
-		{
-		case VertexAttributeType::INT:		return sizeof(int)   * 1;
-		case VertexAttributeType::INT2:		return sizeof(int)   * 2;
-		case VertexAttributeType::INT3:		return sizeof(int)   * 3;
-		case VertexAttributeType::INT4:		return sizeof(int)   * 4;
-		case VertexAttributeType::FLOAT:	return sizeof(float) * 1;
-		case VertexAttributeType::FLOAT2:	return sizeof(float) * 2;
-		case VertexAttributeType::FLOAT3:	return sizeof(float) * 3;
-		case VertexAttributeType::FLOAT4:	return sizeof(float) * 4;
-		case VertexAttributeType::FLOAT3X3:	return sizeof(float) * 9;
-		case VertexAttributeType::FLOAT4X4:	return sizeof(float) * 16;
-		}
-	};
-
-	static GLuint OpenGLVertexAttributeTypeCount(VertexAttributeType type)
-	{
-		switch(type)
-		{
-		case VertexAttributeType::INT:		return 1;
-		case VertexAttributeType::INT2:		return 2;
-		case VertexAttributeType::INT3:		return 3;
-		case VertexAttributeType::INT4:		return 4;
-		case VertexAttributeType::FLOAT:	return 1;
-		case VertexAttributeType::FLOAT2:	return 2;
-		case VertexAttributeType::FLOAT3:	return 3;
-		case VertexAttributeType::FLOAT4:	return 4;
-		case VertexAttributeType::FLOAT3X3:	return 9;
-		case VertexAttributeType::FLOAT4X4:	return 16;
-		}
-	};
-
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:

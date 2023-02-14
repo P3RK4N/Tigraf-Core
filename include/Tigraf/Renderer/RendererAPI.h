@@ -1,7 +1,6 @@
 #pragma once
-#include "glm/glm.hpp"
 
-#include "Buffers/Buffer.h"
+#include "Tigraf/Renderer/Buffers/Buffer.h"
 
 namespace Tigraf
 {

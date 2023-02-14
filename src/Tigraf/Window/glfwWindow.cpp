@@ -1,5 +1,6 @@
-//#include "PCH.h"
 #include "glfwWindow.h"
+
+#include <glad/glad.h>
 
 namespace Tigraf
 {
@@ -8,20 +9,20 @@ namespace Tigraf
 	glfwWindow::glfwWindow(int width, int height, const char* name, bool vsyncEnabled, std::function<void(Event&)> eventCallback)
 	{
 		status = glfwInit();
-		TIGRAF_ASSERT(status, "GLFW library couldn't be initialized!");
+		TIGRAF_CORE_ASSERT(status, "GLFW library couldn't be initialized!");
 		glfwSetErrorCallback(glfwWindow::onError);
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 
 		GLFWwindow* window = glfwCreateWindow(width, height, name, NULL, NULL);
-		TIGRAF_ASSERT(window, "Window creation failed!");
+		TIGRAF_CORE_ASSERT(window, "Window creation failed!");
 
 		m_GraphicsContext.init = [window]()
 		{
 			glfwMakeContextCurrent(window);
 			status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-			TIGRAF_ASSERT(status, "Could not initialize graphics context!");
+			TIGRAF_CORE_ASSERT(status, "Could not initialize graphics context!");
 
 			//-------------
 			CORE_INFO("GRAPHICS CONTEXT");

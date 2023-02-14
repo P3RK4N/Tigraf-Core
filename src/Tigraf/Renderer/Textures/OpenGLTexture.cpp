@@ -1,4 +1,3 @@
-//#include "PCH.h"
 #include "OpenGLTexture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -50,7 +49,8 @@ namespace Tigraf
 			return GL_DEPTH_STENCIL;
 		}
 
-		TIGRAF_ASSERT(0, "Invalid Texture Format");
+		TIGRAF_CORE_ASSERT(0, "Invalid Texture Format");
+		return 0;
 	}
 
 	GLuint textureFormatToOpenGLInternalFormat(TextureFormat textureFormat)
@@ -97,7 +97,8 @@ namespace Tigraf
 			return GL_DEPTH24_STENCIL8;
 		}
 
-		TIGRAF_ASSERT(0, "Invalid Texture Format");
+		TIGRAF_CORE_ASSERT(0, "Invalid Texture Format");
+		return 0;
 	}
 
 	GLuint textureFormatToComponentType(TextureFormat textureFormat)
@@ -132,7 +133,8 @@ namespace Tigraf
 			return GL_UNSIGNED_INT_24_8;
 		}
 
-		TIGRAF_ASSERT(0, "Invalid Texture Format");
+		TIGRAF_CORE_ASSERT(0, "Invalid Texture Format");
+		return 0;
 	}
 
 	OpenGLTexture2D::OpenGLTexture2D(const char* filePath)

@@ -1,14 +1,10 @@
 #pragma once
-#include "Tigraf/Core/Core.h"
-#include "Tigraf/Event/Event.h"
-#include "Tigraf/Renderer/GraphicsContext.h"
 
-#include <string>
+#include "Tigraf/Renderer/GraphicsContext.h"
+#include "Tigraf/Event/Event.h"
 
 namespace Tigraf
 {
-	struct TimeStep;
-
 	class Window
 	{
 	public:

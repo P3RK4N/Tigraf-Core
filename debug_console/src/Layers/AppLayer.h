@@ -1,10 +1,6 @@
 #pragma once
-#include "Tigraf/Core/Application.h"
-#include "Tigraf/Renderer/Camera/EditorCamera.h"
-#include "Tigraf/Renderer/Textures/Texture.h"
-#include "Tigraf/Renderer/Framebuffers/Framebuffer.h"
-#include "Tigraf/Renderer/Mesh/Mesh.h"
-#include "Tigraf/Renderer/Mesh/MeshPrimitives.h"
+
+#include <Tigraf/Tigraf.h>
 
 namespace Tigraf
 {

@@ -1,6 +1,4 @@
-//#include "PCH.h"
-#include "Texture.h"
-
+#include "Tigraf/Renderer/Textures/Texture.h"
 #include "OpenGLTexture.h"
 
 namespace Tigraf

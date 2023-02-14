@@ -1,10 +1,7 @@
+#include "Tigraf/Tigraf.h"
+
 #include "Layers/AppLayer.h"
 
-#include <Tigraf.h>
-
-#include <vector>
-
-using namespace std;
 using namespace Tigraf;
 
 //Add layers to Application

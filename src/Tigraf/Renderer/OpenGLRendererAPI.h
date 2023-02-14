@@ -1,8 +1,6 @@
 #pragma once
-#include "RendererAPI.h"
-#include "Buffers/OpenGLBuffer.h"
 
-#include <glad/glad.h>
+#include "Tigraf/Renderer/RendererAPI.h"
 
 namespace Tigraf
 {

@@ -1,8 +1,7 @@
 #pragma once
-#include "Shader.h"
+#include "Tigraf/Renderer/Shaders/Shader.h"
 
 #include <glad/glad.h>
-#include <filesystem>
 
 namespace Tigraf
 {

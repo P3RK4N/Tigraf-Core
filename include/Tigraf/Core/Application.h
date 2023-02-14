@@ -1,12 +1,8 @@
 #pragma once
-#include "Tigraf/Window/Window.h"
-#include "Tigraf/Core/Layer.h"
-#include "Tigraf/Event/Event.h"
-#include "Tigraf/Core/Timer.h"
-#include "Tigraf/Renderer/Renderer.h"
 
-#include "Tigraf/Renderer/Buffers/Buffer.h"
-#include "Tigraf/Renderer/Shaders/Shader.h"
+#include "Tigraf/Core/Layer.h"
+#include "Tigraf/Window/Window.h"
+#include "Tigraf/Event/Event.h"
 
 namespace Tigraf
 {
@@ -26,7 +22,17 @@ namespace Tigraf
 	class Application
 	{
 	public:
-		Application(ApplicationSpecification spec);
+		Application
+		(
+			ApplicationSpecification spec = 
+			{ 
+				"TIny GRAphic Framework", 
+				std::filesystem::current_path(), 
+				{} 
+			}
+
+		);
+
 		virtual ~Application();
 
 		void run();

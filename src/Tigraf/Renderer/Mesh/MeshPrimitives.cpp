@@ -1,8 +1,10 @@
-#include "MeshPrimitives.h"
+#include <glm/glm.hpp>
 
-#include "Mesh.h"
 #include "Tigraf/Renderer/Buffers/Buffer.h"
 #include "Tigraf/Renderer/Shaders/Shader.h"
+#include "Tigraf/Renderer/Mesh/Mesh.h"
+
+#include "Tigraf/Renderer/Mesh/MeshPrimitives.h"
 
 namespace Tigraf
 {
@@ -118,8 +120,6 @@ namespace Tigraf
 
 		return createRef<Mesh>(vertexBuffer, indexBuffer, s_PrimitiveShader);
 	}
-
-
 
 	Ref<Mesh> MeshPrimitives::Plane2D(const glm::mat4& initialTransform)
 	{

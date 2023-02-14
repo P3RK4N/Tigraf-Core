@@ -1,7 +1,4 @@
-//#include "PCH.h"
 #include "glslShader.h"
-
-#include "Tigraf/Renderer/Buffers/OpenGLBuffer.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -20,7 +17,7 @@ namespace Tigraf
 	glslShader::glslShader(const std::filesystem::path& path)
 	{
 		std::ifstream shaderFile(path);
-		TIGRAF_ASSERT(shaderFile.is_open(), "Shader file could not be opened!");
+		TIGRAF_CORE_ASSERT(shaderFile.is_open(), "Shader file could not be opened!");
 
 		m_ShaderID = glCreateProgram();
 
@@ -55,7 +52,7 @@ namespace Tigraf
 				shaderSS = std::stringstream{};
 				currentShaderName = line.substr(1, line.length() - 1);
 
-				TIGRAF_ASSERT(NameToShaderType.find(currentShaderName) != NameToShaderType.end(), std::format("Unsupported Compute Shader: {0}", currentShaderName));
+				TIGRAF_CORE_ASSERT(NameToShaderType.find(currentShaderName) != NameToShaderType.end(), std::format("Unsupported Compute Shader: {0}", currentShaderName));
 			}
 			else shaderSS << line << '\n';
 		}

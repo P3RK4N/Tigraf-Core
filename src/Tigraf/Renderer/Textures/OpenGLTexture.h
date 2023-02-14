@@ -1,5 +1,5 @@
 #pragma once
-#include "Texture.h"
+#include "Tigraf/Renderer/Textures/Texture.h"
 
 #include <glad/glad.h>
 
@@ -9,10 +9,6 @@ namespace Tigraf
 	{
 	public:
 		OpenGLTexture2D(const char* filePath);
-
-		/**
-		* NOTE: Each color component must have size of 1 byte
-		*/
 		OpenGLTexture2D(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData);
 
 		virtual ~OpenGLTexture2D();

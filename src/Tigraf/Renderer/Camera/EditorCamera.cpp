@@ -1,10 +1,7 @@
-//#include "PCH.h"
-#include "EditorCamera.h"
+#include "Tigraf/Renderer/Camera/EditorCamera.h"
 
+#include "Tigraf/Input/Keycodes.h"
 #include "Tigraf/Input/glfwInput.h"
-
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/transform.hpp>
 
 namespace Tigraf
 {

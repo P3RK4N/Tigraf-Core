@@ -1,7 +1,7 @@
 #pragma once
-#include "Tigraf/Core/Timer.h"
 
-#include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/transform.hpp>
 
 namespace Tigraf
 {

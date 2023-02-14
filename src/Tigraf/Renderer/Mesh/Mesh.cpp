@@ -1,7 +1,6 @@
-#include "Mesh.h"
+#include "Tigraf/Renderer/Mesh/Mesh.h"
 
 #include "Tigraf/Renderer/Renderer.h"
-#include "Tigraf/Renderer/Shaders/Shader.h"
 
 namespace Tigraf
 {
@@ -13,7 +12,7 @@ namespace Tigraf
 
 	void Mesh::drawTriangles()
 	{
-		TIGRAF_ASSERT(m_Shader, "Shader not attached!");
+		TIGRAF_CORE_ASSERT(m_Shader, "Shader not attached!");
 	
 		m_Shader->use();
 		Renderer::s_RendererAPI->drawTriangles(m_VertexBuffer);
@@ -21,8 +20,8 @@ namespace Tigraf
 
 	void Mesh::drawTrianglesIndexed()
 	{
-		TIGRAF_ASSERT(m_IndexBuffer, "Index buffer not attached!");
-		TIGRAF_ASSERT(m_Shader, "Shader not attached!");
+		TIGRAF_CORE_ASSERT(m_IndexBuffer, "Index buffer not attached!");
+		TIGRAF_CORE_ASSERT(m_Shader, "Shader not attached!");
 
 		m_Shader->use();
 		Renderer::s_RendererAPI->drawTrianglesIndexed(m_VertexBuffer);

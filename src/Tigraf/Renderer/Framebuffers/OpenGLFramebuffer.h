@@ -1,12 +1,10 @@
 #pragma once
-#include "Framebuffer.h"
+#include "Tigraf/Renderer/Framebuffers/Framebuffer.h"
 
 #include <glad/glad.h>
 
 namespace Tigraf
 {
-	static GLenum drawBuffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-
 	class OpenGLFramebuffer : public Framebuffer
 	{
 	public:

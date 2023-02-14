@@ -36,7 +36,7 @@ macro(set_shared isShared)
 endmacro()
 
 #Lists all targets recursively into a hierarchy tree
-function(listTargets currentDir)
+function(groupTargets currentDir)
 
    get_property(currentTargets DIRECTORY "${currentDir}" PROPERTY BUILDSYSTEM_TARGETS)
    get_property(currentSubdirs DIRECTORY "${currentDir}" PROPERTY SUBDIRECTORIES)
@@ -55,18 +55,18 @@ function(listTargets currentDir)
 
 
    foreach(subdir IN LISTS currentSubdirs)
-      listTargets("${subdir}")
+      groupTargets("${subdir}")
    endforeach()
    
 endfunction()
 
 #Lists all sources recursively into a hierarchy tree
-macro(listSources sources root_path)
+macro(groupSources sources root_path root_replacer)
 
    foreach(source IN LISTS "${sources}")
 
       get_filename_component(source_path "${source}" PATH)
-      string(REPLACE "${root_path}" "" source_path "${source_path}")
+      string(REPLACE "${root_path}" "${root_replacer}" source_path "${source_path}")
 
       if(MSVC)
          string(REPLACE "/" "\\" source_path "${source_path}")
@@ -75,5 +75,11 @@ macro(listSources sources root_path)
       source_group("${source_path}" FILES "${source}")
 
    endforeach()
+
+endmacro()
+
+#Creates include from this header files
+#source folder needs to be called "src" and include folder "include"
+macro(createInclude interface)
 
 endmacro()

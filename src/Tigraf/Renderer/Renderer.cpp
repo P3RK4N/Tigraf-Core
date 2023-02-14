@@ -1,4 +1,6 @@
-#include "Renderer.h"
+#include "Tigraf/Renderer/Renderer.h"
+
+#include "OpenGLRendererAPI.h"
 
 namespace Tigraf
 {

@@ -1,12 +1,11 @@
 #pragma once
-#include <string>
 
-namespace Tigraf
-{
 #define DISPATCH(TYPE, EVENT, FUNC) if(EVENT.m_Type == TYPE && FUNC(EVENT.m_Data)) return true
 
 #define EVENT(NAME) bool NAME(void* eventData)
 
+namespace Tigraf
+{
 	enum class EVENT_TYPE : int
 	{
 		RESIZE,

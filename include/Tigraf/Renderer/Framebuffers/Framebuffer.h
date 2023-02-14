@@ -1,7 +1,6 @@
 #pragma once
-#include "Tigraf/Renderer/Textures/Texture.h"
 
-#include <glm/glm.hpp>
+#include "Tigraf/Renderer/Textures/Texture.h"
 
 namespace Tigraf
 {
@@ -26,8 +25,8 @@ namespace Tigraf
 		virtual void attachColorTexture(TextureFormat colorFormat) = 0;
 		virtual void attachDepthStencilTexture(TextureFormat depthStencilFormat) = 0;
 
-		const Ref<Texture2D>& getColorTexture(uint32_t textureIndex) { TIGRAF_ASSERT(textureIndex < m_ColorTextures.size(), "Invalid index!"); return m_ColorTextures[textureIndex]; }
-		const Ref<Texture2D>& getDepthStencilTexture() { TIGRAF_ASSERT(m_DepthStencilTexture, "DepthStencil not attached!"); return m_DepthStencilTexture; }
+		const Ref<Texture2D>& getColorTexture(uint32_t textureIndex);
+		const Ref<Texture2D>&getDepthStencilTexture();
 
 		const float getWidth() { return m_Width; }
 		const float getHeight() { return m_Height; }

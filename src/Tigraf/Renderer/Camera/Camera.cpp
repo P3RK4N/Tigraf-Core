@@ -1,8 +1,4 @@
-//#include "PCH.h"
-#include "Camera.h"
-
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/transform.hpp>
+#include "Tigraf/Renderer/Camera/Camera.h"
 
 namespace Tigraf
 {

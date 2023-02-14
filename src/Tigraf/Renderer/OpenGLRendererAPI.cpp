@@ -4,6 +4,8 @@
 #include "Tigraf/Renderer/Mesh/MeshPrimitives.h"
 #include "Tigraf/Renderer/Shaders/Shader.h"
 
+#include <glad/glad.h>
+
 namespace Tigraf
 {
 	void OpenGLRendererAPI::init()
@@ -50,7 +52,7 @@ namespace Tigraf
 
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
 
-	TIGRAF_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
+	TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
 
 		glDrawElements(GL_TRIANGLES, vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
@@ -65,7 +67,7 @@ namespace Tigraf
 	{
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
 
-	TIGRAF_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
+	TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
 
 		glDrawElements(GL_POINTS, vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}

@@ -1,12 +1,10 @@
 #pragma once
-#include "Tigraf/Core/Core.h"
+
+#include "Tigraf/Renderer/Buffers/Buffer.h"
+#include "Tigraf/Renderer/Shaders/Shader.h"
 
 namespace Tigraf
 {
-	class VertexBuffer;
-	class IndexBuffer;
-	class Shader;
-
 	class Mesh
 	{
 	public:
@@ -14,6 +12,8 @@ namespace Tigraf
 
 		void drawTriangles();
 		void drawTrianglesIndexed();
+
+		//TODO: Add other draw methods
 
 		void setShader(Ref<Shader> shader) { m_Shader = shader; }
 		Ref<Shader> getShader() { return m_Shader; }

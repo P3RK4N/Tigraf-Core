@@ -1,31 +1,47 @@
 #pragma once
-#include <memory>
 #include "Tigraf/Core/PlatformDetection.h"
 
+//Defining library type
 #ifdef TIGRAF_WINDOWS
+
 	#if TIGRAF_DYNAMIC_LINK
+
 		#ifdef TIGRAF_DLL
+
 			#define TIGRAF_API __declspec(dllexport)
+
 		#else 
+
 			#define TIGRAF_API __declspec(dllimport)
+
 		#endif
+
 	#else 
+
 		#define TIGRAF_API
+
 	#endif
+
 #else
+
 	#error Tigraf only supports windows!
+
 #endif
 
+//Defining macros for asserting
 #ifdef TIGRAF_DEBUG
 
 	#if defined(TIGRAF_WINDOWS)
+
 		#define TIGRAF_DEBUGBREAK() __debugbreak()
 
 	#elif defined(TIGRAF_LINUX)
+
 		#include <signal.h>
 		#define TIGRAF_DEBUGBREAK() raise(SIGTRAP)
 
 	#else
+
 		#error "Platform doesn't support debugbreak yet!"
 	
 	#endif
@@ -33,7 +49,14 @@
 	#define TIGRAF_ENABLE_ASSERTS
 
 #else
+
 	#define TIGRAF_DEBUGBREAK()
+
+#endif
+
+#ifndef TIGRAF_CORE
+
+	#define TIGRAF_CLIENT
 
 #endif
 
@@ -53,6 +76,7 @@
 		CLASS& operator=(const CLASS&) = default;	
 
 
+#include <memory>
 namespace Tigraf
 {
 	template<typename T>
@@ -67,6 +91,3 @@ namespace Tigraf
 	template<typename T, typename ... Args>
 	constexpr Ref<T> createRef(Args&& ... args) { return std::make_shared<T>(std::forward<Args>(args)...); }
 }
-
-#include "Tigraf/Core/Log.h"
-#include "Tigraf/Core/Assert.h"

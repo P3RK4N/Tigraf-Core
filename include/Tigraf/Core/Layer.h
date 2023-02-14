@@ -1,5 +1,6 @@
 #pragma once
-#include "Application.h"
+
+#include "Tigraf/Event/Event.h"
 
 namespace Tigraf
 {
