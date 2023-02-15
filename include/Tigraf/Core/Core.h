@@ -55,8 +55,6 @@
 #endif
 
 
-
-
 #define TIGRAF_EXPAND_MACRO(x) x
 #define TIGRAF_STRINGIFY_MACRO(x) #x
 #define BIT(x) (1 << x)

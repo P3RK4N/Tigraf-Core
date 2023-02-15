@@ -3,7 +3,8 @@
 
 namespace Tigraf
 {
-	class EditorCamera : public Camera
+	/* \deprecated 'EditorCamera' is deprecated. Consider using 'Camera' instead. */
+	class [[deprecated("'EditorCamera' is deprecated. Consider using 'Camera' instead.")]] EditorCamera : public Camera
 	{
 	public:
 		EditorCamera
