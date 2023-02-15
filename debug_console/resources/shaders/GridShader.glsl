@@ -64,9 +64,10 @@ void main()
 	float val = ((floorX < 0.5 && floorZ < 0.5) || (floorX > 0.5 && floorZ > 0.5) ? 0.8 : 0.4);
 
 	float dist = length(ObjectPositionPS) / 20;
+	float dist2 = dist / 5;
 	float opacity = mix(1.0, 0.0, dist*dist);
 
 	val = mix(val, 0.6, clamp(dist - 2,0.0,1.0));
 
-	FragColor = vec4(val, val, val, 0.9);
+	FragColor = vec4(val, val, val, clamp(1.0 - dist2, 0.0, 1.0));
 }

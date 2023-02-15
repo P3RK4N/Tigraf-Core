@@ -1,40 +1,3 @@
-#We need to check whether tool is multi config
-macro(check_multi_config)
-
-   #For now, we will require it
-
-   get_cmake_property(isMultiConfig GENERATOR_IS_MULTI_CONFIG)
-   if(NOT isMultiConfig)
-      message(FATAL_ERROR "This generator doesn't support multi-config!")
-   else()
-      message("Multi-config: Success!")
-   endif()
-
-endmacro()
-
-#Initializes Debug, Release and Dist configurations
-macro(init_configurations)
-
-   #Debug -> core engine debugging and development
-   #Release -> for graphics engine with gui
-   #Distribution -> for engine exported projects, without gui
-
-   list(REMOVE_ITEM CMAKE_CONFIGURATION_TYPES MinSizeRel RelWithDebInfo PARENT_SCOPE)
-   list(APPEND CMAKE_CONFIGURATION_TYPES Dist)
-   list(REMOVE_DUPLICATES CMAKE_CONFIGURATION_TYPES)
-
-   message("Configuration types: Success! (${CMAKE_CONFIGURATION_TYPES})")
-
-endmacro()
-
-#Sets/unsets building DLLs
-macro(set_shared isShared)
-
-   set(BUILD_SHARED_LIBS ${isShared})
-   message("Shared set: Success! (${isShared})")
-
-endmacro()
-
 #Lists all targets recursively into a hierarchy tree
 function(groupTargets currentDir)
 
@@ -78,8 +41,10 @@ macro(groupSources sources root_path root_replacer)
 
 endmacro()
 
-#Creates include from this header files
-#source folder needs to be called "src" and include folder "include"
-macro(createInclude interface)
-
+macro(debug_log)
+   if(DEBUG)
+      foreach(log IN LISTS ARGN)
+         debug_log("Tigraf: ${log}")
+      endforeach()
+   endif()
 endmacro()

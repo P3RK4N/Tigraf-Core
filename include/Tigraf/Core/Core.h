@@ -1,19 +1,19 @@
 #pragma once
 #include "Tigraf/Core/PlatformDetection.h"
 
+#ifndef TIGRAF_CORE
+	#define TIGRAF_CLIENT
+#endif
+
 //Defining library type
 #ifdef TIGRAF_WINDOWS
 
 	#if TIGRAF_DYNAMIC_LINK
 
-		#ifdef TIGRAF_DLL
-
+		#ifdef TIGRAF_CORE
 			#define TIGRAF_API __declspec(dllexport)
-
 		#else 
-
 			#define TIGRAF_API __declspec(dllimport)
-
 		#endif
 
 	#else 
@@ -24,7 +24,7 @@
 
 #else
 
-	#error Tigraf only supports windows!
+	#error Tigraf only supports windows!		//TODO: Change to cross platform
 
 #endif
 
@@ -54,11 +54,7 @@
 
 #endif
 
-#ifndef TIGRAF_CORE
 
-	#define TIGRAF_CLIENT
-
-#endif
 
 
 #define TIGRAF_EXPAND_MACRO(x) x

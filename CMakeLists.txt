@@ -4,10 +4,8 @@ include("cmake/Utils.cmake")
 
 #Debug
 set(DEBUG ON)
-set(CMAKE_MESSAGE_INDENT "Tigraf: ")
 
-#Needs multi-config
-check_multi_config()
+get_cmake_property(is_multi_config GENERATOR_IS_MULTI_CONFIG)
 
 #For project hierarchy
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -21,10 +19,7 @@ set(BUILD_SHARED_LIBS OFF)
 
 if(NOT CMAKE_C_STANDARD VERSION_GREATER 17)
 
-   if(DEBUG)
-      message("Setting C standard to 17")
-   endif()
-   
+   debug_log("Setting C standard to 17")
    set(CMAKE_C_STANDARD 17)
    set(CMAKE_C_STANDARD_REQUIRED ON)
 
@@ -32,18 +27,13 @@ endif()
 
 if(NOT CMAKE_CXX_STANDARD VERSION_GREATER 20)
 
-   if(DEBUG)
-      message("Setting C++ standard to 20")
-   endif()
-
+   debug_log("Setting C++ standard to 20")
    set(CMAKE_CXX_STANDARD_REQUIRED ON)
    set(CMAKE_CXX_STANDARD 20)
 
 endif()
 
-if(DEBUG)
-   message("Turning off C++ extensions")
-endif()
+debug_log("Turning off C++ extensions")
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -53,10 +43,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(Tigraf VERSION 0.1.0 LANGUAGES C CXX)
 
-if(DEBUG)
-   message("SOURCE DIRECTORY: ${Tigraf_SOURCE_DIR}")
-   message("BINARY DIRECTORY: ${Tigraf_BINARY_DIR}")
-endif()
+debug_log(
+   "SOURCE DIRECTORY: ${Tigraf_SOURCE_DIR}" 
+   "BINARY DIRECTORY: ${Tigraf_BINARY_DIR}"
+)
 
 #Tigraf core
 add_library(Tigraf-Core)
@@ -65,58 +55,72 @@ add_library(Tigraf-Core)
 #Setup configurations #######################################################
 #############################################################################
 
-init_configurations()
+if(is_multi_config)
 
-#Debug
-target_compile_definitions(
-   Tigraf-Core
-      PUBLIC $<$<CONFIG:Debug>:TIGRAF_DEBUG>
-)
+   #Debug
+   target_compile_definitions(
+      Tigraf-Core
+         PUBLIC $<$<CONFIG:Debug>:TIGRAF_DEBUG>
+   )
 
-#Release
-target_compile_definitions(
-   Tigraf-Core
-      PUBLIC $<$<CONFIG:Release>:TIGRAF_RELEASE>
-)
+   #Release
+   target_compile_definitions(
+      Tigraf-Core
+         PUBLIC $<$<CONFIG:Release>:TIGRAF_RELEASE>
+   )
 
-#Dist
-target_compile_definitions(
-   Tigraf-Core
-      PUBLIC $<$<CONFIG:Dist>:TIGRAF_DIST>
-)
+   #Custom
+   target_compile_definitions(
+      Tigraf-Core
+         PUBLIC $<$<NOT:$<OR:$<CONFIG:Debug>,$<CONFIG:Release>>>:TIGRAF_RELEASE>
+   )
 
-set(CMAKE_EXE_LINKER_FLAGS_DIST "${CMAKE_EXE_LINKER_FLAGS_RELEASE}")
+else()
+
+   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+      target_compile_definitions(
+         Tigraf-Core
+            PUBLIC TIGRAF_DEBUG
+      )
+
+   else()
+
+      set(CMAKE_BUILD_TYPE "Release")
+
+      target_compile_definitions(
+         Tigraf-Core
+            PUBLIC TIGRAF_RELEASE
+      )
+
+   endif()
+
+   debug_log("NOT USING MULTI CONFIG, CMAKE BUILD TYPE: ${CMAKE_BUILD_TYPE}")
+
+endif()
 
 
+#Compiler flags
 if(MSVC)
 
-   if(DEBUG)
-      message("MSVC set")
-   endif()
-   
+   debug_log("Using MSVC")   
+
    set(CMAKE_CXX_FLAGS_DEBUG "/RTC1 /Zi /Od /Ob0")
    set(CMAKE_CXX_FLAGS_RELEASE "/O2 /Ob2 /Oi /Ot /DNDEBUG")
-   set(CMAKE_CXX_FLAGS_DIST "/O2 /Ob2 /Oi /Ot /DNDEBUG")
    
 else()
    
-   if(DEBUG)
-      message("MSVC not set")
-   endif()
+   debug_log("MSVC not set")
    
    set(CMAKE_CXX_FLAGS_RELEASE "-O2 -finline-functions")
    set(CMAKE_CXX_FLAGS_DEBUG "-fno-inline -O0 -g")
-   set(CMAKE_CXX_FLAGS_DIST "-O2 -finline-functions")      
 
 endif()
       
-if(DEBUG)
-
-   message("CXX COMPILE FLAGS RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
-   message("CXX COMPILE FLAGS DIST: ${CMAKE_CXX_FLAGS_DIST}")
-   message("CXX COMPILE FLAGS DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
-
-endif()
+debug_log(
+   "CXX COMPILE FLAGS RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}"
+   "CXX COMPILE FLAGS DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}"
+)
    
 #############################################################################   
 #Refreshing Precompiles #####################################################
@@ -158,14 +162,12 @@ foreach(precompiled_header IN LISTS std_headers dependency_headers tigraf_header
    string(APPEND precompiled_headers "#include ${precompiled_header}\n")
 endforeach()
 
-if(DEBUG)
-   message("Refreshing PCH:\n${precompiled_headers}")
-endif()
+debug_log("Refreshing PCH:\n${precompiled_headers}")
 
 file(GENERATE
       OUTPUT "${Tigraf_SOURCE_DIR}/src/PCH.h"
       CONTENT "${precompiled_headers}"
-   )
+)
 
 #############################################################################   
 #Refreshing includes ########################################################
@@ -182,9 +184,7 @@ foreach(interface_filepath IN LISTS interface_headers)
 
    string(REPLACE "${Tigraf_SOURCE_DIR}/include/" "" rel_interface_filepath "${interface_filepath}")
 
-   if(DEBUG)
-      message("Refreshing Includes: ${rel_interface_filepath}")
-   endif()
+   debug_log("Refreshing Includes: ${rel_interface_filepath}")
    
    string(APPEND tigraf_includes "\n#include \"${rel_interface_filepath}\"")
    
@@ -194,8 +194,7 @@ file(
    GENERATE 
       OUTPUT "${Tigraf_SOURCE_DIR}/include/Tigraf/Tigraf.h"
       CONTENT "${tigraf_includes}"
-   )
-
+)
 
 #############################################################################   
 #Setup Tigraf-Core ##########################################################
@@ -261,7 +260,7 @@ else()
       "${Tigraf_SOURCE_DIR}/src/PCH.cpp"
          PROPERTIES
             COMPILE_OPTIONS "/YcPCH.h;/FIPCH.h"
-      )
+   )
    
 endif()
 
@@ -281,8 +280,6 @@ target_include_directories(
 #############################################################################
 #Add dependencies ###########################################################
 #############################################################################
-
-unset(CMAKE_MESSAGE_INDENT)
 
 #OpenGL Loader
 add_subdirectory(vendor/glad)
@@ -315,6 +312,7 @@ target_link_libraries(
 #############################################################################
 
 add_executable(Tigraf-Console)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tigraf-Console)
 
 file(GLOB_RECURSE console_sources debug_console/*.cpp debug_console/*.h debug_console/*.glsl debug_console/*.jpg debug_console/*.png)
 
@@ -336,8 +334,6 @@ target_link_libraries(
    Tigraf-Console
       PRIVATE Tigraf-Core
 )
-
-set(VS_STARTUP_PROJECT Tigraf-Console)
 
 set_target_properties(
    Tigraf-Console
