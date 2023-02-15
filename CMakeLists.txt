@@ -1,126 +1,124 @@
 cmake_minimum_required(VERSION 3.25)
-
 include("cmake/Utils.cmake")
 
 #Debug
 set(DEBUG ON)
 
-get_cmake_property(is_multi_config GENERATOR_IS_MULTI_CONFIG)
+#############################################################################
+#PROJECT INIT ###############################################################
+#############################################################################
 
-#For project hierarchy
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-#Static libs
 set(BUILD_SHARED_LIBS OFF)
+
+project(Tigraf VERSION 0.1.0 LANGUAGES C CXX)
+
+debug_log("SOURCE DIRECTORY: ${Tigraf_SOURCE_DIR}") 
+debug_log("BINARY DIRECTORY: ${Tigraf_BINARY_DIR}")
+debug_log("Using MSVC: ${MSVC}")
+
+#Tigraf core
+add_library(Tigraf-Core)
 
 #############################################################################   
 #Language Standard ##########################################################
 #############################################################################   
 
-if(NOT CMAKE_C_STANDARD VERSION_GREATER 17)
+set(cxx_version 20)
 
-   debug_log("Setting C standard to 17")
-   set(CMAKE_C_STANDARD 17)
-   set(CMAKE_C_STANDARD_REQUIRED ON)
-
+if(CMAKE_CXX_STANDARD VERSION_GREATER 20)
+   set(cxx_version "${CMAKE_CXX_STANDARD}")
 endif()
 
-if(NOT CMAKE_CXX_STANDARD VERSION_GREATER 20)
-
-   debug_log("Setting C++ standard to 20")
-   set(CMAKE_CXX_STANDARD_REQUIRED ON)
-   set(CMAKE_CXX_STANDARD 20)
-
-endif()
-
-debug_log("Turning off C++ extensions")
-
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-#############################################################################
-#PROJECT INIT ###############################################################
-#############################################################################
-
-project(Tigraf VERSION 0.1.0 LANGUAGES C CXX)
-
-debug_log(
-   "SOURCE DIRECTORY: ${Tigraf_SOURCE_DIR}" 
-   "BINARY DIRECTORY: ${Tigraf_BINARY_DIR}"
+set_target_properties(
+   Tigraf-Core
+      PROPERTIES
+         CXX_STANDARD "${cxx_version}"
+         CXX_STANDARD_REQUIRED ON
+         CXX_EXTENSIONS OFF
 )
-
-#Tigraf core
-add_library(Tigraf-Core)
 
 #############################################################################
 #Setup configurations #######################################################
 #############################################################################
 
-if(is_multi_config)
+get_cmake_property(is_multi_config GENERATOR_IS_MULTI_CONFIG)
 
-   #Debug
+if(is_multi_config) #Using multi config tools
+
+   #Debug,Release,Custom
    target_compile_definitions(
       Tigraf-Core
          PUBLIC $<$<CONFIG:Debug>:TIGRAF_DEBUG>
-   )
-
-   #Release
-   target_compile_definitions(
-      Tigraf-Core
          PUBLIC $<$<CONFIG:Release>:TIGRAF_RELEASE>
-   )
-
-   #Custom
-   target_compile_definitions(
-      Tigraf-Core
          PUBLIC $<$<NOT:$<OR:$<CONFIG:Debug>,$<CONFIG:Release>>>:TIGRAF_RELEASE>
    )
 
-else()
+   #Multi config Compiler flags
+   if(MSVC)
+
+      target_compile_options(
+         Tigraf-Core
+         PRIVATE $<$<CONFIG:Debug>:/Zi /Od /Ob0>
+         PRIVATE $<$<CONFIG:Release>:/O2 /Ob2 /Oi /Ot /DNDEBUG>
+         PRIVATE $<$<NOT:$<OR:$<CONFIG:Debug>,$<CONFIG:Release>>>:/O2 /Ob2 /Oi /Ot /DNDEBUG>
+      )
+
+   elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+
+      target_compile_options(
+         Tigraf-Core
+         PRIVATE $<$<CONFIG:Debug>:-fno-inline -O0 -g>
+         PRIVATE $<$<CONFIG:Release>:-O2 -finline-functions>
+         PRIVATE $<$<NOT:$<OR:$<CONFIG:Debug>,$<CONFIG:Release>>>:-O2 -finline-functions>
+      )
+
+   else()
+   
+      message(FATAL_ERROR "Unsupported platform or compiler!")
+
+   endif()
+
+else() #Not using multi config tools
 
    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-      target_compile_definitions(
-         Tigraf-Core
-            PUBLIC TIGRAF_DEBUG
-      )
+      target_compile_definitions(Tigraf-Core PUBLIC TIGRAF_DEBUG)
+
+      if(MSVC)
+         target_compile_options(Tigraf-Core PRIVATE /Zi /Od /Ob0)
+      elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+         target_compile_options(Tigraf-Core PRIVATE -fno-inline -O0 -g)
+      else()
+         message(FATAL_ERROR "Unsupported platform or compiler!")
+      endif()
 
    else()
 
       set(CMAKE_BUILD_TYPE "Release")
 
-      target_compile_definitions(
-         Tigraf-Core
-            PUBLIC TIGRAF_RELEASE
-      )
+      target_compile_definitions(Tigraf-Core PUBLIC TIGRAF_RELEASE)
+
+      if(MSVC)
+         target_compile_options(Tigraf-Core PRIVATE /O2 /Ob2 /Oi /Ot /DNDEBUG)
+      elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+         target_compile_options(Tigraf-Core PRIVATE -O2 -finline-functions)
+      else()
+         message(FATAL_ERROR "Unsupported platform or compiler!")
+      endif()
 
    endif()
 
-   debug_log("NOT USING MULTI CONFIG, CMAKE BUILD TYPE: ${CMAKE_BUILD_TYPE}")
+   debug_log("NOT USING MULTI CONFIG, DEFAULT CONFIG: ${CMAKE_BUILD_TYPE}")
 
 endif()
-
-
-#Compiler flags
-if(MSVC)
-
-   debug_log("Using MSVC")   
-
-   set(CMAKE_CXX_FLAGS_DEBUG "/RTC1 /Zi /Od /Ob0")
-   set(CMAKE_CXX_FLAGS_RELEASE "/O2 /Ob2 /Oi /Ot /DNDEBUG")
    
-else()
-   
-   debug_log("MSVC not set")
-   
-   set(CMAKE_CXX_FLAGS_RELEASE "-O2 -finline-functions")
-   set(CMAKE_CXX_FLAGS_DEBUG "-fno-inline -O0 -g")
+get_target_property(compiler_options_debug Tigraf-Core COMPILE_OPTIONS)
+get_target_property(compiler_definitions_debug Tigraf-Core COMPILE_DEFINITIONS)
 
-endif()
-      
-debug_log(
-   "CXX COMPILE FLAGS RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}"
-   "CXX COMPILE FLAGS DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}"
-)
+debug_log("COMPILER OPTIONS: ${compiler_options_debug}")
+debug_log("COMPILER DEFINITIONS: ${compiler_definitions_debug}")
+
    
 #############################################################################   
 #Refreshing Precompiles #####################################################
@@ -156,13 +154,14 @@ set(
 )
 
 #Creating PCH.h
+debug_log("Refreshing PCH:")
 set(precompiled_headers "#pragma once\n")
 
 foreach(precompiled_header IN LISTS std_headers dependency_headers tigraf_headers)
    string(APPEND precompiled_headers "#include ${precompiled_header}\n")
+   debug_log("    #include ${precompiled_header}")
 endforeach()
 
-debug_log("Refreshing PCH:\n${precompiled_headers}")
 
 file(GENERATE
       OUTPUT "${Tigraf_SOURCE_DIR}/src/PCH.h"
@@ -174,6 +173,7 @@ file(GENERATE
 #############################################################################   
 
 #Create Tigraf.h file string which will include all of them, initialising with PCH.h
+debug_log("Refreshing Includes:")
 set(tigraf_includes "${precompiled_headers}")
 
 #Collect all interface header files into Tigraf.h
@@ -184,7 +184,7 @@ foreach(interface_filepath IN LISTS interface_headers)
 
    string(REPLACE "${Tigraf_SOURCE_DIR}/include/" "" rel_interface_filepath "${interface_filepath}")
 
-   debug_log("Refreshing Includes: ${rel_interface_filepath}")
+   debug_log("    ${rel_interface_filepath}")
    
    string(APPEND tigraf_includes "\n#include \"${rel_interface_filepath}\"")
    
@@ -308,39 +308,57 @@ target_link_libraries(
    )
 
 #############################################################################
-#Temporary ##################################################################
+#Example App ################################################################
 #############################################################################
 
-add_executable(Tigraf-Console)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tigraf-Console)
+if(PROJECT_IS_TOP_LEVEL)
 
-file(GLOB_RECURSE console_sources debug_console/*.cpp debug_console/*.h debug_console/*.glsl debug_console/*.jpg debug_console/*.png)
+   add_executable(Tigraf-ExampleApp)
+   set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tigraf-ExampleApp)
 
-file(GLOB_RECURSE console_resources debug_console/*.glsl debug_console/*.jpg debug_console/*.png)
-
-groupSources(console_resources "${Tigraf_SOURCE_DIR}/debug_console/resources" "Resources")
-
-target_sources(
-   Tigraf-Console
+   set_target_properties(
+      Tigraf-ExampleApp
+         PROPERTIES
+            CXX_STANDARD "${cxx_version}"
+            CXX_STANDARD_REQUIRED ON
+            CXX_EXTENSIONS OFF
+   )
+   
+   file(
+      GLOB_RECURSE 
+         console_sources example_app/*.cpp example_app/*.h example_app/*.glsl example_app/*.jpg example_app/*.png
+   )
+   
+   file(
+      GLOB_RECURSE 
+         console_resources example_app/*.glsl example_app/*.jpg example_app/*.png
+   )
+   
+   groupSources(console_resources "${Tigraf_SOURCE_DIR}/example_app/resources" "Resources")
+   
+   target_sources(
+      Tigraf-ExampleApp
       PRIVATE "${console_sources}"
    )
-
-target_include_directories(
-   Tigraf-Console
-      PRIVATE "${Tigraf_SOURCE_DIR}/debug_console/src/"
+      
+   target_include_directories(
+      Tigraf-ExampleApp
+      PRIVATE "${Tigraf_SOURCE_DIR}/example_app/src/"
    )
-
-target_link_libraries(
-   Tigraf-Console
+   
+   target_link_libraries(
+      Tigraf-ExampleApp
       PRIVATE Tigraf-Core
-)
-
-set_target_properties(
-   Tigraf-Console
+   )
+      
+   set_target_properties(
+      Tigraf-ExampleApp
       PROPERTIES
-         VS_DEBUGGER_WORKING_DIRECTORY "${Tigraf_SOURCE_DIR}/debug_console"
+      VS_DEBUGGER_WORKING_DIRECTORY "${Tigraf_SOURCE_DIR}/example_app"
    )
 
+endif()
+         
 #############################################################################
 #Targets Hierarchy ##########################################################
 #############################################################################
