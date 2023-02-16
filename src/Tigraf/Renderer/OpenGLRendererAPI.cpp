@@ -16,14 +16,14 @@ namespace Tigraf
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
-		//glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);				//TODO: Enable
 		//glCullFace(GL_BACK);
 
 		glClearColor(0.2f, 0.6f, 0.8f, 1.0f);
 
 		initGlobalUniformBuffers();
 
-		MeshPrimitives::s_PrimitiveShader = Shader::create("resources\\shaders\\PrimitiveShader.glsl");
+		MeshPrimitives::s_PrimitiveShader = Shader::create("shaders\\PrimitiveShader.glsl");
 	}
 
 	void OpenGLRendererAPI::clear()
