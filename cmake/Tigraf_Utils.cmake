@@ -1,5 +1,5 @@
 #Lists all targets recursively into a hierarchy tree
-function(groupTargets currentDir)
+function(tigraf_group_targets currentDir)
 
    get_property(currentTargets DIRECTORY "${currentDir}" PROPERTY BUILDSYSTEM_TARGETS)
    get_property(currentSubdirs DIRECTORY "${currentDir}" PROPERTY SUBDIRECTORIES)
@@ -18,13 +18,13 @@ function(groupTargets currentDir)
 
 
    foreach(subdir IN LISTS currentSubdirs)
-      groupTargets("${subdir}")
+      tigraf_group_targets("${subdir}")
    endforeach()
    
 endfunction()
 
 #Lists all sources recursively into a hierarchy tree
-macro(groupSources sources root_path root_replacer)
+macro(tigraf_group_sources sources root_path root_replacer)
 
    foreach(source IN LISTS "${sources}")
 

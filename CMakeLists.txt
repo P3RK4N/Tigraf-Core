@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-include("cmake/Utils.cmake")
+include("cmake/Tigraf_Utils.cmake")
 
 #Debug
 set(DEBUG ON)
@@ -36,6 +36,7 @@ set_target_properties(
          CXX_STANDARD "${cxx_version}"
          CXX_STANDARD_REQUIRED ON
          CXX_EXTENSIONS OFF
+         VS_DEBUGGER_WORKING_DIRECTORY "${Tigraf_SOURCE_DIR}/resources"
 )
 
 #############################################################################
@@ -119,7 +120,6 @@ get_target_property(compiler_definitions_debug Tigraf-Core COMPILE_DEFINITIONS)
 debug_log("COMPILER OPTIONS: ${compiler_options_debug}")
 debug_log("COMPILER DEFINITIONS: ${compiler_definitions_debug}")
 
-   
 #############################################################################   
 #Refreshing Precompiles #####################################################
 #############################################################################   
@@ -211,10 +211,10 @@ target_sources(Tigraf-Core PRIVATE "${sources};${headers}")
 
 #Building a hierarchy tree
 #Tigraf Source
-groupSources(sources "${Tigraf_SOURCE_DIR}/src" "Source")
+tigraf_group_sources(sources "${Tigraf_SOURCE_DIR}/src" "Source")
 
 #Tigraf include
-groupSources(headers "${Tigraf_SOURCE_DIR}/include" "Include")
+tigraf_group_sources(headers "${Tigraf_SOURCE_DIR}/include" "Include")
 
 #Precompiles
 source_group("\\Precompile\\" FILES "${Tigraf_SOURCE_DIR}/src/PCH.h")
@@ -313,6 +313,8 @@ target_link_libraries(
 
 if(PROJECT_IS_TOP_LEVEL)
 
+   debug_log("Adding example app")
+
    add_executable(Tigraf-ExampleApp)
    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tigraf-ExampleApp)
 
@@ -334,7 +336,7 @@ if(PROJECT_IS_TOP_LEVEL)
          console_resources example_app/*.glsl example_app/*.jpg example_app/*.png
    )
    
-   groupSources(console_resources "${Tigraf_SOURCE_DIR}/example_app/resources" "Resources")
+   tigraf_group_sources(console_resources "${Tigraf_SOURCE_DIR}/example_app/resources" "Resources")
    
    target_sources(
       Tigraf-ExampleApp
@@ -363,4 +365,4 @@ endif()
 #Targets Hierarchy ##########################################################
 #############################################################################
 
-groupTargets("${CMAKE_CURRENT_LIST_DIR}")
+tigraf_group_targets("${CMAKE_CURRENT_LIST_DIR}")
