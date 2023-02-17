@@ -324,6 +324,7 @@ if(PROJECT_IS_TOP_LEVEL)
             CXX_STANDARD "${cxx_version}"
             CXX_STANDARD_REQUIRED ON
             CXX_EXTENSIONS OFF
+            VS_DEBUGGER_WORKING_DIRECTORY "${Tigraf_SOURCE_DIR}/example_app/resources"
    )
    
    file(
@@ -353,12 +354,6 @@ if(PROJECT_IS_TOP_LEVEL)
       PRIVATE Tigraf-Core
    )
       
-   set_target_properties(
-      Tigraf-ExampleApp
-      PROPERTIES
-      VS_DEBUGGER_WORKING_DIRECTORY "${Tigraf_SOURCE_DIR}/example_app"
-   )
-
 endif()
          
 #############################################################################

@@ -21,23 +21,23 @@ namespace Tigraf
 		//FRAMEBUFFER FRAME
 		glm::mat4 transform =  glm::scale(glm::vec3(2.0f, 2.0f, 2.0f));
 		m_FramebufferFrameMesh = MeshPrimitives::Plane(transform);
-		m_FramebufferFrameMesh->setShader(Shader::create("resources\\shaders\\FramebufferShader.glsl"));
+		m_FramebufferFrameMesh->setShader(Shader::create("shaders\\FramebufferShader.glsl"));
 
 		//FLOOR
 		transform = glm::scale(glm::vec3(1000.0f, 1000.0f, 1000.0f)) * glm::mat4(1.0f);
 		m_FloorMesh = MeshPrimitives::Plane(transform);
-		m_FloorMesh->setShader(Shader::create("resources\\shaders\\GridShader.glsl"));
+		m_FloorMesh->setShader(Shader::create("shaders\\GridShader.glsl"));
 
 		//CUBE
 		m_CubemapMesh = MeshPrimitives::Cube(transform);
-		m_CubemapMesh->setShader(Shader::create("resources\\shaders\\CubemapShader.glsl"));
+		m_CubemapMesh->setShader(Shader::create("shaders\\CubemapShader.glsl"));
 
 		//EDITOR_CAMERA
 		auto[x, y] = Application::s_Instance->getWindow()->getSize();
 		m_EditorCamera = createRef<EditorCamera>(1.0f * x / y, 0.1f, 1000.0f);
 
 		//TEXTURES
-		m_CubemapTexture = TextureCube::create("resources\\textures\\cubemaps\\skybox\\skybox", "jpg");
+		m_CubemapTexture = TextureCube::create("textures\\cubemaps\\skybox\\skybox", "jpg");
 		SET_TEXTURE_HANDLE(m_CubemapTexture->getTextureHandle(), TEXTURE_CUBE_0);
 
 		//FRAMEBUFFER
