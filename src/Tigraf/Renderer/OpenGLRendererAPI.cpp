@@ -84,22 +84,21 @@ namespace Tigraf
 		(
 			NULL, 
 			TEXTURE_HANDLE_OFFSET * (TEXTURE_2D_COUNT + TEXTURE_3D_COUNT + TEXTURE_CUBE_COUNT),
-			//TODO(P3RK4N): Generalize bit flags
-			GL_DYNAMIC_STORAGE_BIT
+			BufferFlag::DYNAMIC
 		);
 
 		UniformBuffer::s_PerFrameBuffer = UniformBuffer::create
 		(
 			NULL,
 			UNIFORM_BUFFER_1_FRAME_SIZE,
-			GL_DYNAMIC_STORAGE_BIT
+			BufferFlag::DYNAMIC
 		);
 
 		UniformBuffer::s_PerModelBuffer = UniformBuffer::create
 		(
 			NULL,
 			UNIFORM_BUFFER_2_MODEL_SIZE,
-			GL_DYNAMIC_STORAGE_BIT
+			BufferFlag::DYNAMIC
 		);
 
 		

@@ -62,20 +62,31 @@ namespace Tigraf
 		return 0;
 	};
 
+	static GLuint OpenGLBufferFlags(BufferFlag bufferFlags)
+	{
+		GLuint openglBufferFlags = 0;
+
+		//It's static by default
+		if(BufferFlag::STATIC && bufferFlags) ;
+		if(BufferFlag::DYNAMIC && bufferFlags) openglBufferFlags |= GL_DYNAMIC_STORAGE_BIT;
+
+		return openglBufferFlags;
+	};
+
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
 		glDeleteVertexArrays(1, &m_VertexArrayID);
 		glDeleteBuffers(1, &m_VertexBufferID);
 	}
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(GLuint vertexCount, GLuint vertexSize, void* data, GLuint flags)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(GLuint vertexCount, GLuint vertexSize, void* data, BufferFlag bufferFlags)
 	{
 		m_VertexSize = vertexSize;
 		m_VertexCount = vertexCount;
 
 		//Creating vertex buffer and assigning immutable storage to it
 		glCreateBuffers(1, &m_VertexBufferID);
-		glNamedBufferStorage(m_VertexBufferID, vertexSize*vertexCount, data, flags);
+		glNamedBufferStorage(m_VertexBufferID, vertexSize*vertexCount, data, OpenGLBufferFlags(bufferFlags));
 
 		//Creating vertex array and binding buffer to index 0
 		glCreateVertexArrays(1, &m_VertexArrayID);
@@ -109,11 +120,11 @@ namespace Tigraf
 		m_IndexBuffer = indexBuffer;
 	}
 
-	OpenGLIndexBuffer::OpenGLIndexBuffer(const std::vector<GLuint>& indices, GLuint flags)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(const std::vector<GLuint>& indices, BufferFlag bufferFlags)
 	{
 		m_IndicesCount = indices.size();
 		glCreateBuffers(1, &m_IndexBufferID);
-		glNamedBufferStorage(m_IndexBufferID, m_IndicesCount * sizeof(indices[0]), indices.data(), flags);
+		glNamedBufferStorage(m_IndexBufferID, m_IndicesCount * sizeof(indices[0]), indices.data(), OpenGLBufferFlags(bufferFlags));
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -121,10 +132,10 @@ namespace Tigraf
 		glDeleteBuffers(1, &m_IndexBufferID);
 	}
 
-	OpenGLUniformBuffer::OpenGLUniformBuffer(void* data, uint32_t sizeInBytes, GLuint storageFlags)
+	OpenGLUniformBuffer::OpenGLUniformBuffer(void* data, uint32_t sizeInBytes, BufferFlag bufferFlags)
 	{
 		glCreateBuffers(1, &m_UniformBufferID);
-		glNamedBufferStorage(m_UniformBufferID, sizeInBytes, data, storageFlags);
+		glNamedBufferStorage(m_UniformBufferID, sizeInBytes, data, OpenGLBufferFlags(bufferFlags));
 		m_SizeInBytes = sizeInBytes;
 	}
 
@@ -155,10 +166,10 @@ namespace Tigraf
 	}
 
 	
-	OpenGLRWBuffer::OpenGLRWBuffer(void* data, uint32_t sizeInBytes, GLuint storageFlags)
+	OpenGLRWBuffer::OpenGLRWBuffer(void* data, uint32_t sizeInBytes, BufferFlag bufferFlags)
 	{
 		glCreateBuffers(1, &m_RWBufferID);
-		glNamedBufferStorage(m_RWBufferID, sizeInBytes, data, storageFlags);
+		glNamedBufferStorage(m_RWBufferID, sizeInBytes, data, OpenGLBufferFlags(bufferFlags));
 		m_SizeInBytes = sizeInBytes;
 	}
 

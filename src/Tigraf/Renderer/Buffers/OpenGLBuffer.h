@@ -9,7 +9,7 @@ namespace Tigraf
 	{
 	public:
 		virtual ~OpenGLVertexBuffer();
-		OpenGLVertexBuffer(GLuint vertexCount, GLuint vertexSize, void* data, GLuint flags = GL_DYNAMIC_STORAGE_BIT);
+		OpenGLVertexBuffer(GLuint vertexCount, GLuint vertexSize, void* data, BufferFlag bufferFlags);
 
 		virtual void pushVertexAttribute(VertexAttributeType type) override;
 		virtual void setIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
@@ -29,7 +29,7 @@ namespace Tigraf
 	{
 	public:
 		virtual ~OpenGLIndexBuffer();
-		OpenGLIndexBuffer(const std::vector<GLuint>& indices, GLuint flags);
+		OpenGLIndexBuffer(const std::vector<GLuint>& indices, BufferFlag bufferFlags);
 		
 		const GLuint getIndexBufferID() const { return m_IndexBufferID; }
 
@@ -40,7 +40,7 @@ namespace Tigraf
 	class OpenGLUniformBuffer : public UniformBuffer
 	{
 	public:
-		OpenGLUniformBuffer(void* data, uint32_t byteSize, GLuint storageFlags);
+		OpenGLUniformBuffer(void* data, uint32_t byteSize, BufferFlag bufferFlags);
 		virtual ~OpenGLUniformBuffer();
 
 		virtual void updateBuffer(void* subData, uint32_t byteOffset, uint32_t sizeInBytes) override;
@@ -56,7 +56,7 @@ namespace Tigraf
 	class OpenGLRWBuffer : public RWBuffer
 	{
 	public:
-		OpenGLRWBuffer(void* data, uint32_t sizeInBytes, GLuint storageFlags);
+		OpenGLRWBuffer(void* data, uint32_t sizeInBytes, BufferFlag bufferFlags);
 		virtual ~OpenGLRWBuffer();
 
 		virtual void updateBuffer(void* subData, uint32_t byteOffset, uint32_t sizeInBytes) override;

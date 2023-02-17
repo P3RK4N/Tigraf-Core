@@ -57,7 +57,7 @@
 
 #define TIGRAF_EXPAND_MACRO(x) x
 #define TIGRAF_STRINGIFY_MACRO(x) #x
-#define BIT(x) (1 << x)
+#define BIT(x) (1U << x)
 #define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1) 
 
 

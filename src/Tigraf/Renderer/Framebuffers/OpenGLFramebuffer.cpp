@@ -145,7 +145,7 @@ namespace Tigraf
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		//TODO(P3RK4N): Change/Remove => UPDATE: Why?
+		//TODO(P3RK4N): Change/Remove => UPDATE: Why? Not yet. When framebuffer becomes different from whole window (ex. scene panel)
 		auto [width, height] = Application::s_Instance->getWindow()->getSize();
 		glViewport(0, 0, width, height);
 	}

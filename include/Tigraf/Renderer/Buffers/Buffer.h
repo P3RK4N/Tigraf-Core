@@ -48,8 +48,25 @@ namespace Tigraf
 		FLOAT4X4 = 105,
 	};
 
-	class IndexBuffer;
+	struct BufferFlag
+	{
+	public:
+		/* For buffer which will be read by user on CPU side */
+		static const BufferFlag STATIC;
+		/* For buffer which needs to be updated by user on CPU side */
+		static const BufferFlag DYNAMIC;
 
+		operator uint32_t() const { return m_BufferFlagValue; }
+		operator uint32_t() { return m_BufferFlagValue; }
+
+	private:
+		BufferFlag();
+		BufferFlag(uint32_t value) : m_BufferFlagValue(value) {}
+
+		uint32_t m_BufferFlagValue;
+	};
+
+	class IndexBuffer;
 	class VertexBuffer
 	{
 	public:
@@ -64,7 +81,7 @@ namespace Tigraf
 		const uint32_t getVertexCount() const { return m_VertexCount; }
 
 	public:
-		static Ref<VertexBuffer> create(uint32_t vertexCount, uint32_t vertexSize, void* data, uint32_t storageFlags);
+		static Ref<VertexBuffer> create(uint32_t vertexCount, uint32_t vertexSize, void* data, BufferFlag bufferFlags);
 
 	protected:
 		uint32_t m_VertexSize = 0;
@@ -81,7 +98,7 @@ namespace Tigraf
 		const uint32_t getIndicesCount() const { return m_IndicesCount; }
 
 	public:
-		static Ref<IndexBuffer> create(const std::vector<uint32_t>& indices, uint32_t storageFlags);
+		static Ref<IndexBuffer> create(const std::vector<uint32_t>& indices, BufferFlag bufferFlags);
 
 	protected:
 		uint32_t m_IndicesCount = 0;
@@ -99,7 +116,7 @@ namespace Tigraf
 		virtual void unbind() = 0;
 
 	public:
-		static Ref<UniformBuffer> create(void* data, uint32_t sizeInBytes, uint32_t storageFlags);
+		static Ref<UniformBuffer> create(void* data, uint32_t sizeInBytes, BufferFlag bufferFlags);
 
 		static std::unordered_set<uint16_t> s_CurrentUniformBuffers;
 		static Ref<UniformBuffer> s_TextureBuffer;
@@ -123,7 +140,7 @@ namespace Tigraf
 		virtual void unbind() = 0;
 
 	public:
-		static Ref<RWBuffer> create(void* data, uint32_t sizeInBytes, uint32_t storageFlags);
+		static Ref<RWBuffer> create(void* data, uint32_t sizeInBytes, BufferFlag bufferFlags);
 
 		static std::unordered_set<uint16_t> s_CurrentRWBuffers;
 

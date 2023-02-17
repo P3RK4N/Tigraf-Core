@@ -63,7 +63,7 @@ namespace Tigraf
 			vertices[index].Position = glm::vec3(initialTransform * glm::vec4(vertices[index].Position, 1.0f));
 		};
 
-		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(8, 12, vertices.data(), 0);
+		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(8, 12, vertices.data(), BufferFlag::STATIC);
 		vertexBuffer->pushVertexAttribute(VertexAttributeType::FLOAT3);
 
 		std::vector<uint32_t> indices =
@@ -87,7 +87,7 @@ namespace Tigraf
 			6,2,0
 		};
 
-		Ref<IndexBuffer> indexBuffer = IndexBuffer::create(indices, 0);
+		Ref<IndexBuffer> indexBuffer = IndexBuffer::create(indices, BufferFlag::STATIC);
 
 		return createRef<Mesh>(vertexBuffer, indexBuffer, s_PrimitiveShader);
 	}
@@ -107,7 +107,7 @@ namespace Tigraf
 			vertices[index].Position = glm::vec3(initialTransform * glm::vec4(vertices[index].Position, 1.0f));
 		};
 
-		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(4, 12, vertices.data(), 0);
+		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(4, 12, vertices.data(), BufferFlag::STATIC);
 		vertexBuffer->pushVertexAttribute(VertexAttributeType::FLOAT3);
 
 		std::vector<uint32_t> indices =
@@ -116,7 +116,7 @@ namespace Tigraf
 			2,3,1
 		};
 
-		Ref<IndexBuffer> indexBuffer = IndexBuffer::create(indices, 0);
+		Ref<IndexBuffer> indexBuffer = IndexBuffer::create(indices, BufferFlag::STATIC);
 
 		return createRef<Mesh>(vertexBuffer, indexBuffer, s_PrimitiveShader);
 	}
@@ -137,7 +137,7 @@ namespace Tigraf
 			vertices[index].Position = glm::vec2(initialTransform * glm::vec4(vertices[index].Position, 1.0f, 1.0f));
 		};
 
-		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(4, 16, vertices.data(), 0);
+		Ref<VertexBuffer> vertexBuffer = VertexBuffer::create(4, 16, vertices.data(), BufferFlag::STATIC);
 		vertexBuffer->pushVertexAttribute(VertexAttributeType::FLOAT2);
 		vertexBuffer->pushVertexAttribute(VertexAttributeType::FLOAT2);
 
@@ -147,7 +147,7 @@ namespace Tigraf
 			2,3,1
 		};
 
-		Ref<IndexBuffer> indexBuffer = IndexBuffer::create(indices, 0);
+		Ref<IndexBuffer> indexBuffer = IndexBuffer::create(indices, BufferFlag::STATIC);
 
 		return createRef<Mesh>(vertexBuffer, indexBuffer, s_PrimitiveShader);
 	}

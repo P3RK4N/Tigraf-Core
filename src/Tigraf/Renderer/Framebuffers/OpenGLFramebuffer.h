@@ -15,7 +15,6 @@ namespace Tigraf
 		virtual void unbind() override;
 
 		virtual void invalidate() override;
-		//TODO(P3RK4N): Create resize
 		virtual void resize(uint32_t width, uint32_t height) override;
 
 		virtual void clearDepthStencil() override;
