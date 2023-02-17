@@ -8,7 +8,10 @@ namespace Tigraf
 		Shader() {}
 		virtual ~Shader() {}
 
+		/* Create shader from file */
 		static Ref<Shader> create(const std::filesystem::path& shaderPath);
+		/* Create shader from memory */
+		static Ref<Shader> create(const char* vertexSrc, const char* pixelSrc);
 
 	public:
 		virtual void use() = 0;

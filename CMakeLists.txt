@@ -201,7 +201,7 @@ file(
 #############################################################################
 
 #Searching for files
-file(GLOB_RECURSE sources src/*.cpp src/*.c src/*.h src/*.hpp)
+file(GLOB_RECURSE sources src/*.*)
 file(GLOB_RECURSE headers include/*.h include/*.hpp)
 
 #Add generated header since it is not yet created during GLOB
@@ -213,7 +213,7 @@ target_sources(Tigraf-Core PRIVATE "${sources};${headers}")
 #Tigraf Source
 tigraf_group_sources(sources "${Tigraf_SOURCE_DIR}/src" "Source")
 
-#Tigraf include
+#Tigraf Include
 tigraf_group_sources(headers "${Tigraf_SOURCE_DIR}/include" "Include")
 
 #Precompiles
@@ -267,7 +267,8 @@ endif()
 #Macros
 target_compile_definitions(
    Tigraf-Core
-      PRIVATE TIGRAF_CORE  
+      PRIVATE TIGRAF_CORE
+      PRIVATE TIGRAF_DIRECTORY="${Tigraf_SOURCE_DIR}"
 )
 
 #Add includes
@@ -327,21 +328,15 @@ if(PROJECT_IS_TOP_LEVEL)
             VS_DEBUGGER_WORKING_DIRECTORY "${Tigraf_SOURCE_DIR}/example_app/resources"
    )
    
-   file(
-      GLOB_RECURSE 
-         console_sources example_app/*.cpp example_app/*.h example_app/*.glsl example_app/*.jpg example_app/*.png
-   )
+   file(GLOB_RECURSE console_sources example_app/src/*.*)
+   file(GLOB_RECURSE console_resources example_app/resources/*.*)
    
-   file(
-      GLOB_RECURSE 
-         console_resources example_app/*.glsl example_app/*.jpg example_app/*.png
-   )
-   
+   tigraf_group_sources(console_sources "${Tigraf_SOURCE_DIR}/example_app/src" "Source")
    tigraf_group_sources(console_resources "${Tigraf_SOURCE_DIR}/example_app/resources" "Resources")
    
    target_sources(
       Tigraf-ExampleApp
-      PRIVATE "${console_sources}"
+      PRIVATE "${console_sources};${console_resources}"
    )
       
    target_include_directories(

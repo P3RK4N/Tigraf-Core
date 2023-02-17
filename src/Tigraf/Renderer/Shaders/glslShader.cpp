@@ -62,6 +62,34 @@ namespace Tigraf
 		glLinkProgram(m_ShaderID);
 	}
 
+	glslShader::glslShader(const char* vertexSrc, const char* pixelSrc)
+	{
+		m_ShaderID = glCreateProgram();
+
+		auto attachShader = [&](const std::string& shaderName, const GLchar* shaderSrc)
+		{
+			GLuint shader = glCreateShader(NameToShaderType.at(shaderName));
+
+			glShaderSource(shader, 1, &shaderSrc, NULL);
+			glCompileShader(shader);
+
+			int  success;
+			char infoLog[512];
+			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+			if(!success)
+			{
+				glGetShaderInfoLog(shader, 512, NULL, infoLog);
+				CORE_ERROR(std::format("{} - {}", shader, infoLog));
+			}
+			glAttachShader(m_ShaderID, shader);
+		};
+
+		attachShader("VertexShader", vertexSrc);
+		attachShader("PixelShader", pixelSrc);
+
+		glLinkProgram(m_ShaderID);
+	}
+
 	glslShader::~glslShader()
 	{
 		glDeleteProgram(m_ShaderID);

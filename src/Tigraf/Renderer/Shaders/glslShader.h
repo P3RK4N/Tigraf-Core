@@ -9,6 +9,8 @@ namespace Tigraf
 	{
 	public:
 		glslShader(const std::filesystem::path& path);
+		glslShader(const char* vertexSrc, const char* pixelSrc);
+
 		virtual ~glslShader();
 
 		virtual void use() override;
@@ -30,6 +32,5 @@ namespace Tigraf
 
 	protected:
 		GLuint m_ShaderID = 0;
-
 	};
 }
