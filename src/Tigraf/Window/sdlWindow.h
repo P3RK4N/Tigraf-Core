@@ -1,8 +1,6 @@
 #pragma once
 #include "Tigraf/Window/Window.h"
 
-#include <SDL3/SDL.h>
-
 namespace Tigraf
 {
 	class Event;

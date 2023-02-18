@@ -7,7 +7,7 @@ macro(tigraf_findOpenGL)
 
    if(OpenGL_FOUND)
 
-      set(TIGRAF_OPENGL ON)
+      set(TIGRAF_OPENGL "TIGRAF_OPENGL")
       set(TIGRAF_OPENGL_LIBRARY_PATH "${OPENGL_LIBRARIES}")
 
       message(
@@ -17,7 +17,7 @@ macro(tigraf_findOpenGL)
 
    else()
 
-      set(TIGRAF_OPENGL OFF)
+      set(TIGRAF_OPENGL "")
 
       message(STATUS "Tigraf: OpenGL not found!\n")
 
@@ -25,7 +25,7 @@ macro(tigraf_findOpenGL)
 
 endmacro()
 
-macro(tigraf_findVulkan)
+macro(tigraf_findVulkan) #TODO: Add other libraries
 
    #Vulkan_FOUND
    #Vulkan_LIBRARY
@@ -35,7 +35,7 @@ macro(tigraf_findVulkan)
 
    if(Vulkan_FOUND)
 
-      set(TIGRAF_VULKAN ON)
+      set(TIGRAF_VULKAN "TIGRAF_VULKAN")
       set(TIGRAF_VULKAN_LIBRARY_PATH "${Vulkan_LIBRARY}")
       set(TIGRAF_VULKAN_INCLUDE_PATH "${Vulkan_INCLUDE_DIR}")
 
@@ -46,7 +46,7 @@ macro(tigraf_findVulkan)
 
    else()
 
-      set(TIGRAF_VULKAN OFF)
+      set(TIGRAF_VULKAN "")
 
       message(STATUS "Tigraf: Vulkan not found!\n")
 
@@ -64,7 +64,7 @@ macro(tigraf_findD3D11)
 
    if(DirectX11_FOUND)
 
-      set(TIGRAF_D3D11 ON)
+      set(TIGRAF_D3D11 "TIGRAF_D3D11")
       set(TIGRAF_D3D11_LIBRARY_PATH "${DirectX11_LIBRARIES}")
       set(TIGRAF_D3D11_INCLUDE_PATH "${DirectX11_INCLUDE_DIRS}")
 
@@ -75,7 +75,7 @@ macro(tigraf_findD3D11)
 
    else()
 
-      set(TIGRAF_D3D11 OFF)
+      set(TIGRAF_D3D11 "")
 
       message(STATUS "Tigraf: D3D11 not found!\n")
 
@@ -96,7 +96,7 @@ macro(tigraf_findD3D12)
 
    if(D3D12_FOUND)
 
-      set(TIGRAF_D3D12 ON)
+      set(TIGRAF_D3D12 "TIGRAF_D3D12")
       set(TIGRAF_D3D12_LIBRARY_PATH "${D3D12_LIBRARIES}")
       set(TIGRAF_D3D12_INCLUDE_PATH "${D3D12_INCLUDE_DIRS}")
 
@@ -107,7 +107,7 @@ macro(tigraf_findD3D12)
 
    else()
 
-      set(TIGRAF_D3D12 OFF)
+      set(TIGRAF_D3D12 "")
 
       message(STATUS "Tigraf: D3D12 not found!\n")
 
@@ -125,7 +125,7 @@ macro(tigraf_findMetal)
 
    if(METAL_FOUND)
 
-      set(TIGRAF_METAL ON)
+      set(TIGRAF_METAL "TIGRAF_METAL")
       set(TIGRAF_METAL_LIBRARY_PATH "${METAL_LIBRARIES}")
       set(TIGRAF_METAL_INCLUDE_PATH "${METAL_INCLUDE_DIR}")
 
@@ -136,7 +136,7 @@ macro(tigraf_findMetal)
 
    else()
 
-      set(TIGRAF_METAL OFF)
+      set(TIGRAF_METAL "")
 
       message(STATUS "Tigraf: Metal not found!\n")
 

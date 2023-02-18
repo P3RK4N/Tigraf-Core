@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-list(APPEND CMAKE_MODULE_PATH "${Tigraf_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 include(Tigraf_Utils)
 include(Tigraf_Packages)
@@ -288,7 +288,7 @@ target_include_directories(
    )
 
 #############################################################################
-#Add dependencies ###########################################################
+#Base dependencies ##########################################################
 #############################################################################
 
 #OpenGL Loader
@@ -321,6 +321,41 @@ target_link_libraries(
       PUBLIC   spdlog::spdlog
       PUBLIC   glm
    )
+
+
+#############################################################################
+#Graphic API dependencies ###################################################
+#############################################################################
+
+target_compile_definitions(
+   Tigraf-Core
+      PRIVATE 
+         "${TIGRAF_OPENGL}"
+         "${TIGRAF_VULKAN}"
+         "${TIGRAF_D3D11}"
+         "${TIGRAF_D3D12}"
+         "${TIGRAF_METAL}"
+)
+
+target_link_libraries(
+   Tigraf-Core
+      PRIVATE 
+         "${TIGRAF_OPENGL_LIBRARY_PATH}"
+         "${TIGRAF_VULKAN_LIBRARY_PATH}" #TODO: Add other libraries
+         "${TIGRAF_D3D11_LIBRARY_PATH}"
+         "${TIGRAF_D3D12_LIBRARY_PATH}"
+         "${TIGRAF_METAL_LIBRARY_PATH}"
+)
+
+target_include_directories(
+   Tigraf-Core
+      PRIVATE 
+         "${TIGRAF_OPENGL_INCLUDE_PATH}"
+         "${TIGRAF_VULKAN_INCLUDE_PATH}"
+         "${TIGRAF_D3D11_INCLUDE_PATH}"
+         "${TIGRAF_D3D12_INCLUDE_PATH}"
+         "${TIGRAF_METAL_INCLUDE_PATH}"
+)
 
 #############################################################################
 #Example App ################################################################

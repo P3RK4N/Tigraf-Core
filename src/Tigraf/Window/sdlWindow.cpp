@@ -10,12 +10,16 @@ namespace Tigraf
 
 	glfwWindow::glfwWindow(int width, int height, const char* name, bool vsyncEnabled, std::function<void(Event&)> eventCallback)
 	{
+
+#ifdef TIGRAF_VULKAN
+#define TheGigaNigga
+#endif
+
 		TIGRAF_CORE_ASSERT(SDL_Init(SDL_INIT_VIDEO) >= 0, "SDL initialization failed: %s\n", SDL_GetError());
 
 		int numDrivers = SDL_GetNumRenderDrivers();
 		printf("Number of render drivers: %d\n", numDrivers);
 
-		SDL_SetHint(SDL_RENDER_DRIVER)
 		for (int i = 0; i < numDrivers; i++) {
 			//SDL_RendererInfo info;
 			const char* info = SDL_GetRenderDriver(i);
@@ -23,6 +27,8 @@ namespace Tigraf
 		}
 
 		SDL_Quit();
+
+		ID3D11Device* device;
 
 
 		status = glfwInit();
