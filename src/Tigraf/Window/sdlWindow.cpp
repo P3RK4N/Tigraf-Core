@@ -2,13 +2,31 @@
 
 #include <glad/glad.h>
 
+#include <SDL3/SDL.h>
+
 namespace Tigraf
 {
 	static int status = 0;
 
 	glfwWindow::glfwWindow(int width, int height, const char* name, bool vsyncEnabled, std::function<void(Event&)> eventCallback)
 	{
-		TIGRAF_CORE_ASSERT(glfwInit(), "GLFW library couldn't be initialized!");
+		TIGRAF_CORE_ASSERT(SDL_Init(SDL_INIT_VIDEO) >= 0, "SDL initialization failed: %s\n", SDL_GetError());
+
+		int numDrivers = SDL_GetNumRenderDrivers();
+		printf("Number of render drivers: %d\n", numDrivers);
+
+		SDL_SetHint(SDL_RENDER_DRIVER)
+		for (int i = 0; i < numDrivers; i++) {
+			//SDL_RendererInfo info;
+			const char* info = SDL_GetRenderDriver(i);
+			printf("Render driver %d: %s\n", i, info);
+		}
+
+		SDL_Quit();
+
+
+		status = glfwInit();
+		TIGRAF_CORE_ASSERT(status, "GLFW library couldn't be initialized!");
 		glfwSetErrorCallback(glfwWindow::onError);
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

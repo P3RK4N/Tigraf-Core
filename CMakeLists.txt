@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.25)
-include("cmake/Tigraf_Utils.cmake")
+list(APPEND CMAKE_MODULE_PATH "${Tigraf_SOURCE_DIR}/cmake")
+
+include(Tigraf_Utils)
+include(Tigraf_Packages)
+
+tigraf_findOpenGL()
+tigraf_findVulkan()
+tigraf_findD3D11()
+tigraf_findD3D12()
+tigraf_findMetal()
 
 #Debug
 set(DEBUG ON)
@@ -299,11 +308,16 @@ add_subdirectory(vendor/glm)
 #Image loader
 target_include_directories(Tigraf-Core PRIVATE vendor/stb)
 
+#Simple DirectMedia Layer
+set(SDL_SHARED_ENABLED_BY_DEFAULT OFF)
+add_subdirectory(vendor/sdl)
+
 #Linking
 target_link_libraries(
    Tigraf-Core 
       PRIVATE  glad
       PRIVATE  glfw
+      PRIVATE  SDL3-static
       PUBLIC   spdlog::spdlog
       PUBLIC   glm
    )
