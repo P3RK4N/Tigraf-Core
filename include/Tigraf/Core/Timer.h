@@ -27,4 +27,16 @@ namespace Tigraf
 	public:
 		virtual const TimeStep& advance() override;
 	};
+
+	class sdlTimer : public Timer
+	{
+	public:
+		virtual const TimeStep& advance() override;
+	};
+
+	class ChronoTimer : public Timer
+	{
+	public:
+		virtual const TimeStep& advance() override;
+	};
 }

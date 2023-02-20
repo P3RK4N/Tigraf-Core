@@ -7,6 +7,8 @@ namespace Tigraf
 {
 	class Window
 	{
+		friend class Application;
+
 	public:
 		Window() = default;
 		virtual ~Window() {}
@@ -41,5 +43,6 @@ namespace Tigraf
 		GraphicsContext m_GraphicsContext{};
 
 		virtual void setEventCallbacks() {}
+		virtual void swapBuffers() {}
 	};
 }

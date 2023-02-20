@@ -40,9 +40,11 @@ namespace Tigraf
 		CORE_TRACE(getWorkingDirectory());
 
 		m_Window = Window::createWindow(1280, 720, "Tigraf", true, BIND_EVENT_FN(Application::onEvent)); //Initializes Window, Events and Graphics Context
-		m_Timer = createScope<glfwTimer>();
-		
+
+		m_Timer = createScope<ChronoTimer>();
+
 		Renderer::init();
+
 		for(Layer* layer : m_Layers) layer->init();
 	}
 
@@ -50,8 +52,9 @@ namespace Tigraf
 	{
 		CORE_INFO("Shutting down");
 
-		Renderer::shutdown();
 		for(Layer* layer : m_Layers) layer->shutdown();
+
+		Renderer::shutdown();
 
 		delete this;
 	}
@@ -100,7 +103,7 @@ namespace Tigraf
 			onDraw();
 		}
 
-		m_Window->onUpdate({});
+		m_Window->swapBuffers();
 		return m_Minimized;
 	}
 
