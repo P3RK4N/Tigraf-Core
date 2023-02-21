@@ -79,9 +79,6 @@ namespace Tigraf
 		m_GraphicsContext.init();	//TODO: Maybe isn't semantically correct
 
 		SDL_GL_SetSwapInterval(vsyncEnabled);
-
-		SDL_SetWindowData(m_WindowHandle, "WindowData", &m_WindowData);	//TODO: Do I really need it?
-		setEventCallbacks();
 	}
 
 	sdlWindow::~sdlWindow()
@@ -118,7 +115,7 @@ namespace Tigraf
 
 		if(timer > 1.0f)
 		{
-			std::string title = std::format("Tigraf - {}FPS / {}ms", frames, 1.0f/frames);
+			std::string title = std::format("Tigraf - Frame: {}FPS / {}ms - Total: {}", frames, 1.0f/frames, ts.m_TotalTime);
 			timer -= 1.0f;
 			frames = 0;
 			SDL_SetWindowTitle(m_WindowHandle, title.c_str());
@@ -133,60 +130,30 @@ namespace Tigraf
 			switch(e.type)
 			{
 				case SDL_EVENT_QUIT: 
-					sdlWindow::WindowCloseCallback(this);
+					[&e, this]()
+					{
+						Event e{ EVENT_TYPE::CLOSE, nullptr };
+						m_WindowData.m_EventCallback(e);
+					}();
 					break;
+
+				case SDL_EVENT_WINDOW_RESIZED:
+					[&e, this]()
+					{
+						auto [w, h] = getSize();
+						ResizeData data{ w, h };
+						Event e{ EVENT_TYPE::RESIZE, &data };
+						m_WindowData.m_EventCallback(e);
+					}();
+					break;
+
 			}
 		}
 	}
 
 	void sdlWindow::setEventCallbacks()
 	{
-		//glfwSetWindowSizeCallback(m_WindowHandle, [](GLFWwindow* window, int width, int height)
-		//{
-		//	ResizeData data{ width, height };
-		//	Event e{EVENT_TYPE::RESIZE, (void*)&data};
-		//	
-		//	WindowData* wd = (WindowData*)glfwGetWindowUserPointer(window);
-		//	wd->m_EventCallback(e);
-		//});
 
-		//glfwSetWindowCloseCallback(m_WindowHandle, [](GLFWwindow* window)
-		//{
-		//	Event e{EVENT_TYPE::CLOSE, nullptr};
-		//	
-		//	WindowData* wd = (WindowData*)glfwGetWindowUserPointer(window);
-		//	wd->m_EventCallback(e);
-		//});
-
-		//glfwSetKeyCallback(m_WindowHandle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
-		//{
-		//	EVENT_TYPE et;
-
-		//	switch(action)
-		//	{
-		//	case GLFW_PRESS:
-		//		et = EVENT_TYPE::KEY_PRESS;
-		//		break;
-		//	case GLFW_RELEASE:
-		//		et = EVENT_TYPE::KEY_RELEASE;
-		//		break;
-		//	case GLFW_REPEAT:
-		//		et = EVENT_TYPE::KEY_REPEAT;
-		//	}
-
-		//	KeyData data{ key };
-		//	Event e{ et, (void*)&data };
-		//	WindowData* wd = (WindowData*)glfwGetWindowUserPointer(window);
-		//	wd->m_EventCallback(e);
-		//});
-
-		//glfwSetCursorPosCallback(m_WindowHandle, [](GLFWwindow* window, double xPos, double yPos)
-		//{
-		//	CursorData data{ (int)xPos, (int)yPos };
-		//	Event e{ EVENT_TYPE::CURSOR_MOVE, (void*)&data };
-		//	WindowData* wd = (WindowData*)glfwGetWindowUserPointer(window);
-		//	wd->m_EventCallback(e);
-		//});
 	}
 
 	void sdlWindow::WindowCloseCallback(sdlWindow* window)

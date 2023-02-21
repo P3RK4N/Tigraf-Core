@@ -17,6 +17,10 @@ namespace Tigraf
 		KEY_REPEAT
 	};
 
+	struct ResizeData;
+	struct KeyData;
+	struct CursorData;
+
 	class Event
 	{
 	public:

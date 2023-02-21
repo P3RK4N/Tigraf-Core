@@ -104,6 +104,8 @@ namespace Tigraf
 		}
 
 		m_Window->swapBuffers();
+		m_Timer->calibrate();
+
 		return m_Minimized;
 	}
 

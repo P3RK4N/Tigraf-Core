@@ -33,4 +33,5 @@ namespace Tigraf
 		static void WindowResizeCallback(sdlWindow* window);
 		static void WindowCloseCallback(sdlWindow* window);
 	};
+
 }
