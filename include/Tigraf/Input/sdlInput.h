@@ -1,9 +1,10 @@
 #pragma once
-#include "Tigraf/Input/Keycodes.h"
+
+#include "Tigraf/Input/sdlKeycodes.h"
 
 namespace Tigraf
 {
-	class [[deprecated("Consider using sdlInput")]] glfwInput
+	class sdlInput
 	{
 	public:
 		static const bool isKeyDown(int keycode);

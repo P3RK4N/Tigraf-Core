@@ -1,7 +1,6 @@
 #include "Tigraf/Renderer/Camera/EditorCamera.h"
 
-#include "Tigraf/Input/Keycodes.h"
-#include "Tigraf/Input/glfwInput.h"
+#include "Tigraf/Input/sdlInput.h"
 
 namespace Tigraf
 {
@@ -17,7 +16,7 @@ namespace Tigraf
 	)
 		: Camera(ProjectionType::PERSPECTIVE, aspectRatio, nearPlane, farPlane, position, forward, up, FOV)
 	{
-		auto[x, y] = glfwInput::getCursorPos();
+		auto[x, y] = sdlInput::getCursorPos();
 		m_CursorX = x;
 		m_CursorY = y;
 
@@ -46,20 +45,20 @@ namespace Tigraf
 		glm::vec3 sideOffset = sideVector * moveFactor;
 		glm::vec3 upOffset{ 0,moveFactor,0 };
 
-		if(glfwInput::isKeyDown(KEY_A)) m_Position -= sideOffset;
-		if(glfwInput::isKeyDown(KEY_D)) m_Position += sideOffset;
-		if(glfwInput::isKeyDown(KEY_S)) m_Position -= forwardOffset;
-		if(glfwInput::isKeyDown(KEY_W)) m_Position += forwardOffset;
-		if(glfwInput::isKeyDown(KEY_SPACE)) m_Position += upOffset;
-		if(glfwInput::isKeyDown(KEY_LEFT_SHIFT)) m_Position -= upOffset;
+		if(sdlInput::isKeyDown(TIGRAF_KEY_A)) m_Position -= sideOffset;
+		if(sdlInput::isKeyDown(TIGRAF_KEY_D)) m_Position += sideOffset;
+		if(sdlInput::isKeyDown(TIGRAF_KEY_S)) m_Position -= forwardOffset;
+		if(sdlInput::isKeyDown(TIGRAF_KEY_W)) m_Position += forwardOffset;
+		if(sdlInput::isKeyDown(TIGRAF_KEY_SPACE)) m_Position += upOffset;
+		if(sdlInput::isKeyDown(TIGRAF_KEY_LSHIFT)) m_Position -= upOffset;
 
-		auto [x, y] = glfwInput::getCursorPos();
+		auto [x, y] = sdlInput::getCursorPos();
 		int dx = x - m_CursorX;
 		int dy = y - m_CursorY;
 		m_CursorX = x;
 		m_CursorY = y;
 
-		if(glfwInput::isButtonDown(MOUSE_BUTTON_LEFT))
+		if(sdlInput::isMouseButtonDown(TIGRAF_MOUSE_BUTTON_LEFT))
 		{
 			float rotateFactor = ts * m_RotateSpeed;
 

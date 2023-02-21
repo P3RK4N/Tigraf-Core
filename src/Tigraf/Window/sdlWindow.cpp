@@ -115,7 +115,7 @@ namespace Tigraf
 
 		if(timer > 1.0f)
 		{
-			std::string title = std::format("Tigraf - Frame: {}FPS / {}ms - Total: {}", frames, 1.0f/frames, ts.m_TotalTime);
+			std::string title = std::format("Tigraf - Frame: {}FPS / {}ms", frames, 1.0f/frames, ts.m_TotalTime);
 			timer -= 1.0f;
 			frames = 0;
 			SDL_SetWindowTitle(m_WindowHandle, title.c_str());

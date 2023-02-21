@@ -24,6 +24,8 @@
 #include "Tigraf/Event/Event.h"
 #include "Tigraf/Input/Keycodes.h"
 #include "Tigraf/Input/glfwInput.h"
+#include "Tigraf/Input/sdlInput.h"
+#include "Tigraf/Input/sdlKeycodes.h"
 #include "Tigraf/Renderer/Buffers/Buffer.h"
 #include "Tigraf/Renderer/Buffers/RWBufferDefines.h"
 #include "Tigraf/Renderer/Buffers/UniformBufferDefines.h"

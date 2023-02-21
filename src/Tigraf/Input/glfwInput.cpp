@@ -18,7 +18,7 @@ namespace Tigraf
 		return glfwGetKey((GLFWwindow*)Application::s_Instance->getWindow()->getWindowHandle(), keycode) == GLFW_RELEASE;	
 	}
 
-	const bool glfwInput::isButtonDown(int keycode)
+	const bool glfwInput::isMouseButtonDown(int keycode)
 	{
 		return glfwGetMouseButton((GLFWwindow*)Application::s_Instance->getWindow()->getWindowHandle(), keycode) == GLFW_PRESS;	
 	}
