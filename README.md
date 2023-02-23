@@ -5,7 +5,7 @@ Tigraf-Core is a lightweight and cross-platform library that provides a simple a
 **Note**: For now, Tigraf-Core has only been tested on Windows using CMake and Visual Studio 2022, and it may not work properly on other platforms or with other IDEs.
 
 ## License
-Tigraf-Core is released under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License. This means that you are free to use, copy, distribute, and transmit the software for non-commercial purposes only, and you must give appropriate credit to the author(s).
+Tigraf-Core is released under the MIT License. This means that you are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software for both commercial and non-commercial purposes. However, any distribution of the software must include a copy of the MIT License, and any modifications made to the software must also be released under the same MIT License terms.
 
 ## Dependencies
 Tigraf-Core relies on the following third-party libraries:
