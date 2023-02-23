@@ -35,7 +35,7 @@ Tigraf-Core provides the following features:
 - Cross-platform support (Windows, macOS, Linux)
 - Support for multiple graphics APIs (OpenGL, DirectX, Vulkan, Metal)
 
-##Example
+## Example
 If you want to see how the Tigraf-Core library works, you can run the example executable that is generated using the win_generate_project.bat script in the scripts folder. This will generate a executable project with the example code that demonstrates how to use the library.
 
 ## Contributing
