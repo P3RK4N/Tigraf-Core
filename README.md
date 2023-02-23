@@ -20,7 +20,7 @@ Tigraf-Core relies on the following third-party libraries:
 To build Tigraf-Core, follow these steps:
 
 1. Install CMake on your system.
-2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core.git"
+2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core"
 3. In project folder, navigate to scripts and run project generation command. Alternatively, you can run with your own command for specific tool
 
 **NOTE**: It's preferred that you have latest vulkan installed or DirectX if you are on windows
