@@ -23,7 +23,7 @@ To build Tigraf-Core, follow these steps:
 2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core.git"
 3. In project folder, navigate to scripts and run project generation command. Alternatively, you can run with your own command for specific tool
 
-**NOTE**: It's preferred if you have latest vulkan installed or DirectX if you are on windows
+**NOTE**: It's preferred that you have latest vulkan installed or DirectX if you are on windows
 
 ## Features
 Tigraf-Core provides the following features:
