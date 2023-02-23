@@ -24,14 +24,6 @@ namespace Tigraf
 		SDL_Window* m_WindowHandle = nullptr;
 		SDL_GLContext m_WindowContext = NULL;
 
-		virtual void setEventCallbacks() override;
-
-	private:
-		static void onError(int error, const char* description);
-
-		//Event Callbacks
-		static void WindowResizeCallback(sdlWindow* window);
-		static void WindowCloseCallback(sdlWindow* window);
 	};
 
 }

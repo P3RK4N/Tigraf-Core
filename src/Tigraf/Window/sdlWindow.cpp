@@ -100,11 +100,6 @@ namespace Tigraf
 		return { width,height };
 	}
 
-	void sdlWindow::onError(int error, const char* description)
-	{
-		fprintf(stderr, "Error: %s\n", description);
-	}
-
 	void sdlWindow::onUpdate(const TimeStep& ts)
 	{
 		static float timer = 0.0f;
@@ -123,48 +118,56 @@ namespace Tigraf
 
 		m_GraphicsContext.swapBuffers(); 
 		
-		//TODO: Event loop and function callback
+		//TODO: Event loop - expand
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
 		{
 			switch(e.type)
 			{
-				case SDL_EVENT_QUIT: 
-					[&e, this]()
-					{
-						Event e{ EVENT_TYPE::CLOSE, nullptr };
-						m_WindowData.m_EventCallback(e);
-					}();
+				case SDL_EVENT_MOUSE_MOTION:
+				{
+					CursorData  data{ (int)e.motion.x, (int)e.motion.y };
+					Event ev{ EVENT_TYPE::CURSOR_MOVE, &data };
+					m_WindowData.m_EventCallback(ev);
 					break;
+				}
+
+				case SDL_EVENT_KEY_DOWN:
+				{
+					KeyData data{ e.key.keysym.scancode };
+					
+					Event ev{ e.key.repeat ? EVENT_TYPE::KEY_REPEAT : EVENT_TYPE::KEY_PRESS, &data };
+					m_WindowData.m_EventCallback(ev);
+					break;
+				}
+
+				case SDL_EVENT_KEY_UP:
+				{
+					KeyData data{ e.key.keysym.scancode };
+					Event ev{ EVENT_TYPE::KEY_RELEASE, &data };
+					m_WindowData.m_EventCallback(ev);
+					break;
+				}
 
 				case SDL_EVENT_WINDOW_RESIZED:
-					[&e, this]()
-					{
-						auto [w, h] = getSize();
-						ResizeData data{ w, h };
-						Event e{ EVENT_TYPE::RESIZE, &data };
-						m_WindowData.m_EventCallback(e);
-					}();
+				{
+					auto [w, h] = getSize();
+					ResizeData data{ w, h };
+					Event ev{ EVENT_TYPE::RESIZE, &data };
+					m_WindowData.m_EventCallback(ev);
 					break;
+				};
 
+				case SDL_EVENT_QUIT: 
+				{
+					Event ev{ EVENT_TYPE::CLOSE, nullptr };
+					m_WindowData.m_EventCallback(ev);
+					break;
+				}
+
+				default:
+					CORE_TRACE("Unhandled: {}", e.type);
 			}
 		}
-	}
-
-	void sdlWindow::setEventCallbacks()
-	{
-
-	}
-
-	void sdlWindow::WindowCloseCallback(sdlWindow* window)
-	{
-		Event e{ EVENT_TYPE::CLOSE, nullptr };
-
-		window->m_WindowData.m_EventCallback(e);
-	}
-
-	void sdlWindow::WindowResizeCallback(sdlWindow* window)
-	{
-	
 	}
 }

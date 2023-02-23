@@ -61,8 +61,6 @@ namespace Tigraf
 
 	void Application::onUpdate()
 	{
-		//CORE_TRACE("Application::onUpdate");
-
 		TimeStep ts = m_Timer->advance();
 
 		m_Window->onUpdate(ts);
@@ -72,7 +70,6 @@ namespace Tigraf
 
 	void Application::onDraw()
 	{
-		//CORE_TRACE("Application::onDraw");
 		Renderer::s_RendererAPI->clear();
 
 		for(Layer* layer : m_Layers) layer->onDraw();
@@ -80,7 +77,6 @@ namespace Tigraf
 
 	bool Application::onEvent(Event& event)
 	{
-		//CORE_TRACE("Application::onEvent");
 		DISPATCH(EVENT_TYPE::RESIZE, event, Application::onResize);
 		DISPATCH(EVENT_TYPE::CLOSE, event, Application::onClose);
 		DISPATCH(EVENT_TYPE::KEY_PRESS, event, Application::onKey);
@@ -111,7 +107,6 @@ namespace Tigraf
 
 	bool Application::onClose(void* eventData)
 	{
-		CORE_TRACE("CloseEvent");
 		m_Running = false;
 		return true;
 	}

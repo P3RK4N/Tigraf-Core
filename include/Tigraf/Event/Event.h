@@ -17,6 +17,7 @@ namespace Tigraf
 		KEY_REPEAT
 	};
 
+	//TODO: Make union of them
 	struct ResizeData;
 	struct KeyData;
 	struct CursorData;
