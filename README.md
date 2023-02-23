@@ -1,10 +1,11 @@
-# Tigraf-Core 0.1.0
+# Tigraf-Core 0.1.0 ![Drawgon-logo](https://user-images.githubusercontent.com/87949029/220889714-97fc5c4b-8abe-46ae-8daa-07499247a352.png)
+
 Tigraf-Core is a lightweight and cross-platform library that provides a simple and intuitive interface for handling windows, events, input, graphics API, and more. It is designed to be easily expandable and customizable, allowing developers to quickly build applications with minimal effort.
 
 **Note**: For now, Tigraf-Core has only been tested on Windows using CMake and Visual Studio 2022, and it may not work properly on other platforms or with other IDEs.
 
 ## License
-Tigraf-Core is released under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License. This means that you are free to use, copy, distribute, and transmit the software for non-commercial purposes only, and you must give appropriate credit to the author(s).
+Tigraf-Core is released under the MIT License. This means that you are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software for both commercial and non-commercial purposes. However, any distribution of the software must include a copy of the MIT License, and any modifications made to the software must also be released under the same MIT License terms.
 
 ## Dependencies
 Tigraf-Core relies on the following third-party libraries:
@@ -20,7 +21,7 @@ Tigraf-Core relies on the following third-party libraries:
 To build Tigraf-Core, follow these steps:
 
 1. Install CMake on your system.
-2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core.git"
+2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core"
 3. In project folder, navigate to scripts and run project generation command. Alternatively, you can run with your own command for specific tool
 
 **NOTE**: It's preferred that you have latest vulkan installed or DirectX if you are on windows
