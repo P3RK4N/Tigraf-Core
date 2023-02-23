@@ -1,4 +1,4 @@
-Tigraf-Core
+# Tigraf-Core
 Tigraf-Core is a lightweight and cross-platform library that provides a simple and intuitive interface for handling windows, events, input, graphics API, and more. It is designed to be easily expandable and customizable, allowing developers to quickly build applications with minimal effort.
 
 Note: Tigraf-Core has only been tested on Windows using CMake, and it may not work properly on other platforms or with other IDEs.
