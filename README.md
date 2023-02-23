@@ -1,4 +1,7 @@
 # Tigraf-Core 0.1.0
+
+![Drawgon-logo](https://user-images.githubusercontent.com/87949029/220889714-97fc5c4b-8abe-46ae-8daa-07499247a352.png)
+
 Tigraf-Core is a lightweight and cross-platform library that provides a simple and intuitive interface for handling windows, events, input, graphics API, and more. It is designed to be easily expandable and customizable, allowing developers to quickly build applications with minimal effort.
 
 **Note**: For now, Tigraf-Core has only been tested on Windows using CMake and Visual Studio 2022, and it may not work properly on other platforms or with other IDEs.
