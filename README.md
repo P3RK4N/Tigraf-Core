@@ -1,7 +1,7 @@
 # Tigraf-Core
 Tigraf-Core is a lightweight and cross-platform library that provides a simple and intuitive interface for handling windows, events, input, graphics API, and more. It is designed to be easily expandable and customizable, allowing developers to quickly build applications with minimal effort.
 
-**Note**: Tigraf-Core has only been tested on Windows using CMake, and it may not work properly on other platforms or with other IDEs.
+**Note**: For now, Tigraf-Core has only been tested on Windows using CMake and Visual Studio 2022, and it may not work properly on other platforms or with other IDEs.
 
 ## License
 Tigraf-Core is released under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License. This means that you are free to use, copy, distribute, and transmit the software for non-commercial purposes only, and you must give appropriate credit to the author(s).
@@ -20,7 +20,7 @@ Tigraf-Core relies on the following third-party libraries:
 To build Tigraf-Core, follow these steps:
 
 1. Install CMake on your system.
-2. Clone the repository recursively by running the following command: git clone --recursive https://github.com/P3RK4N/Tigraf-Core.git
+2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core.git"
 3. In project folder, navigate to scripts and run project generation command. Alternatively, you can run with your own command for specific tool
 
 ## Features
