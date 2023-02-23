@@ -122,6 +122,8 @@ namespace Tigraf
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
 		{
+			if(m_NativeEventCallback) if(m_NativeEventCallback(&e)) return;
+
 			switch(e.type)
 			{
 				case SDL_EVENT_MOUSE_MOTION:

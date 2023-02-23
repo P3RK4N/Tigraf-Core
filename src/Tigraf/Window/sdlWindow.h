@@ -14,7 +14,9 @@ namespace Tigraf
 		virtual ~sdlWindow();
 
 		virtual std::pair<int, int> getSize() override;
-		virtual void* getWindowHandle() override { return (void*)m_WindowHandle; }
+
+		virtual void* getNativeHandle() override { return (void*)m_WindowHandle; }
+		virtual void* getNativeContext() override { return (void*)m_WindowContext; }
 
 		virtual void setVsync(bool vsyncEnabled) override { Window::setVsync(vsyncEnabled); SDL_GL_SetSwapInterval(vsyncEnabled); }
 
@@ -23,7 +25,6 @@ namespace Tigraf
 	protected:
 		SDL_Window* m_WindowHandle = nullptr;
 		SDL_GLContext m_WindowContext = NULL;
-
 	};
 
 }

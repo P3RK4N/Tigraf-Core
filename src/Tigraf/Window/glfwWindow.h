@@ -15,7 +15,7 @@ namespace Tigraf
 		virtual ~glfwWindow();
 
 		virtual std::pair<int, int> getSize() override;
-		virtual void* getWindowHandle() override { return (void*)m_WindowHandle; }
+		virtual void* getNativeHandle() override { return (void*)m_WindowHandle; }
 
 		virtual void setVsync(bool vsyncEnabled) override { Window::setVsync(vsyncEnabled); glfwSwapInterval(vsyncEnabled); }
 

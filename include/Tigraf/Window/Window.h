@@ -14,7 +14,22 @@ namespace Tigraf
 		virtual ~Window() {}
 
 		virtual std::pair<int, int> getSize() = 0;
-		virtual void* getWindowHandle() = 0;
+
+		/**
+			Gets SDL_Window*
+		*/
+		virtual void* getNativeHandle() = 0;
+
+		/**
+			Gets you native graphics context. In case of OpenGL, it will return SDL_GLContext*
+		*/
+		virtual void* getNativeContext() = 0;
+
+		/**
+			You can set this function from a client side which will take native event (SDL_Event*). 
+			If it returns true, event will be considered finished and will not be propagated trough Engine.
+		*/
+		void setNativeEventCallback(std::function<bool(void*)> nativeCallback) { m_NativeEventCallback = nativeCallback; }
 
 		bool isVsyncEnabled() { return m_WindowData.m_Vsync;}
 		virtual void setVsync(bool enableVsync) { m_WindowData.m_Vsync = enableVsync; }
@@ -41,6 +56,8 @@ namespace Tigraf
 
 		WindowData m_WindowData{};
 		GraphicsContext m_GraphicsContext{};
+
+		std::function<bool(void*)> m_NativeEventCallback = nullptr;
 
 		virtual void setEventCallbacks() {}
 		virtual void swapBuffers() {}
