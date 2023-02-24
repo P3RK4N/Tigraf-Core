@@ -93,7 +93,7 @@ namespace Tigraf
 		m_WindowContext = nullptr;
 	}
 
-	std::pair<int,int> sdlWindow::getSize()
+	const std::pair<int,int>& sdlWindow::getSize()
 	{
 		int width, height;
 		SDL_GetWindowSizeInPixels(m_WindowHandle, &width, &height);
@@ -166,6 +166,14 @@ namespace Tigraf
 					m_WindowData.m_EventCallback(ev);
 					break;
 				}
+
+				case SDL_EVENT_TEXT_INPUT:
+				case SDL_EVENT_WINDOW_MOUSE_ENTER:
+				case SDL_EVENT_WINDOW_MOUSE_LEAVE:
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+					CORE_TRACE("Unimplemented: {}", e.type);
+					break;
 
 				default:
 					CORE_TRACE("Unhandled: {}", e.type);

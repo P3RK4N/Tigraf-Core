@@ -13,7 +13,7 @@ namespace Tigraf
 		Window() = default;
 		virtual ~Window() {}
 
-		virtual std::pair<int, int> getSize() = 0;
+		virtual const std::pair<int, int>& getSize() = 0;
 
 		/**
 			Gets SDL_Window*
@@ -31,12 +31,16 @@ namespace Tigraf
 		*/
 		void setNativeEventCallback(std::function<bool(void*)> nativeCallback) { m_NativeEventCallback = nativeCallback; }
 
+		/**
+			Makes context of this window current again in case client made other context current previously.
+		*/
+		virtual void makeCurrent() = 0;
+
 		bool isVsyncEnabled() { return m_WindowData.m_Vsync;}
 		virtual void setVsync(bool enableVsync) { m_WindowData.m_Vsync = enableVsync; }
 
 		virtual void onUpdate(const TimeStep& ts) = 0;
 
-		virtual void swapBuffers() {}
 
 	public:
 		static Scope<Window> createWindow
@@ -62,5 +66,6 @@ namespace Tigraf
 		std::function<bool(void*)> m_NativeEventCallback = nullptr;
 
 		virtual void setEventCallbacks() {}
+		virtual void swapBuffers() {}
 	};
 }

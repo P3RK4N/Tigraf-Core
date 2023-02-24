@@ -74,7 +74,7 @@ namespace Tigraf
 		glfwTerminate();
 	}
 
-	std::pair<int,int> glfwWindow::getSize()
+	const std::pair<int,int>& glfwWindow::getSize()
 	{
 		int width, height;
 		glfwGetWindowSize(m_WindowHandle, &width, &height);
