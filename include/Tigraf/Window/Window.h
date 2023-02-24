@@ -36,6 +36,8 @@ namespace Tigraf
 
 		virtual void onUpdate(const TimeStep& ts) = 0;
 
+		virtual void swapBuffers() {}
+
 	public:
 		static Scope<Window> createWindow
 		(
@@ -60,6 +62,5 @@ namespace Tigraf
 		std::function<bool(void*)> m_NativeEventCallback = nullptr;
 
 		virtual void setEventCallbacks() {}
-		virtual void swapBuffers() {}
 	};
 }

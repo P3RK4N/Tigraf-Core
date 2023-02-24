@@ -10,23 +10,23 @@ namespace Tigraf
 {
 	const bool glfwInput::isKeyDown(int keycode) 
 	{	
-		return glfwGetKey((GLFWwindow*)Application::s_Instance->getWindow()->getWindowHandle(), keycode) == GLFW_PRESS;		
+		return glfwGetKey((GLFWwindow*)Application::s_Instance->getWindow()->getNativeHandle(), keycode) == GLFW_PRESS;		
 	}
 
 	const bool glfwInput::isKeyUp(int keycode)
 	{	
-		return glfwGetKey((GLFWwindow*)Application::s_Instance->getWindow()->getWindowHandle(), keycode) == GLFW_RELEASE;	
+		return glfwGetKey((GLFWwindow*)Application::s_Instance->getWindow()->getNativeHandle(), keycode) == GLFW_RELEASE;	
 	}
 
 	const bool glfwInput::isMouseButtonDown(int keycode)
 	{
-		return glfwGetMouseButton((GLFWwindow*)Application::s_Instance->getWindow()->getWindowHandle(), keycode) == GLFW_PRESS;	
+		return glfwGetMouseButton((GLFWwindow*)Application::s_Instance->getWindow()->getNativeHandle(), keycode) == GLFW_PRESS;	
 	}
 
 	const std::pair<int, int> glfwInput::getCursorPos()
 	{
 		double x, y;
-		glfwGetCursorPos((GLFWwindow*)Application::s_Instance->getWindow()->getWindowHandle(), &x, &y);
+		glfwGetCursorPos((GLFWwindow*)Application::s_Instance->getWindow()->getNativeHandle(), &x, &y);
 
 		return { (int)x, (int)y };
 	}
