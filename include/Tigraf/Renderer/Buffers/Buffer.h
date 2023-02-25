@@ -3,35 +3,26 @@
 #include "UniformBufferDefines.h"
 #include "RWBufferDefines.h"
 
-#define isINT(VertexAttributeType)		(uint32_t)VertexAttributeType <  100U
-#define isFLOAT(VertexAttributeType)	(uint32_t)VertexAttributeType >= 100U && (uint32_t)VertexAttributeType < 200U
-#define isDOUBLE(VertexAttributeType)	(uint32_t)VertexAttributeType >= 200U
+//TODO: Make Better?
 
-
-/**
-* Sets texture to index location in UNIFORM_TEXTURE_BUFFER
-*/
-#define SET_TEXTURE_HANDLE(textureHandle, textureIndex)											\
-	{																							\
-		uint8_t textureHandleWrapper[16];														\
-		uint64_t handle = textureHandle;														\
-		memcpy(textureHandleWrapper, &handle, 8);												\
-		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureIndex, 16);	\
-	}
-
-/**
-* Updates per frame buffer with given data,size and offset
-*/
-#define UPDATE_PER_FRAME_BUFFER(data, byteOffset, byteSize)	UniformBuffer::s_PerFrameBuffer->updateBuffer((void*)&(data), byteOffset, byteSize)
-
-/**
-* Updates per model buffer with given data,size and offset
-*/
-#define UPDATE_PER_MODEL_BUFFER(data, byteOffset, byteSize)	UniformBuffer::s_PerModelBuffer->updateBuffer((void*)&(data), byteOffset, byteSize)
-
+#ifdef TIGRAF_CORE
+	#define isINT(VertexAttributeType)		(uint32_t)VertexAttributeType <  100U
+	#define isFLOAT(VertexAttributeType)	(uint32_t)VertexAttributeType >= 100U && (uint32_t)VertexAttributeType < 200U
+	#define isDOUBLE(VertexAttributeType)	(uint32_t)VertexAttributeType >= 200U
+#endif
 
 namespace Tigraf
 {
+	class Buffer;
+	class VertexBuffer;
+	class IndexBuffer;
+	class UniformBuffer;
+	class RWBuffer;
+
+	//TODO: Expand
+	/**
+	* Available Vertex Attribute types which can be attached onto a Vertex
+	*/
 	enum class VertexAttributeType : uint16_t
 	{
 		INT = 0,
@@ -48,6 +39,9 @@ namespace Tigraf
 		FLOAT4X4 = 105,
 	};
 
+	/**
+	*	Flags used for describing buffer
+	*/
 	struct BufferFlag
 	{
 	public:
@@ -66,7 +60,9 @@ namespace Tigraf
 		uint32_t m_BufferFlagValue;
 	};
 
-	class IndexBuffer;
+	/**
+	*	Buffer used for storing vertices, can be set on a Mesh //TODO(...and Model?)
+	*/
 	class VertexBuffer
 	{
 	public:
@@ -90,6 +86,9 @@ namespace Tigraf
 		Ref<IndexBuffer> m_IndexBuffer = nullptr;
 	};
 
+	/**
+	*	Buffer used for storing indices. Can be set onto VertexBuffer, Mesh and //TODO(Model?) 
+	*/
 	class IndexBuffer
 	{
 	public:
@@ -148,4 +147,20 @@ namespace Tigraf
 		uint32_t m_SizeInBytes = 0;
 		uint16_t m_BindIndex = -1;
 	};
+
+	/**
+	* Updates per frame buffer with given data, size and offset
+	*/
+	inline static void UpdatePerFrameBuffer(void* data, uint32_t offsetInBytes, uint32_t sizeInBytes)
+	{
+		UniformBuffer::s_PerFrameBuffer->updateBuffer(data, offsetInBytes, offsetInBytes);
+	}
+
+	/**
+	* Updates per model buffer with given data, size and offset
+	*/
+	inline static void UpdatePerModelBuffer(void* data, uint32_t offsetInBytes, uint32_t sizeInBytes)
+	{
+		UniformBuffer::s_PerModelBuffer->updateBuffer(data, offsetInBytes, offsetInBytes);
+	}
 }

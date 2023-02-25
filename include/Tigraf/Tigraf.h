@@ -39,4 +39,5 @@
 #include "Tigraf/Renderer/RendererAPI.h"
 #include "Tigraf/Renderer/Shaders/Shader.h"
 #include "Tigraf/Renderer/Textures/Texture.h"
+#include "Tigraf/Renderer/Textures/TextureDefines.h"
 #include "Tigraf/Window/Window.h"

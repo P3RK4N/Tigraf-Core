@@ -122,26 +122,26 @@ namespace Tigraf
 		UniformBuffer::s_PerFrameBuffer = UniformBuffer::create
 		(
 			NULL,
-			UNIFORM_BUFFER_1_FRAME_SIZE,
+			UNIFORM_BUFFER_1_PER_FRAME_SIZE,
 			BufferFlag::DYNAMIC
 		);
 
 		UniformBuffer::s_PerModelBuffer = UniformBuffer::create
 		(
 			NULL,
-			UNIFORM_BUFFER_2_MODEL_SIZE,
+			UNIFORM_BUFFER_2_PER_MODEL_SIZE,
 			BufferFlag::DYNAMIC
 		);
 
 		
 		GLuint textureBufferID = reinterpret_cast<OpenGLUniformBuffer*>(UniformBuffer::s_TextureBuffer.get())->getUniformBufferID();
-		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_0_TEXTURE, textureBufferID);
+		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_TEXTURE, textureBufferID);
 
 		textureBufferID = reinterpret_cast<OpenGLUniformBuffer*>(UniformBuffer::s_PerFrameBuffer.get())->getUniformBufferID();
-		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_1_FRAME, textureBufferID);
+		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_PER_FRAME, textureBufferID);
 
 		textureBufferID = reinterpret_cast<OpenGLUniformBuffer*>(UniformBuffer::s_PerModelBuffer.get())->getUniformBufferID();
-		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_2_MODEL, textureBufferID);
+		glBindBufferBase(GL_UNIFORM_BUFFER, UNIFORM_BUFFER_PER_MODEL, textureBufferID);
 
 	}
 }

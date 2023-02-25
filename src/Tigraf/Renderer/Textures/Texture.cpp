@@ -1,8 +1,35 @@
 #include "Tigraf/Renderer/Textures/Texture.h"
 #include "OpenGLTexture.h"
 
+#include "Tigraf/Renderer/Buffers/UniformBufferDefines.h"
+#include "Tigraf/Renderer/Buffers/Buffer.h"
+
 namespace Tigraf
 {
+	void SetTextureHandle(Ref<Texture2D> texture, Texture2DSlot textureSlot)
+	{
+		uint8_t textureHandleWrapper[16];													
+		uint64_t handle = texture->getTextureHandle();										
+		memcpy(textureHandleWrapper, &handle, 8);											
+		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureSlot, 16);
+	}
+
+	//void SetTextureHandle(Ref<Texture3D> texture, Texture3DSlot textureSlot) //TODO: Implement
+	//{
+	//	uint8_t textureHandleWrapper[16];													
+	//	uint64_t handle = texture->getTextureHandle();										
+	//	memcpy(textureHandleWrapper, &handle, 8);											
+	//	UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureSlot, 16);
+	//}
+
+	void SetTextureHandle(Ref<TextureCube> texture, TextureCubeSlot textureSlot)
+	{
+		uint8_t textureHandleWrapper[16];													
+		uint64_t handle = texture->getTextureHandle();										
+		memcpy(textureHandleWrapper, &handle, 8);											
+		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureSlot, 16);
+	}
+
 	Ref<Texture2D> Texture2D::create(const char* filePath)
 	{
 		return createRef<OpenGLTexture2D>(filePath);

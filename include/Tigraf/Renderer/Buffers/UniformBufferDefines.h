@@ -1,120 +1,70 @@
 #pragma once
 //GLOBAL UNIFORM BUFFERS -------------------------------------------------------------
-/**
-Buffer for storing 2D,3D and CUBE Textures.
-Access indices with:
-	TEXTURE_2D_0	-	TEXTURE_2D_100
-	TEXTURE_3D_0	-	TEXTURE_2D_20
-	TEXTURE_CUBE_0	-	TEXTURE_2D_20
 
-Shader format:
-layout(std140, binding = 0) uniform TextureBuffer
-----	sampler2D textures2D[100];
-----	sampler3D textures3D[20];
-----	samplerCube texturesCube[20];
+//TODO: Make cleaner, modifiable by user?
+//UNIFORM_BUFFER_0_TEXTURE_SIZE in TextureDefines.h
+
+#define UNIFORM_BUFFER_1_PER_FRAME_SIZE 1000
+#define UNIFORM_BUFFER_2_PER_MODEL_SIZE 1000
+
+/** 
+*	Available slots for Uniform Buffers.
+*	First three can only be updated.
+*
+*	For more details, look at functions:
+*	SetTextureHandle()
+*	UpdatePerFrameBuffer()
+*	UpdatePerModelBuffer()
+*
+*	You can find size of previous buffers with: 
+*	--- UNIFORM_BUFFER_0_TEXTURE_SIZE, 
+*	--- UNIFORM_BUFFER_1_PER_FRAME_SIZE,
+*	--- UNIFORM_BUFFER_2_PER_MODEL_SIZE
+*
+*	Others need to be created with UniformBuffer::create() and manually used.
 */
-#define UNIFORM_BUFFER_0_TEXTURE 0
+typedef enum
+{
+	/**
+	*	Buffer for storing 2D,3D and CUBE Textures.
+	*	Access indices with:
+	*		TEXTURE_2D_0	-	TEXTURE_2D_100
+	*		TEXTURE_3D_0	-	TEXTURE_2D_20
+	*		TEXTURE_CUBE_0	-	TEXTURE_2D_20
+	*	
+	*	Shader format:
+	*	
+	*	layout(std140, binding = 0) uniform TextureBuffer
+	*	----	sampler2D textures2D[TEXTURE_2D_COUNT];			//Default 100
+	*	----	sampler3D textures3D[TEXTURE_3D_COUNT];			//Default 20
+	*	----	samplerCube texturesCube[TEXTURE_CUBE_COUNT];	//Default 20
+	*/
+	UNIFORM_BUFFER_TEXTURE		= 0,
 
-//TEXTURE HANDLE OFFSET
-#define TEXTURE_HANDLE_OFFSET 16
+	/**
+	*	Buffer for storing data that changes once per frame.
+	*/
+	UNIFORM_BUFFER_PER_FRAME	= 1,
 
-//Counts
-#define TEXTURE_2D_COUNT	100
-#define TEXTURE_3D_COUNT	20 
-#define TEXTURE_CUBE_COUNT	20
+	/**
+	*	Buffer for storing data that changes with each model.
+	*/
+	UNIFORM_BUFFER_PER_MODEL	= 2,
 
-//TEXTURE LOCATIONS
-	#define TEXTURE_2D_0	0   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_1	1   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_2	2   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_3	3   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_4	4   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_5	5   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_6	6   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_7	7   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_8	8   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_9	9   *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_10	10  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_11	11  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_12	12  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_13	13  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_14	14  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_15	15  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_16	16  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_17	17  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_18	18  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_19	19  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_20	20  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_21	21  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_22	22  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_23	23  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_24	24  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_25	25  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_26	26  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_27	27  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_28	28  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_29	29  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_30	30  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_31	31  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_32	32  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_33	33  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_34	34  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_35	35  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_36	36  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_37	37  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_38	38  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_39	39  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_40	40  *   TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_2D_41	41  *   TEXTURE_HANDLE_OFFSET
-	//TODO(P3RK4N): FINISH		
-								
-	#define TEXTURE_3D_0	100	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_1	101	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_2	102	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_3	103	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_4	104	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_5	105	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_6	106	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_7	107	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_3D_9	108	*	TEXTURE_HANDLE_OFFSET
-	//TODO(P3RK4N): FINISH		
-								
-	#define TEXTURE_CUBE_0	120	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_1	121	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_2	122	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_3	123	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_4	124	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_5	125	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_6	126	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_7	127	*	TEXTURE_HANDLE_OFFSET
-	#define TEXTURE_CUBE_9	128	*	TEXTURE_HANDLE_OFFSET
-	//TODO(P3RK4N): FINISH
-
-/**
-Buffer for storing data that changes once per frame.
-*/
-#define UNIFORM_BUFFER_1_FRAME 1
-#define UNIFORM_BUFFER_1_FRAME_SIZE 1000
-
-/**
-Buffer for storing data that changes with each model.
-*/
-#define UNIFORM_BUFFER_2_MODEL 2
-#define UNIFORM_BUFFER_2_MODEL_SIZE 1000
-
-
-#define UNIFORM_BUFFER_3	3
-#define UNIFORM_BUFFER_4	4
-#define UNIFORM_BUFFER_5	5
-#define UNIFORM_BUFFER_6	6
-#define UNIFORM_BUFFER_7	7
-#define UNIFORM_BUFFER_8	8
-#define UNIFORM_BUFFER_9	9
-#define UNIFORM_BUFFER_10	10
-#define UNIFORM_BUFFER_11	11
-#define UNIFORM_BUFFER_12	12
-#define UNIFORM_BUFFER_13	13
-#define UNIFORM_BUFFER_14	14
-#define UNIFORM_BUFFER_15	15
+	/* General purpose buffers */
+	UNIFORM_BUFFER_3			= 3,
+	UNIFORM_BUFFER_4			= 4,
+	UNIFORM_BUFFER_5			= 5,
+	UNIFORM_BUFFER_6			= 6,
+	UNIFORM_BUFFER_7			= 7,
+	UNIFORM_BUFFER_8			= 8,
+	UNIFORM_BUFFER_9			= 9,
+	UNIFORM_BUFFER_10			= 10,
+	UNIFORM_BUFFER_11			= 11,
+	UNIFORM_BUFFER_12			= 12,
+	UNIFORM_BUFFER_13			= 13,
+	UNIFORM_BUFFER_14			= 14,
+	UNIFORM_BUFFER_15			= 15
+} UniformBufferSlot;
 
 //------------------------------------------------------------------------------------

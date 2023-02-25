@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Tigraf/Renderer/Buffers/Buffer.h"
+#include "Tigraf/Renderer/Textures/TextureDefines.h"
 
 namespace Tigraf
 {

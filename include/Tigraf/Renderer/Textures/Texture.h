@@ -1,7 +1,12 @@
 #pragma once
 
+#include "Tigraf/Renderer/Textures/TextureDefines.h"
+
 namespace Tigraf
 {
+	class Texture2D;
+	class TextureCube;
+
 	enum class TextureFormat : int
 	{
 		None,
@@ -29,6 +34,18 @@ namespace Tigraf
 		DEPTH24STENCIL8		//Depth and stencil texture => ????????
 	};
 
+	/**
+	* Sets texture to index location in UNIFORM_BUFFER_TEXTURE which can then be accessed in shader
+	*/
+	void SetTextureHandle(Ref<Texture2D> texture, Texture2DSlot textureSlot);	//TODO: Make version with array of textures to reduce calls to opengl
+
+	//void SetTextureHandle(Ref<Texture3D> texture, Texture3DSlot textureSlot);	//TODO: Implement
+
+	/**
+	* Sets texture to index location in UNIFORM_BUFFER_TEXTURE which can then be accessed in shader
+	*/
+	void SetTextureHandle(Ref<TextureCube> texture, TextureCubeSlot textureSlot);
+
 	class Texture
 	{
 	public:
@@ -38,6 +55,8 @@ namespace Tigraf
 		TextureFormat getTextureFormat() { return m_TextureFormat; }
 
 	protected:
+		Texture() {}
+
 		uint64_t m_TextureHandle = 0;
 		TextureFormat m_TextureFormat = TextureFormat::None;
 	};
