@@ -4,7 +4,6 @@
 #include "RWBufferDefines.h"
 
 //TODO: Make Better?
-
 #ifdef TIGRAF_CORE
 	#define isINT(VertexAttributeType)		(uint32_t)VertexAttributeType <  100U
 	#define isFLOAT(VertexAttributeType)	(uint32_t)VertexAttributeType >= 100U && (uint32_t)VertexAttributeType < 200U
@@ -153,7 +152,7 @@ namespace Tigraf
 	*/
 	inline static void UpdatePerFrameBuffer(void* data, uint32_t offsetInBytes, uint32_t sizeInBytes)
 	{
-		UniformBuffer::s_PerFrameBuffer->updateBuffer(data, offsetInBytes, offsetInBytes);
+		UniformBuffer::s_PerFrameBuffer->updateBuffer(data, offsetInBytes, sizeInBytes);
 	}
 
 	/**
@@ -161,6 +160,6 @@ namespace Tigraf
 	*/
 	inline static void UpdatePerModelBuffer(void* data, uint32_t offsetInBytes, uint32_t sizeInBytes)
 	{
-		UniformBuffer::s_PerModelBuffer->updateBuffer(data, offsetInBytes, offsetInBytes);
+		UniformBuffer::s_PerModelBuffer->updateBuffer(data, offsetInBytes, sizeInBytes);
 	}
 }
