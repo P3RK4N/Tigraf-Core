@@ -1,6 +1,5 @@
 #include "OpenGLFramebuffer.h"
 
-#include "Tigraf/Renderer/Textures/OpenGLTexture.h"
 #include "Tigraf/Core/Application.h"
 
 namespace Tigraf
@@ -23,7 +22,7 @@ namespace Tigraf
 	TIGRAF_CORE_ASSERT(colorFormat == TextureFormat::RGBA8, "Tigraf currently does not support this framebuffer color format!");
 
 		Ref<Texture2D> colorTexture = Texture2D::create(colorFormat, m_Width, m_Height, nullptr);
-		GLuint textureID = reinterpret_cast<OpenGLTexture2D*>(colorTexture.get())->getTextureID();
+		GLuint textureID = *(GLuint*)colorTexture->getNativeTextureID();
 
 		glNamedFramebufferTexture(m_FramebufferID, GL_COLOR_ATTACHMENT0 + m_ColorTextures.size(), textureID, 0);
 
@@ -36,7 +35,7 @@ namespace Tigraf
 	TIGRAF_CORE_ASSERT(!m_DepthStencilTexture, "Depth stencil texture already attached!");
 
 		Ref<Texture2D> depthStencilTexture = Texture2D::create(depthStencilFormat, m_Width, m_Height, nullptr);
-		GLuint textureID = reinterpret_cast<OpenGLTexture2D*>(depthStencilTexture.get())->getTextureID();
+		GLuint textureID = *(GLuint*)depthStencilTexture->getNativeTextureID();
 
 		glNamedFramebufferTexture(m_FramebufferID, GL_DEPTH_STENCIL_ATTACHMENT, textureID, 0);
 
@@ -92,7 +91,7 @@ namespace Tigraf
 	TIGRAF_CORE_ASSERT(m_ColorTextures.size() > index, "Invalid color texture index!");
 		
 		TextureFormat format = m_ColorTextures[index]->getTextureFormat();
-		GLuint textureID = reinterpret_cast<OpenGLTexture2D*>(m_ColorTextures[index].get())->getTextureID();
+		GLuint textureID = *(GLuint*)m_ColorTextures[index]->getNativeTextureID();
 
 		switch(format)
 		{

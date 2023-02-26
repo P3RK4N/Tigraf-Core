@@ -9,7 +9,7 @@ namespace Tigraf
 	void SetTextureHandle(Ref<Texture2D> texture, Texture2DSlot textureSlot)
 	{
 		uint8_t textureHandleWrapper[16];													
-		uint64_t handle = texture->getTextureHandle();										
+		uint64_t handle = *(uint64_t*)texture->getNativeTextureHandle();										
 		memcpy(textureHandleWrapper, &handle, 8);											
 		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureSlot, 16);
 	}
@@ -25,7 +25,7 @@ namespace Tigraf
 	void SetTextureHandle(Ref<TextureCube> texture, TextureCubeSlot textureSlot)
 	{
 		uint8_t textureHandleWrapper[16];													
-		uint64_t handle = texture->getTextureHandle();										
+		uint64_t handle = *(uint64_t*)texture->getNativeTextureHandle();										
 		memcpy(textureHandleWrapper, &handle, 8);											
 		UniformBuffer::s_TextureBuffer->updateBuffer(textureHandleWrapper, textureSlot, 16);
 	}

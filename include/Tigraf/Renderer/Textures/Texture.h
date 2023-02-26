@@ -53,7 +53,9 @@ namespace Tigraf
 	public:
 		virtual ~Texture() {}
 
-		uint64_t getTextureHandle() { return m_TextureHandle; }
+		void* getNativeTextureHandle() { return &m_TextureHandle; }
+		virtual void* getNativeTextureID() { return nullptr; }
+
 		TextureFormat getTextureFormat() { return m_TextureFormat; }
 
 	protected:

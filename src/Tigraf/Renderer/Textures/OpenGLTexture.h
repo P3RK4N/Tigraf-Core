@@ -13,7 +13,7 @@ namespace Tigraf
 
 		virtual ~OpenGLTexture2D();
 
-		const GLuint getTextureID() { return m_TextureID; }
+		virtual void* getNativeTextureID() override { return &m_TextureID; }
 
 	protected:
 		GLuint m_TextureID = 0;
@@ -24,6 +24,8 @@ namespace Tigraf
 	public:
 		OpenGLTextureCube(const char* baseFilePath, const char* fileFormat);
 		virtual ~OpenGLTextureCube();
+
+		virtual void* getNativeTextureID() override { return &m_TextureID; }
 
 	protected:
 		GLuint m_TextureID = 0;
@@ -38,7 +40,7 @@ namespace Tigraf
 		OpenGLRWTexture2D(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData);
 		virtual ~OpenGLRWTexture2D();
 
-		const GLuint getTextureID() { return m_TextureID; }
+		virtual void* getNativeTextureID() override { return &m_TextureID; }
 
 	protected:
 		GLuint m_TextureID = 0;
