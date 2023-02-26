@@ -57,12 +57,16 @@ namespace Tigraf
 		virtual void* getNativeTextureID() { return nullptr; }
 
 		TextureFormat getTextureFormat() { return m_TextureFormat; }
+		std::pair<int, int> getSize() { return { m_Width, m_Height }; }
 
 	protected:
 		Texture() {}
 
 		uint64_t m_TextureHandle = 0;
 		TextureFormat m_TextureFormat = TextureFormat::None;
+
+		int m_Width = 0;
+		int m_Height = 0;
 	};
 
 	class Texture2D : public Texture
@@ -74,9 +78,6 @@ namespace Tigraf
 		static Ref<Texture2D> create(const char* filePath);
 		static Ref<Texture2D> create(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData);
 
-	protected:
-		int m_Width = 0;
-		int m_Height = 0;
 	};
 
 	class RWTexture2D : public Texture
@@ -87,9 +88,6 @@ namespace Tigraf
 	public:
 		static Ref<RWTexture2D> create(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData);
 
-	protected:
-		int m_Width = 0;
-		int m_Height = 0;
 	};
 
 	class TextureCube : public Texture
@@ -109,10 +107,6 @@ namespace Tigraf
 
 		static const std::string s_CubeSides[6];
 
-	protected:
-		//Of each side
-		int m_Width = 0;
-		int m_Height = 0;
 	};
 }
 
