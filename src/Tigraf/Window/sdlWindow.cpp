@@ -93,7 +93,7 @@ namespace Tigraf
 		m_WindowContext = nullptr;
 	}
 
-	const std::pair<int,int>& sdlWindow::getSize()
+	const std::pair<int,int> sdlWindow::getSize()
 	{
 		int width, height;
 		SDL_GetWindowSizeInPixels(m_WindowHandle, &width, &height);

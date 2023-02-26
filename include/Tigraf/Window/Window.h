@@ -13,7 +13,7 @@ namespace Tigraf
 		Window() = default;
 		virtual ~Window() {}
 
-		virtual const std::pair<int, int>& getSize() = 0;
+		virtual const std::pair<int, int> getSize() = 0;
 
 		/**
 			Gets SDL_Window*

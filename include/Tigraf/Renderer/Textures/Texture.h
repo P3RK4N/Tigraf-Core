@@ -2,6 +2,8 @@
 
 #include "Tigraf/Renderer/Textures/TextureDefines.h"
 
+//TODO: Make unordered map of bound textures 
+
 namespace Tigraf
 {
 	class Texture2D;

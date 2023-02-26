@@ -16,6 +16,10 @@ namespace Tigraf
 		virtual void unbind() = 0;
 
 		virtual void invalidate() = 0;
+
+		/*
+		* Resizes framebuffer textures. Invalidates previous handles, so they need to be set again.
+		*/
 		virtual void resize(uint32_t width, uint32_t height) = 0;
 
 		virtual void clearDepthStencil() = 0;

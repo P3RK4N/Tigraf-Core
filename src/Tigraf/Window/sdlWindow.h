@@ -13,7 +13,7 @@ namespace Tigraf
 		sdlWindow(int width, int height, const char* name, bool vsyncEnabled, std::function<void(Event&)> eventCallback);
 		virtual ~sdlWindow();
 
-		virtual const std::pair<int, int>& getSize() override;
+		virtual const std::pair<int, int> getSize() override;
 
 		virtual void* getNativeHandle() override { return (void*)m_WindowHandle; }
 		virtual void* getNativeContext() override { return (void*)m_WindowContext; }

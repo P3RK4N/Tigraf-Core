@@ -134,6 +134,7 @@ namespace Tigraf
 			clearColor(index);
 	}
 
+	//TODO: Make Begin and End functions which preserve changed states***IMPORTANT***
 	void OpenGLFramebuffer::bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID);
