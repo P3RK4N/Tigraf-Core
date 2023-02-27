@@ -160,7 +160,8 @@ namespace Tigraf
 					break;
 				};
 
-				case SDL_EVENT_QUIT: 
+				case SDL_EVENT_QUIT:
+				case SDL_EVENT_WINDOW_CLOSE_REQUESTED: 
 				{
 					Event ev{ EVENT_TYPE::CLOSE, nullptr };
 					m_WindowData.m_EventCallback(ev);

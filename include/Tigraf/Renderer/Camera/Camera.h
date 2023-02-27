@@ -1,4 +1,5 @@
 #pragma once
+#include "Tigraf/Core/Timer.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp>

@@ -15,10 +15,16 @@ namespace Tigraf
 		virtual void bind() = 0;
 		virtual void unbind() = 0;
 
+		/*
+		* Invalidates previous framebuffer and creates new one. 
+		* Texture handles must be set into UNIFORM_BUFFER_TEXTURE again		//TODO: Remove predefined uniform buffers in a TIGRAF-CORE and leave it to client
+		*/
 		virtual void invalidate() = 0;
 
 		/*
-		* Resizes framebuffer textures. Invalidates previous handles, so they need to be set again.
+		* Resizes all textures in a framebuffer and then invalidates previous buffer.
+		* Do NOT call Framebugger::invalidate() after this function unless you attach textures after this.
+		* See Framebuffer::invalidate() for more details
 		*/
 		virtual void resize(uint32_t width, uint32_t height) = 0;
 
@@ -26,11 +32,20 @@ namespace Tigraf
 		virtual void clearColor(uint32_t index) = 0;
 		virtual void clearAll() = 0;
 
+		/* Attaches color texture
+		* You need to invalidate buffer after this command. 
+		* If attaching multiple textures, invalidate it only at the end.
+		*/
 		virtual void attachColorTexture(TextureFormat colorFormat) = 0;
+
+		/* Attaches depth stencil texture
+		* You need to invalidate buffer after this command. 
+		* If attaching multiple textures, invalidate it only at the end.
+		*/
 		virtual void attachDepthStencilTexture(TextureFormat depthStencilFormat) = 0;
 
-		const Ref<Texture2D>& getColorTexture(uint32_t textureIndex);
-		const Ref<Texture2D>&getDepthStencilTexture();
+		const Ref<Texture2D>& getColorTexture(uint32_t textureIndex = 0);
+		const Ref<Texture2D>& getDepthStencilTexture();
 
 		const float getWidth() { return m_Width; }
 		const float getHeight() { return m_Height; }
