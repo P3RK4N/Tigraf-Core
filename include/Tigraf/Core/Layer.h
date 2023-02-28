@@ -5,7 +5,7 @@
 namespace Tigraf
 {
 
-#define DECLARE_LAYER											\
+#define TIGRAF_DECLARE_LAYER									\
 	public: 													\
 		virtual void init() override; 							\
 		virtual void onUpdate(const TimeStep& ts) override; 	\

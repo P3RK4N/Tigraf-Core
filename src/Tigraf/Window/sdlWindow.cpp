@@ -122,7 +122,7 @@ namespace Tigraf
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
 		{
-			if(m_NativeEventCallback) if(m_NativeEventCallback(&e)) return;
+			if(m_NativeEventCallback) if(m_NativeEventCallback(&e)) continue;
 
 			switch(e.type)
 			{
