@@ -20,12 +20,17 @@ namespace Tigraf
 		return SDL_GetMouseState(NULL, NULL) && keycode;
 	}
 
-	const std::pair<int, int> sdlInput::getCursorPos()
-	{
-		float x, y;
-		SDL_GetMouseState(&x, &y);
+	std::pair<int, int> sdlInput::s_CursorAbsPos = { 0, 0 };
+	std::pair<int, int> sdlInput::s_CursorRelPos = { 0, 0 };
 
-		return { (int)x, (int)y };
+	const std::pair<int, int>& sdlInput::getCursorAbsPos()
+	{
+		return s_CursorAbsPos;
+	}
+
+	const std::pair<int, int>& sdlInput::getCursorRelPos()
+	{
+		return s_CursorRelPos;
 	}
 
 	//TODO: Add other functions

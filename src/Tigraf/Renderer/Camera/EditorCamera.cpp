@@ -16,10 +16,6 @@ namespace Tigraf
 	)
 		: Camera(ProjectionType::PERSPECTIVE, aspectRatio, nearPlane, farPlane, position, forward, up, FOV)
 	{
-		auto[x, y] = sdlInput::getCursorPos();
-		m_CursorX = x;
-		m_CursorY = y;
-
 		recalculateView();
 		recalculateProjection();
 	}
@@ -52,11 +48,7 @@ namespace Tigraf
 		if(sdlInput::isKeyDown(TIGRAF_KEY_SPACE)) m_Position += upOffset;
 		if(sdlInput::isKeyDown(TIGRAF_KEY_LSHIFT)) m_Position -= upOffset;
 
-		auto [x, y] = sdlInput::getCursorPos();
-		int dx = x - m_CursorX;
-		int dy = y - m_CursorY;
-		m_CursorX = x;
-		m_CursorY = y;
+		auto& [dx, dy] = sdlInput::getCursorRelPos();
 
 		if(sdlInput::isMouseButtonDown(TIGRAF_MOUSE_BUTTON_LEFT))
 		{

@@ -1,4 +1,5 @@
 #include "sdlWindow.h"
+#include "Tigraf/Input/sdlInput.h"
 
 #include <glad/glad.h>
 
@@ -117,7 +118,12 @@ namespace Tigraf
 		}
 
 		m_GraphicsContext.swapBuffers(); 
-		
+
+		float x, y;
+		SDL_GetMouseState(&x, &y);
+		sdlInput::s_CursorRelPos = { x - sdlInput::s_CursorAbsPos.first, y - sdlInput::s_CursorAbsPos.second};
+		sdlInput::s_CursorAbsPos = { x, y };
+
 		//TODO: Event loop - expand
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
