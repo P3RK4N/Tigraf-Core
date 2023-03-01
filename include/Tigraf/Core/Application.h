@@ -35,13 +35,8 @@ namespace Tigraf
 
 		virtual ~Application();
 
-		void run();
-
-		void init();
-		void onUpdate();
-		void onDraw();
-		bool onEvent(Event& event);
-		void shutdown();
+		void run(); //TODO: Also make visible in entry class in entrypoint only
+		void exit() { m_Running = false; } //TODO: This too
 
 		std::string getName() { return m_ApplicationSpecification.name; }
 		std::filesystem::path getWorkingDirectory() { return m_ApplicationSpecification.workingDirectory; }
@@ -52,6 +47,13 @@ namespace Tigraf
 
 		std::vector<Layer*>& getLayers() { return m_Layers; }
 		void setLayers(const std::vector<Layer*>& layers) { m_Layers = layers; }
+
+	private:
+		void init();
+		void onUpdate();
+		void onDraw();
+		bool onEvent(Event& event);
+		void shutdown();
 
 	public:
 		static Application* s_Instance;

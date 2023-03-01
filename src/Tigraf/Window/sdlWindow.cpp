@@ -123,7 +123,10 @@ namespace Tigraf
 		SDL_GetMouseState(&x, &y);
 		sdlInput::s_CursorRelPos = { x - sdlInput::s_CursorAbsPos.first, y - sdlInput::s_CursorAbsPos.second};
 		sdlInput::s_CursorAbsPos = { x, y };
+	}
 
+	void sdlWindow::onPollEvents()
+	{
 		//TODO: Event loop - expand
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
@@ -158,6 +161,10 @@ namespace Tigraf
 				}
 
 				case SDL_EVENT_WINDOW_RESIZED:
+				case SDL_EVENT_WINDOW_MINIMIZED:
+				//case SDL_EVENT_WINDOW_EXPOSED:
+				//case SDL_EVENT_WINDOW_SHOWN:
+				case SDL_EVENT_WINDOW_RESTORED:
 				{
 					auto [w, h] = getSize();
 					ResizeData data{ w, h };
@@ -165,6 +172,12 @@ namespace Tigraf
 					m_WindowData.m_EventCallback(ev);
 					break;
 				};
+
+				case SDL_EVENT_WINDOW_HIDDEN:
+				{
+					CORE_TRACE("Hidden Window!");
+					break;
+				}
 
 				case SDL_EVENT_QUIT:
 				case SDL_EVENT_WINDOW_CLOSE_REQUESTED: 
@@ -186,5 +199,10 @@ namespace Tigraf
 					CORE_TRACE("Unhandled: {}", e.type);
 			}
 		}
+	}
+
+	void sdlWindow::sleep(uint32_t milliseconds)
+	{
+		SDL_Delay(milliseconds);
 	}
 }

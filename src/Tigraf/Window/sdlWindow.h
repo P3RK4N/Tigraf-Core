@@ -22,6 +22,8 @@ namespace Tigraf
 		virtual void setVsync(bool vsyncEnabled) override { Window::setVsync(vsyncEnabled); SDL_GL_SetSwapInterval(vsyncEnabled); }
 
 		virtual void onUpdate(const TimeStep& ts) override;
+		virtual void onPollEvents()	override;
+		virtual void sleep(uint32_t milliseconds) override;
 
 	protected:
 		SDL_Window* m_WindowHandle = nullptr;

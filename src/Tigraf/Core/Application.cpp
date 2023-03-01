@@ -28,8 +28,14 @@ namespace Tigraf
 
 		while(m_Running)
 		{
-			onUpdate();
-			onDraw();
+			m_Window->onPollEvents();
+
+			if(!m_Minimized)
+			{
+				onUpdate();
+				onDraw();
+			}
+			else m_Window->sleep(10);
 		}
 
 		shutdown();

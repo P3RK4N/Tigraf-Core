@@ -40,7 +40,8 @@ namespace Tigraf
 		virtual void setVsync(bool enableVsync) { m_WindowData.m_Vsync = enableVsync; }
 
 		virtual void onUpdate(const TimeStep& ts) = 0;
-
+		virtual void onPollEvents() {}
+		virtual void sleep(uint32_t milliseconds) {}
 
 	public:
 		static Scope<Window> createWindow
