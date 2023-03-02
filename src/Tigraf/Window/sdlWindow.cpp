@@ -14,6 +14,7 @@ namespace Tigraf
 	{
 		m_WindowHandle = SDL_CreateWindow(name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS);
 		m_WindowData.m_Vsync = vsyncEnabled;
+		m_WindowData.m_WindowName = name;
 		m_WindowData.m_EventCallback = eventCallback;
 
 		TIGRAF_CORE_ASSERT(m_WindowHandle, "Window creation failed!");
@@ -111,7 +112,7 @@ namespace Tigraf
 
 		if(timer > 1.0f)
 		{
-			std::string title = std::format("Tigraf - Frame: {}FPS / {}ms", frames, 1.0f/frames, ts.m_TotalTime);
+			std::string title = std::format("{}: {}FPS / {}ms", m_WindowData.m_WindowName, frames, 1.0f / frames, ts.m_TotalTime);
 			timer -= 1.0f;
 			frames = 0;
 			SDL_SetWindowTitle(m_WindowHandle, title.c_str());
@@ -131,7 +132,12 @@ namespace Tigraf
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
 		{
-			if(m_NativeEventCallback) if(m_NativeEventCallback(&e)) continue;
+			if(m_NativeEventCallback) 
+				if(m_NativeEventCallback(&e))
+				{
+					//CORE_TRACE("Event Early Exit: {}", e.type);
+					continue;
+				}
 
 			switch(e.type)
 			{

@@ -1,6 +1,7 @@
 #include "Tigraf/Core/Application.h"
-
 #include "Tigraf/Renderer/Renderer.h"
+
+#include "EntryPoint.h"
 
 namespace Tigraf
 {
@@ -11,7 +12,7 @@ namespace Tigraf
 	Application::Application(ApplicationSpecification spec)
 		: m_ApplicationSpecification(spec)
 	{
-		if(s_Instance != nullptr) delete s_Instance;
+		if(s_Instance != nullptr) s_Instance->shutdown();
 		s_Instance = this;
 	}
 
@@ -45,7 +46,7 @@ namespace Tigraf
 	{
 		CORE_TRACE(getWorkingDirectory());
 
-		m_Window = Window::createWindow(1280, 720, "Tigraf", true, BIND_EVENT_FN(Application::onEvent)); //Initializes Window, Events and Graphics Context
+		m_Window = Window::createWindow(1280, 720, m_ApplicationSpecification.name.c_str(), true, BIND_EVENT_FN(Application::onEvent)); //Initializes Window, Events and Graphics Context
 
 		m_Timer = createScope<ChronoTimer>();
 
@@ -125,4 +126,3 @@ namespace Tigraf
 	}
 }
 
-#include "EntryPoint.h"

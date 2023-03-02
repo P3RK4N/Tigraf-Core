@@ -1,3 +1,8 @@
+#Variables you can set before adding this subdirectory:
+#TIGRAF_DISABLE_CONSOLE (Works only on windows, on other platforms it doesnt make difference)
+#TODO: EXPAND (Maybe DLL?)
+#
+
 cmake_minimum_required(VERSION 3.25)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
@@ -274,6 +279,13 @@ else()
 endif()
 
 #Macros
+if(TIGRAF_DISABLE_CONSOLE)
+   target_compile_definitions(
+      Tigraf-Core 
+         PRIVATE "TIGRAF_DISABLE_CONSOLE"
+   )
+endif()
+
 target_compile_definitions(
    Tigraf-Core
       PRIVATE TIGRAF_CORE

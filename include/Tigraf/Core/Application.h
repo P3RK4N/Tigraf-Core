@@ -4,6 +4,8 @@
 #include "Tigraf/Window/Window.h"
 #include "Tigraf/Event/Event.h"
 
+class EntryPoint;
+
 namespace Tigraf
 {
 	struct CommandLineArgs
@@ -21,7 +23,9 @@ namespace Tigraf
 
 	class Application
 	{
-	public:
+		friend class EntryPoint;
+
+	private:
 		Application
 		(
 			ApplicationSpecification spec = 
@@ -35,8 +39,9 @@ namespace Tigraf
 
 		virtual ~Application();
 
-		void run(); //TODO: Also make visible in entry class in entrypoint only
-		void exit() { m_Running = false; } //TODO: This too
+
+	public:
+		void exit() { m_Running = false; }
 
 		std::string getName() { return m_ApplicationSpecification.name; }
 		std::filesystem::path getWorkingDirectory() { return m_ApplicationSpecification.workingDirectory; }
@@ -49,6 +54,8 @@ namespace Tigraf
 		void setLayers(const std::vector<Layer*>& layers) { m_Layers = layers; }
 
 	private:
+		void run();
+
 		void init();
 		void onUpdate();
 		void onDraw();

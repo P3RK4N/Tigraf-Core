@@ -58,6 +58,7 @@ namespace Tigraf
 		struct WindowData
 		{
 			bool m_Vsync = true;
+			const char* m_WindowName = "Tigraf";
 			std::function<void(Event&)> m_EventCallback = nullptr;
 		};
 
