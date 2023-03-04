@@ -28,7 +28,7 @@
 
 		static void Run() 
 		{ 
-			TIGRAF_CORE_ASSERT(s_ApplicationInstance, "Application is not running!");
+			TIGRAF_CORE_ASSERT(s_ApplicationInstance, "Application is not initialised!");
 
 			CORE_INFO("\n\n##########################\n\t{}\n##########################\n", TIGRAF_APP_NAME);
 
@@ -63,7 +63,7 @@
 		CORE_TRACE("Press any key to exit: ");
 		std::cin.get();
 
-
+		
 	}
 
 #endif
