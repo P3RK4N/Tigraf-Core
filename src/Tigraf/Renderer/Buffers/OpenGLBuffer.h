@@ -14,6 +14,8 @@ namespace Tigraf
 		virtual void pushVertexAttribute(VertexAttributeType type) override;
 		virtual void setIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
 
+		virtual void updateBuffer(void* subData, uint32_t byteOffset, uint32_t byteSize) override;
+
 		const GLuint getVertexArrayID() const { return m_VertexArrayID; }
 		const GLuint getVertexBufferID() const { return m_VertexBufferID; }
 

@@ -120,6 +120,12 @@ namespace Tigraf
 		m_IndexBuffer = indexBuffer;
 	}
 
+	void OpenGLVertexBuffer::updateBuffer(void* subData, uint32_t byteOffset, uint32_t byteSize)
+	{
+		//TODO:Assert on out of bounds
+		glBufferSubData(m_VertexBufferID, byteOffset, byteSize, subData);
+	}
+
 	OpenGLIndexBuffer::OpenGLIndexBuffer(const std::vector<GLuint>& indices, BufferFlag bufferFlags)
 	{
 		m_IndicesCount = indices.size();

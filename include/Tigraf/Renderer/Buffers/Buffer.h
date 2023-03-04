@@ -10,6 +10,8 @@
 	#define isDOUBLE(VertexAttributeType)	(uint32_t)VertexAttributeType >= 200U
 #endif
 
+//TODO: Store flags in buffers -> needed for asserting wrong behaviour
+//TODO: Remove redundant 'Buffer' from 'updateBuffer' methods
 namespace Tigraf
 {
 	class Buffer;
@@ -41,23 +43,14 @@ namespace Tigraf
 	/**
 	*	Flags used for describing buffer
 	*/
-	struct BufferFlag
+	typedef enum : uint32_t
 	{
-	public:
 		/* For buffer which will be read by user on CPU side */
-		static const BufferFlag STATIC;
+		STATIC = BIT(0),
 		/* For buffer which needs to be updated by user on CPU side */
-		static const BufferFlag DYNAMIC;
+		DYNAMIC = BIT(1),
 
-		operator uint32_t() const { return m_BufferFlagValue; }
-		operator uint32_t() { return m_BufferFlagValue; }
-
-	private:
-		BufferFlag();
-		BufferFlag(uint32_t value) : m_BufferFlagValue(value) {}
-
-		uint32_t m_BufferFlagValue;
-	};
+	} BufferFlag;
 
 	/**
 	*	Buffer used for storing vertices, can be set on a Mesh //TODO(...and Model?)
@@ -71,6 +64,8 @@ namespace Tigraf
 
 		const Ref<IndexBuffer>& getIndexBuffer() { return m_IndexBuffer; }
 		virtual void setIndexBuffer(const Ref<IndexBuffer>& indexBuffer) = 0;
+
+		virtual void updateBuffer(void* subData, uint32_t byteOffset, uint32_t byteSize) {}
 		
 		const uint32_t getVertexSize() const { return m_VertexSize; }
 		const uint32_t getVertexCount() const { return m_VertexCount; }

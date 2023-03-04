@@ -4,9 +4,6 @@
 
 namespace Tigraf
 {
-	const BufferFlag BufferFlag::STATIC =	BufferFlag(BIT(0));
-	const BufferFlag BufferFlag::DYNAMIC =	BufferFlag(BIT(1));
-
 	Ref<VertexBuffer> VertexBuffer::create(uint32_t vertexCount, uint32_t vertexSize, void* data, BufferFlag bufferFlags)
 	{
 		TIGRAF_CORE_ASSERT(!(bufferFlags && 0b00), "Invalid buffer flags used!");
