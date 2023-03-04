@@ -158,6 +158,26 @@ namespace Tigraf
 					break;
 				}
 
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				{
+					ButtonData data{ e.button.button };
+					
+					
+					Event ev{ EVENT_TYPE::BUTTON_PRESS, &data };
+					m_WindowData.m_EventCallback(ev);
+					break;
+				}
+
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+				{
+					ButtonData data{ e.button.button };
+					
+					
+					Event ev{ EVENT_TYPE::BUTTON_RELEASE, &data };
+					m_WindowData.m_EventCallback(ev);
+					break;
+				}
+
 				case SDL_EVENT_KEY_UP:
 				{
 					KeyData data{ e.key.keysym.scancode };
@@ -196,8 +216,6 @@ namespace Tigraf
 				case SDL_EVENT_TEXT_INPUT:
 				case SDL_EVENT_WINDOW_MOUSE_ENTER:
 				case SDL_EVENT_WINDOW_MOUSE_LEAVE:
-				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-				case SDL_EVENT_MOUSE_BUTTON_UP:
 					CORE_TRACE("Unimplemented: {}", e.type);
 					break;
 

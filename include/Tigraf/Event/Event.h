@@ -14,6 +14,8 @@ namespace Tigraf
 		CLOSE,
 		KEY_PRESS,
 		KEY_RELEASE,
+		BUTTON_PRESS,
+		BUTTON_RELEASE,
 		KEY_REPEAT
 	};
 
@@ -49,6 +51,14 @@ namespace Tigraf
 		const std::string ToString() const { return std::format("KeyEvent({0})", keycode); }
 	};
 
+	struct ButtonData
+	{
+		ButtonData(int keycode) : keycode(keycode) {}
+		int keycode = 0;
+
+		const std::string ToString() const { return std::format("ButtonEvent({0})", keycode); }
+	};
+
 	struct CursorData
 	{
 		CursorData(int xPos, int yPos) : xPos(xPos), yPos(yPos) {}
@@ -62,5 +72,6 @@ namespace Tigraf
 
 	CAST_STREAM(ResizeData)
 	CAST_STREAM(KeyData)
+	CAST_STREAM(ButtonData)
 	CAST_STREAM(CursorData)
 }
