@@ -6,6 +6,7 @@
 
 #include <glad/glad.h>
 
+//TODO: Add much more asserts
 namespace Tigraf
 {
 	void OpenGLRendererAPI::init()
@@ -73,41 +74,62 @@ namespace Tigraf
 		glViewport(x, y, width, height);
 	}
 
-	void OpenGLRendererAPI::drawTriangles(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLRendererAPI::drawTriangles(const Ref<VertexBuffer>& vertexBuffer, uint32_t numVertices)
 	{
+		TIGRAF_CORE_ASSERT(numVertices <= vertexBuffer->getVertexCount(), "Number of vertices is too great!");
+
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
-		glDrawArrays(GL_TRIANGLES, 0, vertexBuffer->getVertexCount());
+		glDrawArrays(GL_TRIANGLES, 0, numVertices ? numVertices : vertexBuffer->getVertexCount());
 	}
 
-	void OpenGLRendererAPI::drawTrianglesIndexed(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLRendererAPI::drawTrianglesIndexed(const Ref<VertexBuffer>& vertexBuffer, uint32_t numIndices)
 	{
+		TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
+		TIGRAF_CORE_ASSERT(numIndices <= vertexBuffer->getIndexBuffer()->getIndicesCount(), "Number of indices is too great!");
 
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
-
-	TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
-
-		glDrawElements(GL_TRIANGLES, vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, numIndices ? numIndices : vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	void OpenGLRendererAPI::drawPoints(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLRendererAPI::drawPoints(const Ref<VertexBuffer>& vertexBuffer, uint32_t numVertices)
 	{
+		TIGRAF_CORE_ASSERT(numVertices <= vertexBuffer->getVertexCount(), "Number of vertices is too great!");
+
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
-		glDrawArrays(GL_POINTS, 0, vertexBuffer->getVertexCount());
+		glDrawArrays(GL_POINTS, 0, numVertices ? numVertices : vertexBuffer->getVertexCount());
 	}
 
-	void OpenGLRendererAPI::drawPointsIndexed(const Ref<VertexBuffer>& vertexBuffer)
+	void OpenGLRendererAPI::drawPointsIndexed(const Ref<VertexBuffer>& vertexBuffer, uint32_t numIndices)
 	{
+		TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
+		TIGRAF_CORE_ASSERT(numIndices <= vertexBuffer->getIndexBuffer()->getIndicesCount(), "Number of indices is too great!");
+
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
-
-	TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
-
-		glDrawElements(GL_POINTS, vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_POINTS, numIndices ? numIndices : vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	void OpenGLRendererAPI::drawPointsInstanced(const Ref<VertexBuffer>& vertexBuffer, uint32_t numInstances)
+	void OpenGLRendererAPI::drawPointsInstanced(const Ref<VertexBuffer>& vertexBuffer, uint32_t numInstances, uint32_t numVertices)
 	{
+		TIGRAF_CORE_ASSERT(numVertices <= vertexBuffer->getVertexCount(), "Number of vertices is too great!");
+
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
-		glDrawArraysInstanced(GL_POINTS, 0, vertexBuffer->getVertexCount(), numInstances);
+		glDrawArraysInstanced(GL_POINTS, 0, numVertices ? numVertices : vertexBuffer->getVertexCount(), numInstances);
+	}
+
+	void OpenGLRendererAPI::drawLines(const Ref<VertexBuffer>& vertexBuffer, uint32_t numVertices)
+	{
+		TIGRAF_CORE_ASSERT(numVertices <= vertexBuffer->getVertexCount(), "Number of vertices is too great!");
+
+		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
+		glDrawArrays(GL_LINES, 0, numVertices ? numVertices : vertexBuffer->getVertexCount());
+	}
+		
+	void OpenGLRendererAPI::drawLinesIndexed(const Ref<VertexBuffer>& vertexBuffer, uint32_t numIndices)
+	{
+		TIGRAF_CORE_ASSERT(numIndices <= vertexBuffer->getIndexBuffer()->getIndicesCount(), "Number of indices is too great!");
+
+		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());
+		glDrawElements(GL_LINES, numIndices ? numIndices : vertexBuffer->getIndexBuffer()->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
 	void OpenGLRendererAPI::initGlobalUniformBuffers()
