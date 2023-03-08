@@ -13,7 +13,7 @@ Tigraf-Core relies on the following third-party libraries:
 - **GLM**: A header-only C++ mathematics library for graphics software. It provides classes and functions designed and implemented with the same naming conventions and functionalities than OpenGL/GLSL.
 - **STB**: A collection of single-file libraries for C/C++ that provide various useful utilities, including image loading and writing.
 - **SDL**: A cross-platform development library designed to provide low-level access to audio, keyboard, mouse, joystick, and graphics hardware via OpenGL and Direct3D.
-- **GLFW**: A lightweight and cross-platform library for creating windows and handling input and events.
+- **GLFW**: A lightweight and cross-platform library for creating windows and handling input and events. (**OUTDATED**)
 - **spdlog**: A fast C++ logging library with a simple interface and performance-oriented design.
 - **Glad**: A multi-language GL/GLES/EGL/GLX/WGL loader-generator based on the official specs.
 
@@ -22,7 +22,7 @@ To build Tigraf-Core, follow these steps:
 
 1. Install CMake on your system.
 2. Clone the repository recursively by running the following command: "git clone --recursive https://github.com/P3RK4N/Tigraf-Core"
-3. In project folder, navigate to scripts and run project generation command. Alternatively, you can run with your own command for specific tool
+3. In project folder, navigate to scripts and run project generation command. Alternatively, you can run with your own command for specific generator
 
 **NOTE**: It's preferred that you have latest vulkan installed or DirectX if you are on windows
 
@@ -36,7 +36,7 @@ Tigraf-Core provides the following features:
 - Support for multiple graphics APIs (OpenGL, DirectX, Vulkan, Metal)
 
 ## Example
-If you want to see how the Tigraf-Core library works, you can run the example executable that is generated using the win_generate_project.bat script in the scripts folder. This will generate a executable project with the example code that demonstrates how to use the library.
+If you want to see how the Tigraf-Core library works, you can run the example executable that is generated using the win_generate_project.bat script in the scripts folder. This will generate a executable project with the example code that demonstrates how to use the library. (**OUTDATED**)
 
 **NOTE**: Example will not be created if this library is used as dependency which is not CMake's top level project.
 
