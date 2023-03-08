@@ -23,6 +23,7 @@ namespace Tigraf
 	struct ResizeData;
 	struct KeyData;
 	struct CursorData;
+	struct ButtonData;
 
 	class Event
 	{

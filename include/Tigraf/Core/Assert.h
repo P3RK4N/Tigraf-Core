@@ -18,6 +18,9 @@
 //
 //#endif
 
+#include <Tigraf/Core/Core.h>
+#include <Tigraf/Core/Log.h>
+
 #ifdef TIGRAF_ENABLE_ASSERTS
 
 	#ifdef TIGRAF_CORE

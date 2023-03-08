@@ -143,7 +143,7 @@ namespace Tigraf
 	};
 
 	/**
-	* Updates per frame buffer with given data, size and offset
+	* Updates per frame buffer (bind = 1) with given data, size and offset
 	*/
 	inline static void UpdatePerFrameBuffer(void* data, uint32_t offsetInBytes, uint32_t sizeInBytes)
 	{
@@ -151,7 +151,7 @@ namespace Tigraf
 	}
 
 	/**
-	* Updates per model buffer with given data, size and offset
+	* Updates per model buffer (bind = 2) with given data, size and offset
 	*/
 	inline static void UpdatePerModelBuffer(void* data, uint32_t offsetInBytes, uint32_t sizeInBytes)
 	{

@@ -54,7 +54,7 @@ namespace Tigraf
 		virtual ~Texture() {}
 
 		void* getNativeTextureHandle() { return &m_TextureHandle; }
-		virtual void* getNativeTextureID() { return nullptr; }
+		virtual void* getNativeTextureID() = 0;
 
 		TextureFormat getTextureFormat() { return m_TextureFormat; }
 		std::pair<int, int> getSize() { return { m_Width, m_Height }; }
@@ -76,7 +76,7 @@ namespace Tigraf
 
 	public:
 		static Ref<Texture2D> create(const char* filePath);
-		static Ref<Texture2D> create(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData);
+		static Ref<Texture2D> create(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData = nullptr);
 
 	};
 
@@ -104,6 +104,7 @@ namespace Tigraf
 		* @return newly created cubemap texture pointer
 		*/
 		static Ref<TextureCube> create(const char* baseFilePath, const char* fileFormat);
+		static Ref<TextureCube> create(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData = nullptr);
 
 		static const std::string s_CubeSides[6];
 

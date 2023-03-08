@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Tigraf/Core/Core.h"
+
 // Platform detection using predefined macros
 #ifdef _WIN32
 	/* Windows x64/x86 */

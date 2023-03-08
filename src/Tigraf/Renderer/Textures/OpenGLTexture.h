@@ -23,6 +23,8 @@ namespace Tigraf
 	{
 	public:
 		OpenGLTextureCube(const char* baseFilePath, const char* fileFormat);
+		OpenGLTextureCube(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData = nullptr);
+
 		virtual ~OpenGLTextureCube();
 
 		virtual void* getNativeTextureID() override { return &m_TextureID; }

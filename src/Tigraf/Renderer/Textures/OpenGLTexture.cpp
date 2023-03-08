@@ -213,7 +213,6 @@ namespace Tigraf
 		glDeleteTextures(1, &m_TextureID);
 	}
 
-
 	OpenGLTextureCube::OpenGLTextureCube(const char* baseFilePath, const char* fileFormat)
 	{
 		glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &m_TextureID);
@@ -257,6 +256,32 @@ namespace Tigraf
 
 		m_TextureHandle = glGetTextureHandleARB(m_TextureID);
 	
+		//TODO(P3RK4N): Remove
+		glMakeTextureHandleResidentARB(m_TextureHandle);
+	}
+
+	OpenGLTextureCube::OpenGLTextureCube(TextureFormat textureFormat, uint32_t width, uint32_t height, const void* textureData) //TODO: Make other func params from data to textureData, specify also that data is passed in unsigned bytes
+	{
+		glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &m_TextureID);
+
+		GLenum internalFormat, dataFormat, componentType;
+		dataFormat = textureFormatToOpenGLDataFormat(textureFormat);
+		internalFormat = textureFormatToOpenGLInternalFormat(textureFormat);
+		componentType = textureFormatToComponentType(textureFormat);
+
+		glTextureStorage2D(m_TextureID, 1, internalFormat, width, height);
+		glTextureSubImage3D(m_TextureID, 0, 0, 0, 0, m_Width, m_Height, 1, dataFormat, GL_UNSIGNED_BYTE, textureData);
+
+		glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+		m_TextureHandle = glGetTextureHandleARB(m_TextureID);
+		m_TextureFormat = textureFormat;
+
 		//TODO(P3RK4N): Remove
 		glMakeTextureHandleResidentARB(m_TextureHandle);
 	}
