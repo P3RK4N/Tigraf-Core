@@ -4,7 +4,7 @@
 namespace Tigraf
 {
 	const Ref<Texture2D>& Framebuffer::getColorTexture(uint32_t textureIndex) { TIGRAF_CORE_ASSERT(textureIndex < m_ColorTextures.size(), "Invalid index!"); return m_ColorTextures[textureIndex]; }
-	const Ref<Texture2D>& Framebuffer::getDepthStencilTexture() { TIGRAF_CORE_ASSERT(m_DepthStencilTexture, "DepthStencil not attached!"); return m_DepthStencilTexture; }
+	const Ref<Texture>& Framebuffer::getDepthStencilTexture() { TIGRAF_CORE_ASSERT(m_DepthStencilTexture, "DepthStencil not attached!"); return m_DepthStencilTexture; }
 
 
 	Ref<Framebuffer> Framebuffer::create(uint32_t width, uint32_t height)

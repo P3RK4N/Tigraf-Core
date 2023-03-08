@@ -13,8 +13,10 @@ namespace Tigraf
 
 		virtual void clear() override;
 		virtual void setClearColor(const glm::vec4& color) override;
-
 		virtual void setViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
+
+		virtual void setWireframeMode(bool wireframed) override;
+		virtual void setCulling(bool cull, bool side = 0) override;
 
 		virtual void drawTriangles(const Ref<VertexBuffer>& vertexBuffer, uint32_t numVertices = 0) override;
 		virtual void drawTrianglesIndexed(const Ref<VertexBuffer>& vertexBuffer, uint32_t numIndices = 0) override;

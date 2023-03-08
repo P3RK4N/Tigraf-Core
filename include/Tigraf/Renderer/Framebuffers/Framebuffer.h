@@ -37,18 +37,31 @@ namespace Tigraf
 		* If attaching multiple textures, invalidate it only at the end.
 		*/
 		virtual void attachColorTexture(TextureFormat colorFormat) = 0;
+		virtual void attachColorTexture(Ref<Texture2D> colorTexture) = 0;
 
 		/* Attaches depth stencil texture
 		* You need to invalidate buffer after this command. 
 		* If attaching multiple textures, invalidate it only at the end.
 		*/
 		virtual void attachDepthStencilTexture(TextureFormat depthStencilFormat) = 0;
+				/* Attaches depth stencil texture
+		* You need to invalidate buffer after this command. 
+		* If attaching multiple textures, invalidate it only at the end.
+		*/
+		virtual void attachDepthStencilTexture(Ref<Texture2D> depthStencilTexture) = 0;
+				/* Attaches depth stencil texture
+		* You need to invalidate buffer after this command. 
+		* If attaching multiple textures, invalidate it only at the end.
+		*/
+		virtual void attachDepthStencilTexture(Ref<TextureCube> depthStencilTexture) = 0;
 
 		const Ref<Texture2D>& getColorTexture(uint32_t textureIndex = 0);
-		const Ref<Texture2D>& getDepthStencilTexture();
+		const Ref<Texture>& getDepthStencilTexture();
 
 		const float getWidth() { return m_Width; }
 		const float getHeight() { return m_Height; }
+
+		virtual const bool isComplete() = 0;
 
 	public:
 		static Ref<Framebuffer> create(uint32_t width, uint32_t height);
@@ -74,7 +87,7 @@ namespace Tigraf
 
 	protected:
 		std::vector<Ref<Texture2D>> m_ColorTextures{};
-		Ref<Texture2D> m_DepthStencilTexture = nullptr;
+		Ref<Texture> m_DepthStencilTexture = nullptr;
 
 		uint32_t m_Width = 0;
 		uint32_t m_Height = 0;

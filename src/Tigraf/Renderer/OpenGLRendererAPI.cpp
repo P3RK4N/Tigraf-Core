@@ -74,6 +74,17 @@ namespace Tigraf
 		glViewport(x, y, width, height);
 	}
 
+	void OpenGLRendererAPI::setWireframeMode(bool wireframed)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, wireframed ? GL_LINE : GL_FILL);
+	}
+
+	void OpenGLRendererAPI::setCulling(bool cull, bool side)
+	{
+		cull ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+		glCullFace(side ? GL_FRONT : GL_BACK);
+	}
+
 	void OpenGLRendererAPI::drawTriangles(const Ref<VertexBuffer>& vertexBuffer, uint32_t numVertices)
 	{
 		TIGRAF_CORE_ASSERT(numVertices <= vertexBuffer->getVertexCount(), "Number of vertices is too great!");
@@ -126,6 +137,7 @@ namespace Tigraf
 		
 	void OpenGLRendererAPI::drawLinesIndexed(const Ref<VertexBuffer>& vertexBuffer, uint32_t numIndices)
 	{
+		TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
 		TIGRAF_CORE_ASSERT(numIndices <= vertexBuffer->getIndexBuffer()->getIndicesCount(), "Number of indices is too great!");
 
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());

@@ -42,6 +42,19 @@ namespace Tigraf
 		m_DepthStencilTexture = depthStencilTexture;
 	}
 
+	void OpenGLFramebuffer::attachDepthStencilTexture(Ref<TextureCube> depthStencilTexture)
+	{
+	TIGRAF_CORE_ASSERT(depthStencilTexture->getTextureFormat() == TextureFormat::DEPTH24STENCIL8, "Tigraf currently does not support this framebuffer depth stencil format!");
+	TIGRAF_CORE_ASSERT(!m_DepthStencilTexture, "Depth stencil texture already attached!");
+	//TODO: Assert if texture is not proper size as framebuffer...do in other places as well
+
+		GLuint textureID = *(GLuint*)depthStencilTexture->getNativeTextureID();
+
+		glNamedFramebufferTexture(m_FramebufferID, GL_DEPTH_STENCIL_ATTACHMENT, textureID, 0);
+
+		m_DepthStencilTexture = depthStencilTexture;
+	}
+
 	void OpenGLFramebuffer::invalidate()
 	{
 		if(m_FramebufferID)
@@ -61,9 +74,13 @@ namespace Tigraf
 
 			glNamedFramebufferDrawBuffers(m_FramebufferID, m_ColorTextures.size(), drawBuffers);
 		}
-		else glNamedFramebufferDrawBuffer(m_FramebufferID, GL_NONE);
+		else 
+		{
+			glNamedFramebufferDrawBuffer(m_FramebufferID, GL_NONE);
+			glNamedFramebufferReadBuffer(m_FramebufferID, GL_NONE);
+		}
 
-		if(m_DepthStencilTexture)
+		if(m_DepthStencilTexture) //TODO: Bug, doesnt know whether it was cube or not
 		{
 			TextureFormat depthStencilFormat = m_DepthStencilTexture->getTextureFormat();
 			m_DepthStencilTexture = nullptr;
