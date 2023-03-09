@@ -6,28 +6,28 @@ namespace Tigraf
 {
 	Ref<VertexBuffer> VertexBuffer::create(uint32_t vertexCount, uint32_t vertexSize, void* data, BufferFlag bufferFlags)
 	{
-		TIGRAF_CORE_ASSERT(!(bufferFlags && 0b00), "Invalid buffer flags used!");
+		TIGRAF_CORE_ASSERT(bufferFlags && 0b11, "Invalid buffer flags used!");
 
 		return createRef<OpenGLVertexBuffer>(vertexCount, vertexSize, data, bufferFlags);
 	}
 
 	Ref<IndexBuffer> IndexBuffer::create(const std::vector<uint32_t>& indices, BufferFlag bufferFlags)
 	{
-		TIGRAF_CORE_ASSERT(!(bufferFlags && 0b00), "Invalid buffer flags used!");
+		TIGRAF_CORE_ASSERT(bufferFlags && 0b11, "Invalid buffer flags used!");
 
 		return createRef<OpenGLIndexBuffer>(indices, bufferFlags);
 	}
 
 	Ref<UniformBuffer> UniformBuffer::create(void* data, uint32_t byteSize, BufferFlag bufferFlags)
 	{
-		TIGRAF_CORE_ASSERT(!(bufferFlags && 0b00), "Invalid buffer flags used!");
+		TIGRAF_CORE_ASSERT(bufferFlags && 0b11, "Invalid buffer flags used!");
 
 		return createRef<OpenGLUniformBuffer>(data, byteSize, bufferFlags);
 	}
 
 	Ref<RWBuffer> RWBuffer::create(void* data, uint32_t sizeInBytes, BufferFlag bufferFlags)
 	{
-		TIGRAF_CORE_ASSERT(!(bufferFlags && 0b00), "Invalid buffer flags used!");
+		TIGRAF_CORE_ASSERT(bufferFlags && 0b11, "Invalid buffer flags used!");
 
 		return createRef<OpenGLRWBuffer>(data, sizeInBytes, bufferFlags);
 	}

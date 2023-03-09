@@ -15,6 +15,8 @@ tigraf_findD3D11()
 tigraf_findD3D12()
 tigraf_findMetal()
 
+#TODO: find compilers and other stuff
+
 #Debug
 set(DEBUG ON)
 

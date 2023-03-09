@@ -126,6 +126,7 @@ namespace Tigraf
 		
 	void OpenGLRendererAPI::drawLinesIndexed(const Ref<VertexBuffer>& vertexBuffer, uint32_t numIndices)
 	{
+		TIGRAF_CORE_ASSERT(vertexBuffer->getIndexBuffer() != nullptr, "Index Buffer must be set before drawing indexed!");
 		TIGRAF_CORE_ASSERT(numIndices <= vertexBuffer->getIndexBuffer()->getIndicesCount(), "Number of indices is too great!");
 
 		glBindVertexArray(reinterpret_cast<OpenGLVertexBuffer*>(vertexBuffer.get())->getVertexArrayID());

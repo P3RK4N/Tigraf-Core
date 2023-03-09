@@ -1,5 +1,11 @@
 #pragma once
 
+//TODO: Make includes more granular
+//TODO: Try to make PCH more implicit to include to client
+//TODO: REMOVE DEFAULT UNIFORM BUFFERS!
+//TODO: Big shader refactor -> when MOSH is complete?
+//TODO: CRST Refactor!!!
+
 #include "Tigraf/Core/Layer.h"
 #include "Tigraf/Window/Window.h"
 #include "Tigraf/Event/Event.h"

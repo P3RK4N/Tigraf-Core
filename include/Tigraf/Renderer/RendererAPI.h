@@ -6,6 +6,7 @@
 namespace Tigraf
 {
 	//TODO: Maybe refactor into a one draw function with enum draw config
+	//TODO: Big refactor needed!
 	class RendererAPI
 	{
 	public:
