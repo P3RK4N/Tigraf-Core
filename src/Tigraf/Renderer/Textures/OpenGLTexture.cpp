@@ -5,6 +5,7 @@
 
 namespace Tigraf
 {
+	//TODO: Make typedefs and constant arrays, remove switch
 	GLuint textureFormatToOpenGLDataFormat(TextureFormat textureFormat)
 	{
 		switch(textureFormat)
