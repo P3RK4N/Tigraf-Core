@@ -79,7 +79,6 @@ namespace Tigraf
 		
 
 		m_GraphicsContext.init();	//TODO: Maybe isn't semantically correct
-
 		SDL_GL_SetSwapInterval(vsyncEnabled);
 	}
 
@@ -132,12 +131,11 @@ namespace Tigraf
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
 		{
-			if(m_NativeEventCallback) 
-				if(m_NativeEventCallback(&e))
-				{
-					//CORE_TRACE("Event Early Exit: {}", e.type);
-					continue;
-				}
+			if(m_NativeEventCallback && m_NativeEventCallback(&e))
+			{
+				//CORE_TRACE("Event Early Exit: {}", e.type);
+				continue;
+			}
 
 			switch(e.type)
 			{
@@ -210,6 +208,13 @@ namespace Tigraf
 				{
 					Event ev{ EVENT_TYPE::CLOSE, nullptr };
 					m_WindowData.m_EventCallback(ev);
+					break;
+				}
+
+				case SDL_EVENT_DROP_FILE:
+				{
+					CORE_TRACE("Drop file event!");
+					SDL_free(e.drop.file);
 					break;
 				}
 
