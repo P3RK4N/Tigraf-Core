@@ -213,7 +213,9 @@ namespace Tigraf
 
 				case SDL_EVENT_DROP_FILE:
 				{
-					CORE_TRACE("Drop file event!");
+					FileData fd{ e.drop.file };
+					Event ev{ EVENT_TYPE::FILE_DROP, &fd };
+					m_WindowData.m_EventCallback(ev);
 					SDL_free(e.drop.file);
 					break;
 				}

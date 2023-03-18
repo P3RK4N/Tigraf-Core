@@ -16,14 +16,16 @@ namespace Tigraf
 		KEY_RELEASE,
 		BUTTON_PRESS,
 		BUTTON_RELEASE,
-		KEY_REPEAT
+		KEY_REPEAT,
+		FILE_DROP
 	};
 
-	//TODO: Make union of them
+	//TODO: Make union of them UPDATE1: Or variant?
 	struct ResizeData;
 	struct KeyData;
 	struct CursorData;
 	struct ButtonData;
+	struct FileData;
 
 	class Event
 	{
@@ -69,10 +71,19 @@ namespace Tigraf
 		const std::string ToString() const { return std::format("CursorEvent({0},{1})", xPos, yPos); }
 	};
 
+	struct FileData
+	{
+		FileData(const char* filePath) : filePath(filePath) {}
+		const char* filePath = nullptr;
+
+		const std::string ToString() const { return std::format("FileEvent({0})", filePath); }
+	};
+
 #define CAST_STREAM(DATA) inline std::ostream& operator<<(std::ostream& os, const DATA& d) { return os << d.ToString(); }
 
 	CAST_STREAM(ResizeData)
 	CAST_STREAM(KeyData)
 	CAST_STREAM(ButtonData)
 	CAST_STREAM(CursorData)
+	CAST_STREAM(FileData)
 }
