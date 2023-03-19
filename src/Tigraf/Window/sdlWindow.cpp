@@ -12,7 +12,7 @@ namespace Tigraf
 
 	sdlWindow::sdlWindow(int width, int height, const char* name, bool vsyncEnabled, std::function<void(Event&)> eventCallback)
 	{
-		m_WindowHandle = SDL_CreateWindow(name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS);
+		m_WindowHandle = SDL_CreateWindow(name, width, height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_FOCUS);
 		m_WindowData.m_Vsync = vsyncEnabled;
 		m_WindowData.m_WindowName = name;
 		m_WindowData.m_EventCallback = eventCallback;
